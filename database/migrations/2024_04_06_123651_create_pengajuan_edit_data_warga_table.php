@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->char('jenis_kelamin',1);
             $table->string('agama',10);
-            $table->string('status_pernikahan',10);
+            $table->string('status_pernikahan',15);
             $table->string('keterangan',50);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
