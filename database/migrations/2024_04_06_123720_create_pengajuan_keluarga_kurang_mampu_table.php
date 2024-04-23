@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('pengajuanKeluargaKurangMampu', function (Blueprint $table) {
             $table->string('noKK_pengajuan')->primary();
-            $table->integer('kriteria1');
-            $table->integer('kriteria2');
-            $table->integer('kriteria3');
-            $table->integer('kriteria4');
-            $table->integer('kriteria5');
-            $table->string('bukti',20);
+            $table->integer('jumlah_tanggungan');
+            $table->float('pendapatan');
+            $table->integer('jumlah_kendaraan');
+            $table->integer('luas_tanah');
             $table->timestamps();
         });
     }

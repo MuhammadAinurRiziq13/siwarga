@@ -4,13 +4,15 @@
     <div class="card ">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}">Daftar Pengajuan</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
-                        class="fas fa-fw fa-plus"></i> Tambah</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Export</a>
+                <<<<<<< HEAD <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}">Daftar
+                    Pengajuan</a>
+                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                            class="fas fa-fw fa-plus"></i> Tambah</a>
+                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                            class="fas fa-regular fa-file-excel"></i> Import</a>
+                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                            class="fas fa-regular fa-file-excel"></i> Export</a>
+                    >>>>>>> d6af4f1342db29db9f88cae13e6dc3db0edb55d3
             </div>
         </div>
         <div class="card-body">
