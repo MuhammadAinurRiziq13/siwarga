@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('jumlah_kendaraan');
             $table->integer('luas_tanah');
             $table->integer('kondisi_rumah');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         
             $table->foreign('noKK')->references('noKK')->on('keluarga');
         });

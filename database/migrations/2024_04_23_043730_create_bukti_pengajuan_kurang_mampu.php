@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('bukti_pengajuan_kurang_mampu', function (Blueprint $table) {
             $table->string("noKK_pengajuan");
             $table->string("nama_bukti");
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('noKK_pengajuan')->references('noKK_pengajuan')->on('pengajuanKeluargaKurangMampu');
         });

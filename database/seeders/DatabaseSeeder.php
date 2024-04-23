@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             $keluargaData[] = [
                 'noKK' => $faker->unique()->numerify('###########'),
                 'alamat' => $faker->address,
-                'kecamatan' => $faker->city,
+                'kecamatan' => $faker->citySuffix,
                 'kabupaten_kota' => $faker->city,
                 'provinsi' => $faker->state,
             ];
@@ -52,5 +52,17 @@ class DatabaseSeeder extends Seeder
             }
         }
         DB::table('warga')->insert($wargaData);
+
+        // Generate dummy warga sementara data with references to warga
+        $wargaSementaraData = [];
+        foreach ($wargaData as $warga) {
+            if (rand(0, 1)) { // 50% chance to generate warga sementara
+                $wargaSementaraData[] = [
+                    'NIK_warga_sementara' => $warga['NIK'],
+                    'domisili_asal' => $faker->city
+                ];
+            }
+        }
+        DB::table('wargasementara')->insert($wargaSementaraData);
     }
 }

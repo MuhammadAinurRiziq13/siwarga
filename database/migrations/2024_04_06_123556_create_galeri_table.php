@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nama_galeri');
             $table->date('tanggal_kegiatan');
             $table->string('keterangan');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

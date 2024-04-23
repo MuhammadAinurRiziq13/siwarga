@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('kecamatan', 30);
             $table->string('kabupaten_kota', 30);
             $table->string('provinsi', 30);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

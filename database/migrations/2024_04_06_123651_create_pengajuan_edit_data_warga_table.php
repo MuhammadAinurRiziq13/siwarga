@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('agama',10);
             $table->string('status_pernikahan',10);
             $table->string('keterangan',50);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
