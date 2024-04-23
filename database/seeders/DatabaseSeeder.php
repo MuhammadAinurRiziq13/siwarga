@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $keluargaData = [];
         for ($i = 0; $i < 50; $i++) {
             $keluargaData[] = [
-                'noKK' => $faker->unique()->numerify('###########'),
+                'noKK' => $faker->unique()->numerify('################'),
                 'alamat' => $faker->address,
                 'kecamatan' => $faker->citySuffix,
                 'kabupaten_kota' => $faker->city,
