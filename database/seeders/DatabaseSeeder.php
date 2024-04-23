@@ -1,22 +1,56 @@
 <?php
 
-namespace Database\Seeders;
-
-use App\Models\FamilyModel;
-use App\Models\ResidentModel;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // Membuat data FamilyModel terlebih dahulu
-        // FamilyModel::factory(7)->create();
+        $faker = FakerFactory::create('id_ID'); // Create Indonesian Faker instance
 
-        // Membuat data ResidentModel setelah data FamilyModel sudah dibuat
-        ResidentModel::factory(30)->create();
+        // Generate dummy keluarga data
+        $keluargaData = [];
+        for ($i = 0; $i < 50; $i++) {
+            $keluargaData[] = [
+                'noKK' => $faker->unique()->numerify('###########'),
+                'alamat' => $faker->address,
+                'kecamatan' => $faker->city,
+                'kabupaten_kota' => $faker->city,
+                'provinsi' => $faker->state,
+            ];
+        }
+        DB::table('keluarga')->insert($keluargaData);
+
+        // Generate dummy warga data with references to keluarga
+        $wargaData = [];
+        foreach ($keluargaData as $keluarga) {
+            for ($j = 0; $j < rand(2, 5); $j++) { // Generate 2-5 warga per keluarga
+                $nama = $faker->name; // Generate full name using Faker
+
+                // Truncate nama to 30 characters if it exceeds
+                if (strlen($nama) > 30) {
+                    $nama = substr($nama, 0, 30);
+                }
+
+                $wargaData[] = [
+                    'NIK' => $faker->unique()->numerify('################'),
+                    'noKK' => $keluarga['noKK'],
+                    'nama' => $nama, // Use truncated nama
+                    'tempat_lahir' => $faker->city,
+                    'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
+                    'jenis_kelamin' => $faker->randomElement(['L', 'P']),
+                    'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
+                    'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
+                ];
+            }
+        }
+        DB::table('warga')->insert($wargaData);
     }
 }
