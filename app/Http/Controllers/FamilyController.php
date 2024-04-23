@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MigrantController extends Controller
+class FamilyController extends Controller
 {
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Selamat Datang',
-            'list' => ['Home', 'Migrant']
+            'title' => 'Data Keluarga',
+            'list' => ['Home', 'Family']
         ];
 
         $page = (object)[
@@ -18,7 +18,7 @@ class MigrantController extends Controller
         ];
 
         return view(
-            'migrant.index',
+            'family.index',
             [
                 'breadcrumb' => $breadcrumb,
                 'page' => $page,

@@ -9,7 +9,7 @@ class GalleryController extends Controller
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Selamat Datang',
+            'title' => 'Data Galery',
             'list' => ['Home', 'Gallery']
         ];
         return view(

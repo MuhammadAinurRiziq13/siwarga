@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MigrantController;
@@ -30,7 +31,7 @@ Route::Post('/login', [LoginController::class, 'authenticate']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/migrant', [MigrantController::class, 'index']);
+Route::get('/family', [FamilyController::class, 'index']);
 Route::get('/poor-resident', [PoorResidentController::class, 'index']);
 Route::get('/gallery', [GalleryController::class, 'index']);
 
@@ -43,4 +44,15 @@ Route::group(['prefix' => 'resident'], function () {
     Route::get('/{id}/edit', [ResidentController::class, 'edit']);
     Route::put('/{id}', [ResidentController::class, 'update']);
     Route::delete('/{id}', [ResidentController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'family'], function () {
+    Route::get('/', [FamilyController::class, 'index']);        //menampilkan halaman awal
+    Route::post('/list', [FamilyController::class, 'list']);    //menampilkan data user dalam bentuk json untuk datatables
+    Route::get('/create', [FamilyController::class, 'create']);
+    Route::post('/', [FamilyController::class, 'store']);       //menyimpan data user baru
+    Route::get('/{id}', [FamilyController::class, 'show']);
+    Route::get('/{id}/edit', [FamilyController::class, 'edit']);
+    Route::put('/{id}', [FamilyController::class, 'update']);
+    Route::delete('/{id}', [FamilyController::class, 'destroy']);
 });

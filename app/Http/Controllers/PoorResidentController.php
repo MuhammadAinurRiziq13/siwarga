@@ -9,7 +9,7 @@ class PoorResidentController extends Controller
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Selamat Datang',
+            'title' => 'Data Keluarga Kurang Mampu',
             'list' => ['Home', 'Poor-Resident']
         ];
         return view(

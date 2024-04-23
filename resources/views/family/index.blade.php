@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card card-outline card-primary">
-        <div class="card-header">
-            <h3 class="card-title">{{ $page->title }}</h3>
-            <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Tambah</a>
+    <div class="card ">
+        <div class="card-header bg-transparent">
+            <div class="card-tools float-right">
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-fw fa-plus"></i> Tambah</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-regular fa-file-excel"></i> Import</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-regular fa-file-excel"></i> Export</a>
             </div>
         </div>
         <div class="card-body">
@@ -15,30 +19,14 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group row">
-                        <label for="" class="col-1 control-label col-form-label">Filter:</label>
-                        <div class="col-3">
-                            <select name="user_id" id="user_id" class="form-control">
-                                <option value="">- Semua -</option>
-                                @foreach ($user as $item)
-                                    <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                            <small class="form-text text-muted">Pengelola barang</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_transaksi">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_family">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Pengelola</th>
-                        <th>Pembeli</th>
-                        <th>Kode Pnjualan</th>
-                        <th>Tanggal Penjualan</th>
+                        <th>No</th>
+                        <th>No KK</th>
+                        <th>Nama Kepala Keluarga</th>
+                        <th>Jumlah Anggota</th>
+                        <th>Alamat</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -52,15 +40,12 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataBarang = $('#table_transaksi').DataTable({
+            var dataFamily = $('#table_family').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('penjualan/list') }}",
+                    "url": "{{ url('resident/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function(d) {
-                        d.user_id = $('#user_id').val();
-                    }
                 },
                 columns: [{
                         data: "DT_RowIndex",
@@ -69,25 +54,37 @@
                         searchable: false
                     },
                     {
-                        data: "user.nama",
+                        data: "NIK",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "pembeli",
+                        data: "noKK",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "penjualan_kode",
+                        data: "nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "tempat_lahir",
                         className: "",
                         orderable: true,
                         searchable: false
                     },
                     {
-                        data: "penjualan_tanggal",
+                        data: "tanggal_lahir",
+                        className: "",
+                        orderable: true,
+                        searchable: false
+                    },
+                    {
+                        data: "jenis_kelamin",
                         className: "",
                         orderable: false,
                         searchable: false
@@ -99,10 +96,6 @@
                         searchable: false // diiisi true jika ingin kolom ini bisa di cari
                     }
                 ]
-            });
-
-            $('#user_id').on('change', function() {
-                dataBarang.ajax.reload();
             });
         });
     </script>

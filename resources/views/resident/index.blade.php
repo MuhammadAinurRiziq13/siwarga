@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card border-left-primary">
+    <div class="card ">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Tambah</a>
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Import</a>
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Exort</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}">Daftar Pengajuan</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-fw fa-plus"></i> Tambah</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-regular fa-file-excel"></i> Import</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                        class="fas fa-regular fa-file-excel"></i> Export</a>
             </div>
         </div>
         <div class="card-body">
@@ -21,7 +25,6 @@
                     <tr>
                         <th>No</th>
                         <th>NIK</th>
-                        <th>No KK</th>
                         <th>Nama</th>
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>

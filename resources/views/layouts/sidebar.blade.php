@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-dark-blue sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -23,23 +23,23 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Data Warga
+        Data Penduduk
     </div>
 
-    <li class="nav-item {{ request()->is('resident') ? 'active' : '' }} ">
-        <a href="{{ url('/resident') }}" class="nav-link">
+    <li class="nav-item {{ request()->is('family') ? 'active' : '' }} ">
+        <a href="{{ url('/family') }}" class="nav-link">
             <i class="fas fa-fw fa-user-alt"></i>
-            <span>Warga Setempat</span></a>
+            <span>Keluarga</span></a>
     </li>
-    <li class="nav-item {{ request()->is('migrant') ? 'active' : '' }}">
-        <a href="{{ url('/migrant') }}" class="nav-link">
+    <li class="nav-item {{ request()->is('resident') ? 'active' : '' }}">
+        <a href="{{ url('/resident') }}" class="nav-link">
             <i class="fas fa-fw fa-user-clock"></i>
-            <span>Warga Perantau</span></a>
+            <span>Data Warga</span></a>
     </li>
     <li class="nav-item {{ request()->is('poor-resident') ? 'active' : '' }}">
         <a href="{{ url('/poor-resident') }}" class="nav-link">
             <i class="fas fa-fw fa-user-injured"></i>
-            <span>Warga Kurang Mampu</span></a>
+            <span>Keluarga Kurang Mampu</span></a>
     </li>
 
     <hr class="sidebar-divider">
