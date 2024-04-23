@@ -6,7 +6,7 @@
             <div class="card-tools float-right">
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Tambah</a>
                 <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Import</a>
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Exort</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Export</a>
             </div>
         </div>
         <div class="card-body">

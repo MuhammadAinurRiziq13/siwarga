@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id_users();
-            $table->string('foto');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->int('level');
-            $table->string('nama');
+        Schema::create('bukti_pengajuan_edit_data_warga', function (Blueprint $table) {
+            $table->string("NIK_pengajuan");
+            $table->string("nama_bukti");
             $table->timestamps();
+
+            $table->foreign('NIK_pengajuan')->references('NIK_pengajuan')->on('pengajuanEditDataWarga');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('bukti_pengajuan_edit_data_warga');
     }
 };

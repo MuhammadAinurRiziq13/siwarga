@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('keluargaKurangMampu', function (Blueprint $table) {
             $table->string('noKK');
-            $table->integer('kriteria1');
-            $table->integer('kriteria2');
-            $table->integer('kriteria3');
-            $table->integer('kriteria4');
-            $table->integer('kriteria5');
+            $table->integer('jumlah_tanggungan');
+            $table->float('pendapatan');
+            $table->integer('jumlah_kendaraan');
+            $table->integer('luas_tanah');
+            $table->integer('kondisi_rumah');
             $table->timestamps();
         
             $table->foreign('noKK')->references('noKK')->on('keluarga');
