@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
         // Generate dummy warga sementara data with references to warga
         $wargaSementaraData = [];
         foreach ($wargaData as $warga) {
-            if (rand(0, 1)) { // 50% chance to generate warga sementara
+            if (rand(0, 4) === 0) { // 20% chance to generate warga sementara
                 $wargaSementaraData[] = [
                     'NIK_warga_sementara' => $warga['NIK'],
                     'domisili_asal' => $faker->city
@@ -64,5 +64,103 @@ class DatabaseSeeder extends Seeder
             }
         }
         DB::table('wargasementara')->insert($wargaSementaraData);
+
+        // Generate dummy pengajuaneditdatawarga data with references to warga
+        $pengajuanEditDataWargaData = [];
+        foreach ($wargaData as $warga) {
+            $keterangan = $faker->sentence; // Generate full sentence for keterangan
+
+            // Truncate keterangan to 50 characters if it exceeds
+            if (strlen($keterangan) > 20) {
+                $keterangan = substr($keterangan, 0, 20);
+            }
+
+            // Generate pengajuaneditdatawarga with 10% chance
+            if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
+                $pengajuanEditDataWargaData[] = [
+                    'NIK_pengajuan' => $faker->unique()->numerify('################'),
+                    'nama' => $warga['nama'], // Generate different name for pengajuan
+                    'tempat_lahir' => $faker->city,
+                    'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
+                    'jenis_kelamin' => $faker->randomElement(['L', 'P']),
+                    'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
+                    'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
+                    'keterangan' => $keterangan // Use truncated keterangan
+                ];
+            }
+        }
+        DB::table('pengajuaneditdatawarga')->insert($pengajuanEditDataWargaData);
+
+        $buktiPengajuanEditDataWargaData = [];
+        foreach ($pengajuanEditDataWargaData as $pengajuan) {
+            $nama_bukti = $faker->sentence; 
+
+            if (strlen($nama_bukti) > 20) {
+                $nama_bukti = substr($nama_bukti, 0, 20);
+            }
+
+            $buktiPengajuanEditDataWargaData[] = [
+                'NIK_pengajuan' => $pengajuan['NIK_pengajuan'],
+                'nama_bukti' => $nama_bukti 
+            ];
+        }
+        DB::table('bukti_pengajuan_edit_data_warga')->insert($buktiPengajuanEditDataWargaData);
+
+        // Generate dummy pengajuaneditdatawarga data with references to warga
+        $pengajuanKeluargaKurangMampuData = [];
+        foreach ($wargaData as $warga) {
+            
+            // Generate pengajuaneditdatawarga with 10% chance
+            if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
+                $pengajuanKeluargaKurangMampuData[] = [
+                    'noKK_pengajuan' => $faker->unique()->numerify('################'),
+                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
+                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
+                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+                    'luas_tanah' => $faker->numberBetween(100, 500),
+                ];
+            }
+        }
+        DB::table('pengajuankeluargakurangmampu')->insert($pengajuanKeluargaKurangMampuData);
+
+        $buktiPengajuanKurangMampuData = [];
+        foreach ($pengajuanKeluargaKurangMampuData as $pengajuanKurangMampu) {
+            $nama_bukti = $faker->sentence; 
+
+            if (strlen($nama_bukti) > 20) {
+                $nama_bukti = substr($nama_bukti, 0, 20);
+            }
+
+            $buktiPengajuanKurangMampuData[] = [
+                'noKK_pengajuan' => $pengajuanKurangMampu['noKK_pengajuan'],
+                'nama_bukti' => $nama_bukti 
+            ];
+        }
+        DB::table('bukti_pengajuan_kurang_mampu')->insert($buktiPengajuanKurangMampuData);
+
+        $keluargaKurangMampuData = [];
+        foreach ($keluargaData as $keluarga) {
+            if (rand(0, 8) === 0) { 
+                $keluargaKurangMampuData[] = [
+                    'noKK' => $keluarga['noKK'],
+                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
+                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
+                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+                    'luas_tanah' => $faker->numberBetween(100, 500),
+                    'kondisi_rumah' => $faker->numberBetween(1, 5),
+                ];
+            }
+        }
+        DB::table('keluargakurangmampu')->insert($keluargaKurangMampuData);
+
+        $galeriData = [];
+        for ($i = 0; $i < 10; $i++) {
+            $keluargaData[] = [
+                'nama_galeri' => $faker->unique()->numerify('###'),
+                'tanggal_kegiatan' => $faker->date('Y-m-d'),
+                'keterangan' => $faker->sentence,
+            ];
+        }
+        DB::table('galeri')->insert($galeriData);
     }
 }
