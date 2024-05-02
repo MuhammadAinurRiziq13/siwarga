@@ -5,8 +5,10 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MigrantController;
+use App\Http\Controllers\PoorFamilyController;
 use App\Http\Controllers\PoorResidentController;
 use App\Http\Controllers\ResidentController;
+use App\Models\PoorFamilyModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,8 +34,6 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/family', [FamilyController::class, 'index']);
-Route::get('/poor-resident', [PoorResidentController::class, 'index']);
-Route::get('/gallery', [GalleryController::class, 'index']);
 
 Route::group(['prefix' => 'resident'], function () {
     Route::get('/', [ResidentController::class, 'index']);        //menampilkan halaman awal
@@ -55,4 +55,26 @@ Route::group(['prefix' => 'family'], function () {
     Route::get('/{id}/edit', [FamilyController::class, 'edit']);
     Route::put('/{id}', [FamilyController::class, 'update']);
     Route::delete('/{id}', [FamilyController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'poor-family'], function () {
+    Route::get('/', [PoorFamilyController::class, 'index']);        //menampilkan halaman awal
+    Route::post('/list', [PoorFamilyController::class, 'list']);    //menampilkan data user dalam bentuk json untuk datatables
+    Route::get('/create', [PoorFamilyController::class, 'create']);
+    Route::post('/', [PoorFamilyController::class, 'store']);       //menyimpan data user baru
+    Route::get('/{id}', [PoorFamilyController::class, 'show']);
+    Route::get('/{id}/edit', [PoorFamilyController::class, 'edit']);
+    Route::put('/{id}', [PoorFamilyController::class, 'update']);
+    Route::delete('/{id}', [PoorFamilyController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'gallery'], function () {
+    Route::get('/', [GalleryController::class, 'index']);        //menampilkan halaman awal
+    Route::post('/list', [GalleryController::class, 'list']);    //menampilkan data user dalam bentuk json untuk datatables
+    Route::get('/create', [GalleryController::class, 'create']);
+    Route::post('/', [GalleryController::class, 'store']);       //menyimpan data user baru
+    Route::get('/{id}', [GalleryController::class, 'show']);
+    Route::get('/{id}/edit', [GalleryController::class, 'edit']);
+    Route::put('/{id}', [GalleryController::class, 'update']);
+    Route::delete('/{id}', [GalleryController::class, 'destroy']);
 });

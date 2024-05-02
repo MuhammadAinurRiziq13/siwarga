@@ -12,9 +12,9 @@ class FamilyModel extends Model
     protected $table = 'keluarga';
     protected $primaryKey = 'noKK';
 
-    protected $guarded = ['noKK'];
+    protected $guarded = [''];
 
-    public function resident(): HasMany
+    public function warga(): HasMany
     {
         return $this->hasMany(ResidentModel::class, 'noKK', 'noKK');
     }

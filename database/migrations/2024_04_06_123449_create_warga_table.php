@@ -20,12 +20,14 @@ return new class extends Migration
             $table->char('jenis_kelamin', 1);
             $table->string('agama', 10);
             $table->string('status_pernikahan', 15);
+            $table->boolean('kepala_keluarga')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->foreign('noKK')->references('noKK')->on('keluarga');
+            $table->foreign('noKK')->references('noKK')->on('keluarga')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

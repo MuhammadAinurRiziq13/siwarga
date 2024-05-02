@@ -4,11 +4,11 @@
     <div class="card ">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('family/create') }}"><i
                         class="fas fa-fw fa-plus"></i> Tambah</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('family/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('family/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Export</a>
             </div>
         </div>
@@ -24,10 +24,9 @@
                     <tr>
                         <th>No</th>
                         <th>No KK</th>
-                        <th>Nama Kepala Keluarga</th>
-                        <th>Jumlah Anggota</th>
+                        <th>Jml Anggota</th>
                         <th>Alamat</th>
-                        <th>Aksi</th>
+                        <th style="width: 12%">Aksi</th>
                     </tr>
                 </thead>
             </table>
@@ -43,7 +42,7 @@
             var dataFamily = $('#table_family').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('resident/list') }}",
+                    "url": "{{ url('family/list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
@@ -54,48 +53,33 @@
                         searchable: false
                     },
                     {
-                        data: "NIK",
-                        className: "",
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
                         data: "noKK",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "nama",
+                        data: "jumlah_anggota",
+                        className: "",
+                        orderable: true,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return data !== null ? data : 0;
+                        }
+                    },
+                    {
+                        data: "alamat",
                         className: "",
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: "tempat_lahir",
-                        className: "",
-                        orderable: true,
-                        searchable: false
-                    },
-                    {
-                        data: "tanggal_lahir",
-                        className: "",
-                        orderable: true,
-                        searchable: false
-                    },
-                    {
-                        data: "jenis_kelamin",
+                        data: "aksi",
                         className: "",
                         orderable: false,
                         searchable: false
-                    },
-                    {
-                        data: "aksi",
-                        className: "",
-                        orderable: false, // diiisi true jika ingin kolom ini bisa diurutkan
-                        searchable: false // diiisi true jika ingin kolom ini bisa di cari
                     }
-                ]
+                ],
             });
         });
     </script>

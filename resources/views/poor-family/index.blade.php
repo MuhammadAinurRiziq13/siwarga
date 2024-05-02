@@ -20,7 +20,7 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_resident">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_poorfamily">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -40,10 +40,10 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataResident = $('#table_resident').DataTable({
+            var dataFamily = $('#table_poorfamily').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('resident/list') }}",
+                    "url": "{{ url('poor-family/list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
@@ -52,12 +52,6 @@
                         className: "text-center",
                         orderable: false,
                         searchable: false
-                    },
-                    {
-                        data: "NIK",
-                        className: "",
-                        orderable: true,
-                        searchable: true
                     },
                     {
                         data: "noKK",
@@ -72,28 +66,16 @@
                         searchable: true
                     },
                     {
-                        data: "tempat_lahir",
+                        data: "jumlah_anggota",
                         className: "",
                         orderable: true,
-                        searchable: false
-                    },
-                    {
-                        data: "tanggal_lahir",
-                        className: "",
-                        orderable: true,
-                        searchable: false
-                    },
-                    {
-                        data: "jenis_kelamin",
-                        className: "",
-                        orderable: false,
-                        searchable: false
+                        searchable: true
                     },
                     {
                         data: "aksi",
                         className: "",
-                        orderable: false, // diiisi true jika ingin kolom ini bisa diurutkan
-                        searchable: false // diiisi true jika ingin kolom ini bisa di cari
+                        orderable: false,
+                        searchable: false
                     }
                 ]
             });

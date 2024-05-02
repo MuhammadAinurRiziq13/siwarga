@@ -26,18 +26,18 @@
         Data Penduduk
     </div>
 
-    <li class="nav-item {{ request()->is('family') ? 'active' : '' }} ">
+    <li class="nav-item {{ request()->is('family*') ? 'active' : '' }} ">
         <a href="{{ url('/family') }}" class="nav-link">
             <i class="fas fa-fw fa-user-alt"></i>
             <span>Keluarga</span></a>
     </li>
-    <li class="nav-item {{ request()->is('resident') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('resident*') ? 'active' : '' }}">
         <a href="{{ url('/resident') }}" class="nav-link">
             <i class="fas fa-fw fa-user-clock"></i>
             <span>Data Warga</span></a>
     </li>
-    <li class="nav-item {{ request()->is('poor-resident') ? 'active' : '' }}">
-        <a href="{{ url('/poor-resident') }}" class="nav-link">
+    <li class="nav-item {{ request()->is('poor-family*') ? 'active' : '' }}">
+        <a href="{{ url('/poor-family') }}" class="nav-link">
             <i class="fas fa-fw fa-user-injured"></i>
             <span>Keluarga Kurang Mampu</span></a>
     </li>
@@ -48,7 +48,7 @@
         Landing Page
     </div>
 
-    <li class="nav-item {{ request()->is('gallery') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('gallery*') ? 'active' : '' }}">
         <a href="{{ url('/gallery') }}" class="nav-link">
             <i class="fas fa-fw fa-images"></i>
             <span>Gallery</span></a>

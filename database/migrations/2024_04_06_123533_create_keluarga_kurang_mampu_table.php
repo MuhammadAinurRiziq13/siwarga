@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('kondisi_rumah');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-        
-            $table->foreign('noKK')->references('noKK')->on('keluarga');
+
+            $table->foreign('noKK')->references('noKK')->on('keluarga')->onDelete('cascade');
         });
     }
 

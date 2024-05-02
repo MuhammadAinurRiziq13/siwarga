@@ -18,20 +18,39 @@ class DatabaseSeeder extends Seeder
         // Generate dummy keluarga data
         $keluargaData = [];
         for ($i = 0; $i < 50; $i++) {
+            $noKK = rand(1, 9) . $faker->unique()->numerify('################');
             $keluargaData[] = [
-                'noKK' => $faker->unique()->numerify('################'),
+                'noKK' => $noKK,
                 'alamat' => $faker->address,
                 'kecamatan' => $faker->citySuffix,
                 'kabupaten_kota' => $faker->city,
                 'provinsi' => $faker->state,
             ];
+
+            // Insert keluarga kurang mampu
+            if (rand(0, 8) === 0) {
+                $keluargaKurangMampuData[] = [
+                    'noKK' => $noKK,
+                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
+                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
+                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+                    'luas_tanah' => $faker->numberBetween(100, 500),
+                    'kondisi_rumah' => $faker->numberBetween(1, 5),
+                ];
+            }
         }
+
         DB::table('keluarga')->insert($keluargaData);
+        DB::table('keluargakurangmampu')->insert($keluargaKurangMampuData);
+
 
         // Generate dummy warga data with references to keluarga
         $wargaData = [];
         foreach ($keluargaData as $keluarga) {
-            for ($j = 0; $j < rand(2, 5); $j++) { // Generate 2-5 warga per keluarga
+            $jumlahWarga = rand(2, 7); // Generate 2-5 warga per keluarga
+            $kepalaKelurahanAdded = false; // Flag untuk menandai apakah kepala keluarga sudah ditambahkan
+
+            for ($j = 0; $j < $jumlahWarga; $j++) {
                 $nama = $faker->name; // Generate full name using Faker
 
                 // Truncate nama to 30 characters if it exceeds
@@ -39,18 +58,31 @@ class DatabaseSeeder extends Seeder
                     $nama = substr($nama, 0, 30);
                 }
 
-                $wargaData[] = [
-                    'NIK' => $faker->unique()->numerify('################'),
+                $startDate = '-80 years'; // Rentang umur mulai dari 0 sampai 80 tahun yang lalu
+                $endDate = '-0 years'; // Rentang umur mulai dari 80 tahun yang lalu hingga sekarang
+
+                $warga = [
+                    'NIK' => rand(1, 9) . $faker->unique()->numerify('################'),
                     'noKK' => $keluarga['noKK'],
                     'nama' => $nama, // Use truncated nama
                     'tempat_lahir' => $faker->city,
-                    'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
+                    'tanggal_lahir' => $faker->dateTimeBetween($startDate, $endDate)->format('Y-m-d'),
                     'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                     'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                     'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
+                    'kepala_keluarga' => false, // Setiap warga tidak menjadi kepala keluarga secara default
                 ];
+
+                // Jika kepala keluarga belum ditambahkan dan ini adalah warga pertama dalam keluarga, tandai sebagai kepala keluarga
+                if (!$kepalaKelurahanAdded && $j === 0) {
+                    $warga['kepala_keluarga'] = true;
+                    $kepalaKelurahanAdded = true;
+                }
+
+                $wargaData[] = $warga;
             }
         }
+
         DB::table('warga')->insert($wargaData);
 
         // Generate dummy warga sementara data with references to warga
@@ -59,7 +91,7 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 4) === 0) { // 20% chance to generate warga sementara
                 $wargaSementaraData[] = [
                     'NIK_warga_sementara' => $warga['NIK'],
-                    'domisili_asal' => $faker->city
+                    'alamat_asal' => $faker->city
                 ];
             }
         }
@@ -93,7 +125,7 @@ class DatabaseSeeder extends Seeder
 
         $buktiPengajuanEditDataWargaData = [];
         foreach ($pengajuanEditDataWargaData as $pengajuan) {
-            $nama_bukti = $faker->sentence; 
+            $nama_bukti = $faker->sentence;
 
             if (strlen($nama_bukti) > 20) {
                 $nama_bukti = substr($nama_bukti, 0, 20);
@@ -101,7 +133,7 @@ class DatabaseSeeder extends Seeder
 
             $buktiPengajuanEditDataWargaData[] = [
                 'NIK_pengajuan' => $pengajuan['NIK_pengajuan'],
-                'nama_bukti' => $nama_bukti 
+                'nama_bukti' => $nama_bukti
             ];
         }
         DB::table('bukti_pengajuan_edit_data_warga')->insert($buktiPengajuanEditDataWargaData);
@@ -109,7 +141,7 @@ class DatabaseSeeder extends Seeder
         // Generate dummy pengajuaneditdatawarga data with references to warga
         $pengajuanKeluargaKurangMampuData = [];
         foreach ($wargaData as $warga) {
-            
+
             // Generate pengajuaneditdatawarga with 10% chance
             if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
                 $pengajuanKeluargaKurangMampuData[] = [
@@ -125,7 +157,7 @@ class DatabaseSeeder extends Seeder
 
         $buktiPengajuanKurangMampuData = [];
         foreach ($pengajuanKeluargaKurangMampuData as $pengajuanKurangMampu) {
-            $nama_bukti = $faker->sentence; 
+            $nama_bukti = $faker->sentence;
 
             if (strlen($nama_bukti) > 20) {
                 $nama_bukti = substr($nama_bukti, 0, 20);
@@ -133,34 +165,36 @@ class DatabaseSeeder extends Seeder
 
             $buktiPengajuanKurangMampuData[] = [
                 'noKK_pengajuan' => $pengajuanKurangMampu['noKK_pengajuan'],
-                'nama_bukti' => $nama_bukti 
+                'nama_bukti' => $nama_bukti
             ];
         }
         DB::table('bukti_pengajuan_kurang_mampu')->insert($buktiPengajuanKurangMampuData);
 
-        $keluargaKurangMampuData = [];
-        foreach ($keluargaData as $keluarga) {
-            if (rand(0, 8) === 0) { 
-                $keluargaKurangMampuData[] = [
-                    'noKK' => $keluarga['noKK'],
-                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
-                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
-                    'luas_tanah' => $faker->numberBetween(100, 500),
-                    'kondisi_rumah' => $faker->numberBetween(1, 5),
-                ];
-            }
-        }
-        DB::table('keluargakurangmampu')->insert($keluargaKurangMampuData);
+        // $keluargaKurangMampuData = [];
+        // foreach ($keluargaData as $keluarga) {
+        //     if (rand(0, 8) === 0) {
+        //         $keluargaKurangMampuData[] = [
+        //             'noKK' => $keluarga['noKK'],
+        //             'jumlah_tanggungan' => $faker->numberBetween(1, 5),
+        //             'pendapatan' => $faker->randomFloat(2, 10000, 20000),
+        //             'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+        //             'luas_tanah' => $faker->numberBetween(100, 500),
+        //             'kondisi_rumah' => $faker->numberBetween(1, 5),
+        //         ];
+        //     }
+        // }
+        // DB::table('keluargakurangmampu')->insert($keluargaKurangMampuData);
 
         $galeriData = [];
         for ($i = 0; $i < 10; $i++) {
-            $keluargaData[] = [
-                'nama_galeri' => $faker->unique()->numerify('###'),
+            $galeriData[] = [
+                'nama_foto' => $faker->word . '.jpg', // contoh nama file foto, Anda bisa menyesuaikan sesuai kebutuhan
+                'judul' => $faker->sentence,
                 'tanggal_kegiatan' => $faker->date('Y-m-d'),
                 'keterangan' => $faker->sentence,
             ];
         }
+
         DB::table('galeri')->insert($galeriData);
     }
 }
