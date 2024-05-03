@@ -4,12 +4,12 @@
     <div class="card ">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}">Daftar Pengajuan</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}">Daftar Pengajuan</a>
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
                         class="fas fa-fw fa-plus"></i> Tambah</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('penjualan/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Export</a>
             </div>
         </div>

@@ -198,58 +198,6 @@ class ResidentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, string $id)
-    // {
-    //     $request->validate([
-    //         'NIK' => 'required|string|min:16|unique:warga,NIK,' . $id . ',NIK',
-    //         'noKK' => 'required',
-    //         'nama' => 'required|string',
-    //         'tempat_lahir' => 'required|string',
-    //         'tanggal_lahir' => 'required|string',
-    //         'jenis_kelamin' => 'required',
-    //         'agama' => 'required',
-    //         'status_pernikahan' => 'required',
-    //     ]);
-
-    //     // Update data warga
-    //     ResidentModel::find($id)->update([
-    //         'NIK' => $request->NIK,
-    //         'noKK' => $request->noKK,
-    //         'nama' => $request->nama,
-    //         'tempat_lahir' => $request->tempat_lahir,
-    //         'tanggal_lahir' => $request->tanggal_lahir,
-    //         'jenis_kelamin' => $request->jenis_kelamin,
-    //         'agama' => $request->agama,
-    //         'status_pernikahan' => $request->status_pernikahan,
-    //     ]);
-
-    //     // Cek apakah NIK_warga_sementara tidak ada pada tabel TemporaryResident
-    //     $tempResident = TemporaryResident::where('NIK_warga_sementara', $id)->first();
-
-    //     // Update data warga sementara jika alamat_asal diisi
-    //     if ($request->has('alamat_asal_checkbox')) {
-    //         if ($tempResident) {
-    //             // Jika data warga sementara sudah ada, update data
-    //             TemporaryResident::where('NIK_warga_sementara', $id)->update([
-    //                 'alamat_asal' => $request->alamat_asal
-    //             ]);
-    //         } else {
-    //             // Jika data warga sementara tidak ada, buat data baru
-    //             TemporaryResident::create([
-    //                 'NIK_warga_sementara' => $request->NIK,
-    //                 'alamat_asal' => $request->alamat_asal,
-    //             ]);
-    //         }
-    //     } else {
-    //         // Jika alamat_asal_checkbox tidak dicentang, hapus data warga sementara jika ada
-    //         if ($tempResident) {
-    //             TemporaryResident::where('NIK_warga_sementara', $id)->delete();
-    //         }
-    //     }
-
-    //     // Jika data berhasil diupdate, akan kembali ke halaman utama
-    //     return redirect('/resident')->with('success', 'Data Warga Berhasil Diubah');
-    // }
     public function update(Request $request, string $id)
     {
         $request->validate([
