@@ -130,14 +130,24 @@
                     <div class="form-group row">
                         <label class="col-2 control-label col-form-label"></label>
                         <div class="col-10">
-                            <div>
-                                <input type="checkbox" id="kepala_keluarga" name="kepala_keluarga">
-                                <label for="kepala_keluarga">Kepala Keluarga</label>
-                                @error('kepala_keluarga')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    <br>
-                                @enderror
-                            </div>
+                            @if ($resident->kepala_keluarga)
+                                <div>
+                                    <input type="checkbox" id="kepala_keluarga" name="kepala_keluarga" checked>
+                                    <label for="kepala_keluarga">Kepala Keluarga</label>
+                                    @error('kepala_keluarga')
+                                        <small class="form-text text-danger">{{ $message }}</small>
+                                        <br>
+                                    @enderror
+                                </div>
+                                <div class="family-members" style="display: none;">
+                                    @foreach ($anggota as $member)
+                                        @if ($member->noKK == $resident->noKK && $member->NIK != $resident->NIK)
+                                            <input type="radio" name="family_member" value="{{ $member->NIK }}">
+                                            <label for="">{{ $member->nama }}</label><br>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                             <div>
                                 <input type="checkbox" id="alamat_asal_checkbox" name="alamat_asal_checkbox"
                                     onclick="toggleAlamatAsal()" {{ !is_null($resident->alamat_asal) ? 'checked' : '' }}>
@@ -184,5 +194,18 @@
                 alamatAsalInput.disabled = true;
             }
         }
+
+        document.getElementById('kepala_keluarga').addEventListener('change', function() {
+            var familyMembersDiv = document.querySelector('.family-members');
+            var radioInputs = document.querySelectorAll('.family-members input[type="radio"]');
+            if (this.checked) {
+                familyMembersDiv.style.display = 'none';
+                radioInputs.forEach(function(radio) {
+                    radio.checked = false;
+                });
+            } else {
+                familyMembersDiv.style.display = 'block';
+            }
+        });
     </script>
 @endpush
