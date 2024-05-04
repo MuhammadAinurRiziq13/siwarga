@@ -10,6 +10,7 @@ class PoorFamilyModel extends Model
 {
     use HasFactory;
     protected $table = 'keluargakurangmampu';
+    protected $guarded = [''];
 
     public function family(): HasOne
     {

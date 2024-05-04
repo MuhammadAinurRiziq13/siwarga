@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keluargaKurangMampu', function (Blueprint $table) {
             $table->string('noKK');
             $table->integer('jumlah_tanggungan');
-            $table->float('pendapatan');
+            $table->integer('pendapatan');
             $table->integer('jumlah_kendaraan');
             $table->integer('luas_tanah');
             $table->integer('kondisi_rumah');
