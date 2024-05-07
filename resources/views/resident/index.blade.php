@@ -4,7 +4,7 @@
     <div class="card shadow">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('resident/create') }}">Daftar
+                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('submission-changes') }}">Daftar
                     Pengajuan</a>
                 <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('resident/create') }}"><i
                         class="fas fa-fw fa-plus"></i> Tambah</a>

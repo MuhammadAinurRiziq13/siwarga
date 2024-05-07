@@ -31,12 +31,13 @@
             <i class="fas fa-fw fa-user-alt"></i>
             <span>Keluarga</span></a>
     </li>
-    <li class="nav-item {{ request()->is('resident*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('resident*') || request()->is('submission-changes*') ? 'active' : '' }}">
         <a href="{{ url('/resident') }}" class="nav-link">
             <i class="fas fa-fw fa-user-clock"></i>
-            <span>Data Warga</span></a>
+            <span>Data Warga</span>
+        </a>
     </li>
-    <li class="nav-item {{ request()->is('poor-family*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('poor-family*') || request()->is('submission-add*') ? 'active' : '' }}">
         <a href="{{ url('/poor-family') }}" class="nav-link">
             <i class="fas fa-fw fa-user-injured"></i>
             <span>Keluarga Kurang Mampu</span></a>

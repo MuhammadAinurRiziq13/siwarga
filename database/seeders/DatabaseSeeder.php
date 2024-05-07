@@ -3,6 +3,7 @@
 use Faker\Factory as FakerFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         // Generate dummy keluarga data
         $keluargaData = [];
+        $keluargaKurangMampuData = [];
         for ($i = 0; $i < 50; $i++) {
             $noKK = rand(1, 9) . $faker->unique()->numerify('################');
             $keluargaData[] = [
@@ -110,7 +112,7 @@ class DatabaseSeeder extends Seeder
             // Generate pengajuaneditdatawarga with 10% chance
             if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
                 $pengajuanEditDataWargaData[] = [
-                    'NIK_pengajuan' => $faker->unique()->numerify('################'),
+                    'NIK_pengajuan' => $warga['NIK'],
                     'nama' => $warga['nama'], // Generate different name for pengajuan
                     'tempat_lahir' => $faker->city,
                     'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
@@ -140,12 +142,12 @@ class DatabaseSeeder extends Seeder
 
         // Generate dummy pengajuaneditdatawarga data with references to warga
         $pengajuanKeluargaKurangMampuData = [];
-        foreach ($wargaData as $warga) {
 
+        foreach ($keluargaData as $keluarga) {
             // Generate pengajuaneditdatawarga with 10% chance
             if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
                 $pengajuanKeluargaKurangMampuData[] = [
-                    'noKK_pengajuan' => $faker->unique()->numerify('################'),
+                    'noKK_pengajuan' => $keluarga['noKK'],
                     'jumlah_tanggungan' => $faker->numberBetween(1, 5),
                     'pendapatan' => $faker->randomFloat(2, 10000, 20000),
                     'jumlah_kendaraan' => $faker->numberBetween(1, 5),
@@ -196,5 +198,22 @@ class DatabaseSeeder extends Seeder
         }
 
         DB::table('galeri')->insert($galeriData);
+
+        DB::table('users')->insert([
+            'foto' => 'admin.jpg', // nama foto admin
+            'username' => 'admin',
+            'level' => 1,
+            'nama' => 'Admin',
+            'password' => Hash::make('admin'), // sesuaikan dengan password yang diinginkan
+        ]);
+
+        // Seeder for superadmin user
+        DB::table('users')->insert([
+            'foto' => 'superadmin.jpg', // nama foto superadmin
+            'username' => 'superadmin',
+            'level' => 2,
+            'nama' => 'Superadmin',
+            'password' => Hash::make('superadmin'), // sesuaikan dengan password yang diinginkan
+        ]);
     }
 }

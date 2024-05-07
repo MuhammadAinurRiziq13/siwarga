@@ -12,16 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuanEditDataWarga', function (Blueprint $table) {
-            $table->string('NIK_pengajuan')->primary();
-            $table->string('nama',30);
-            $table->string('tempat_lahir',30);
+            $table->string('NIK_pengajuan');
+            $table->string('nama', 30);
+            $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
-            $table->char('jenis_kelamin',1);
-            $table->string('agama',10);
-            $table->string('status_pernikahan',15);
-            $table->string('keterangan',50);
+            $table->char('jenis_kelamin', 1);
+            $table->string('agama', 10);
+            $table->string('status_pernikahan', 15);
+            $table->string('keterangan', 50);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('NIK_pengajuan')->references('NIK')->on('warga')->onDelete('cascade');
         });
     }
 

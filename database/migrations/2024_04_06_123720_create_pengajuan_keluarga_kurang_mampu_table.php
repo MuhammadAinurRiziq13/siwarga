@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuanKeluargaKurangMampu', function (Blueprint $table) {
-            $table->string('noKK_pengajuan')->primary();
+            $table->string('noKK_pengajuan');
             $table->integer('jumlah_tanggungan');
             $table->float('pendapatan');
             $table->integer('jumlah_kendaraan');
             $table->integer('luas_tanah');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+
+
+            $table->foreign('noKK_pengajuan')->references('noKK')->on('keluarga')->onDelete('cascade');
         });
     }
 

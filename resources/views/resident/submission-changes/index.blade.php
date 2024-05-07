@@ -1,17 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card ">
+    <div class="card">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('submission-add') }}">Daftar
-                    Pengajuan</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
-                        class="fas fa-fw fa-plus"></i> Tambah</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Export</a>
+                <a class="btn btn-sm btn-secondary ml-1" href="{{ url('resident') }}">Kembali</a>
             </div>
         </div>
         <div class="card-body">
@@ -21,13 +14,14 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_poorfamily">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_submission">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>No KK</th>
-                        <th>Nama Kepala Keluarga</th>
-                        <th>Jumlah Anggota</th>
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Waktu Pengajuan</th>
+                        <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -41,10 +35,10 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataFamily = $('#table_poorfamily').DataTable({
+            var dataFamily = $('#table_submission').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('poor-family/list') }}",
+                    "url": "{{ url('submission-changes/list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
@@ -55,7 +49,7 @@
                         searchable: false
                     },
                     {
-                        data: "noKK",
+                        data: "NIK_pengajuan",
                         className: "",
                         orderable: true,
                         searchable: true
@@ -67,10 +61,16 @@
                         searchable: true
                     },
                     {
-                        data: "jumlah_anggota",
+                        data: "waktu_pengajuan",
                         className: "",
-                        orderable: true,
-                        searchable: true
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "keterangan",
+                        className: "",
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: "aksi",

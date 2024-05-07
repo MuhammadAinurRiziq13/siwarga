@@ -24,4 +24,9 @@ class FamilyModel extends Model
     {
         return $this->hasOne(PoorFamilyModel::class, 'noKK', 'noKK');
     }
+
+    public function submissionAdd(): HasOne
+    {
+        return $this->hasOne(SubmissionAddModel::class, 'noKK_pengajuan', 'noKK');
+    }
 }
