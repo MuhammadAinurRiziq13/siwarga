@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class PoorFamilyController extends Controller
@@ -12,8 +13,8 @@ class PoorFamilyController extends Controller
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Kurang Mampu',
-            'list' => ['Home', 'Poor-Resident']
+            'title' => 'Data Keluarga Pra-Sejahtera',
+            'list' => ['Home', 'Keluarga Pra-Sejahtera']
         ];
         return view(
             'poor-family.index',
@@ -42,10 +43,12 @@ class PoorFamilyController extends Controller
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addColumn('aksi', function ($family) { // menambahkan kolom aksi
                 $btn = '<a href="' . url('/poor-family/' . $family->noKK) . '" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a> ';
-                $btn .= '<a href="' . url('/poor-family/' . $family->noKK . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/poor-family/' . $family->noKK) . '">'
-                    . csrf_field() . method_field('DELETE') .
-                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                if (Auth::user()->level == 'admin') {
+                    $btn .= '<a href="' . url('/poor-family/' . $family->noKK . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
+                    $btn .= '<form class="d-inline-block" method="POST" action="' . url('/poor-family/' . $family->noKK) . '">'
+                        . csrf_field() . method_field('DELETE') .
+                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                }
                 return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
@@ -56,11 +59,11 @@ class PoorFamilyController extends Controller
     {
         $poorFamily = PoorFamilyModel::where('noKK', $id)->first();
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Kurang Mampu',
-            'list' => ['Home', 'Keluarga Kurang Mampu', 'Detail']
+            'title' => 'Data Keluarga Pra-Sejahtera',
+            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Detail Keluarga Kurang Mampu'
+            'title' => 'Detail Keluarga Pra-Sejahtera'
         ];
         return view('poor-family.show', [
             'breadcrumb' => $breadcrumb,
@@ -73,12 +76,12 @@ class PoorFamilyController extends Controller
     {
         $family = FamilyModel::all();
         $breadcrumb = (object)[
-            'title' => 'Tambah Keluarga Kurang Mampu',
-            'list' => ['Home', 'Keluarga Kurang Mampu', 'Tambah']
+            'title' => 'Tambah Keluarga Pra-Sejahtera',
+            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Keluarga Kurang Mampu Baru'
+            'title' => 'Tambah Keluarga Pra-Sejahtera Baru'
         ];
 
         return view('poor-family.create', [
@@ -110,7 +113,7 @@ class PoorFamilyController extends Controller
             'kondisi_rumah' => $request->kondisi_rumah,
         ]);
 
-        return redirect('/poor-family')->with('success', 'Data keluarga kurang mampu berhasil disimpan');
+        return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil disimpan');
     }
 
     public function edit(string $id)
@@ -118,11 +121,11 @@ class PoorFamilyController extends Controller
         $poorFamily = PoorFamilyModel::where('noKK', $id)->first();
         $family = FamilyModel::all();
         $breadcrumb = (object)[
-            'title' => 'Edit Keluarga Kurang Mampu',
-            'list' => ['Home', 'Keluarga Kurang Mampu', 'Edit']
+            'title' => 'Edit Keluarga Pra-Sejahtera',
+            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Keluarga Kurang Mampu'
+            'title' => 'Edit Keluarga Pra-Sejahtera'
         ];
         return view('poor-family.edit', [
             'breadcrumb' => $breadcrumb,
@@ -143,7 +146,7 @@ class PoorFamilyController extends Controller
             'kondisi_rumah' => 'required',
         ]);
 
-        // Update data keluarga kurang mampu
+        // Update data Keluarga Pra-Sejahtera
         PoorFamilyModel::where('noKK', $noKK)->update([
             'noKK' => $request->noKK,
             'jumlah_tanggungan' => $request->jumlah_tanggungan,
@@ -154,24 +157,24 @@ class PoorFamilyController extends Controller
         ]);
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
-        return redirect('/poor-family')->with('success', 'Data Keluarga Kurang Mampu Berhasil Diubah');
+        return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera Berhasil Diubah');
     }
 
     public function destroy(string $noKK)
     {
         $check = PoorFamilyModel::where('noKK', $noKK)->first();
         if (!$check) {
-            return redirect('/poor-family')->with('error', 'Data Keluarga Kurang Mampu tidak ditemukan');
+            return redirect('/poor-family')->with('error', 'Data Keluarga Pra-Sejahtera tidak ditemukan');
         }
 
         try {
             // Hapus data dari tabel anak (keluargaKurangMampu)
             PoorFamilyModel::where('noKK', $noKK)->delete();
 
-            return redirect('/poor-family')->with('success', 'Data Keluarga Kurang Mampu berhasil dihapus');
+            return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/poor-family')->with('error', 'Data Keluarga Kurang Mampu gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/poor-family')->with('error', 'Data Keluarga Pra-Sejahtera gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 }

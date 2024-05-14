@@ -37,21 +37,13 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div class="row justify-content-center">
                 <div class="col-lg-5">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endif
-
-                    @if (session()->has('LoginError'))
+                    {{-- @if (session()->has('LoginError'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ session('LoginError') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                         </div>
-                    @endif
+                    @endif --}}
                     <main class="form-signin w-100 m-auto pt-4">
                         <h1 class="h3 mb-3 fw-normal text-center">Please Login</h1>
                         <form action="/login" method="POST">
@@ -108,6 +100,19 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if ($message = Session::get('LoginError'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "{{ $message }}",
+                });
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>
