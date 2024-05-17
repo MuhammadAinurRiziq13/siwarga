@@ -137,4 +137,11 @@ Route::prefix('gallery')->middleware('auth')->group(function () {
         Route::delete('/{id}', [GalleryController::class, 'destroy']);
     });
     Route::get('/{id}', [GalleryController::class, 'show']);
+<<<<<<< HEAD
+    Route::get('/{id}/edit', [GalleryController::class, 'edit']);
+    Route::put('/{id}', [GalleryController::class, 'update']);
+    Route::delete('/{id}', [GalleryController::class, 'destroy']);
 });
+=======
+});
+>>>>>>> 10f1b62881a8b448f44bc5d444693a43e6f4fd0b
