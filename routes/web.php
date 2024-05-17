@@ -24,11 +24,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('landing-page.home', [
-//         "title" => "Home"
-//     ]);
-// });
+Route::get('/', function () {
+    return view('landing-page.home', [
+        "title" => "Home"
+    ]);
+});
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::Post('/login', [LoginController::class, 'authenticate']);
