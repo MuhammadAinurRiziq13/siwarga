@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-dark-blue sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-dark-blue sidebar sidebar-dark accordion " id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -40,7 +40,7 @@
     <li class="nav-item {{ request()->is('poor-family*') || request()->is('submission-add*') ? 'active' : '' }}">
         <a href="{{ url('/poor-family') }}" class="nav-link">
             <i class="fas fa-fw fa-user-injured"></i>
-            <span>Keluarga Kurang Mampu</span></a>
+            <span>Keluarga Pra-Sejahtera</span></a>
     </li>
 
     <hr class="sidebar-divider">
@@ -54,6 +54,21 @@
             <i class="fas fa-fw fa-images"></i>
             <span>Gallery</span></a>
     </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Pengajuan
+    </div>
+
+    <li class="nav-item {{ request()->is('letter*') ? 'active' : '' }}">
+        <a href="{{ url('/letter') }}" class="nav-link">
+            <i class="fas fa-fw fa-file-pdf"></i>
+            <span>Surat Pengantar</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
 
     {{-- <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

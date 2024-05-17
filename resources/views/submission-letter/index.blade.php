@@ -19,7 +19,7 @@
                     <tr>
                         <th>No</th>
                         <th>NIK</th>
-                        <th>Nama Kepala Keluarga</th>
+                        <th>Nama Pemohon</th>
                         <th>Waktu Pengajuan</th>
                         <th>Aksi</th>
                     </tr>
@@ -48,7 +48,7 @@
                         searchable: false
                     },
                     {
-                        data: "noKK_pengajuan",
+                        data: "NIK",
                         className: "",
                         orderable: true,
                         searchable: true

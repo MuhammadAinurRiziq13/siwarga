@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\FamilyModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
@@ -45,10 +46,12 @@ class FamilyController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($family) {
                 $btn = '<a href="' . url('/family/' . $family->noKK) . '" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a> ';
-                $btn .= '<a href="' . url('/family/' . $family->noKK . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
-                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/family/' . $family->noKK) . '">'
-                    . csrf_field() . method_field('DELETE') .
-                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                if (Auth::user()->level == 'admin') {
+                    $btn .= '<a href="' . url('/family/' . $family->noKK . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
+                    $btn .= '<form class="d-inline-block" method="POST" action="' . url('/family/' . $family->noKK) . '">'
+                        . csrf_field() . method_field('DELETE') .
+                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                }
                 return $btn;
             })
             ->rawColumns(['aksi'])

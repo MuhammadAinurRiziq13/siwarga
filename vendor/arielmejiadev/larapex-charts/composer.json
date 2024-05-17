@@ -1,0 +1,53 @@
+{
+    "name": "arielmejiadev/larapex-charts",
+    "description": "Package to provide easy api to build apex charts on Laravel",
+    "keywords": [
+        "arielmejiadev",
+        "larapex",
+        "charts",
+        "apexcharts"
+    ],
+    "homepage": "https://larapex-charts.netlify.app/",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "ArielMejiaDev",
+            "email": "arielmejiadev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.2",
+        "illuminate/support": "^9.0|^10.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0",
+        "phpunit/phpunit": "^9.0|^10.0",
+        "nunomaduro/collision": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArielMejiaDev\\LarapexCharts\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArielMejiaDev\\LarapexCharts\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ArielMejiaDev\\LarapexCharts\\LarapexChartsServiceProvider"
+            ],
+            "aliases": {
+                "LarapexChart": "ArielMejiaDev\\LarapexCharts\\Facades\\LarapexChart"
+            }
+        }
+    }
+}

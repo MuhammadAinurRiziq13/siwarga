@@ -4,8 +4,10 @@
     <div class="card ">
         <div class="card-header bg-transparent">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('gallery/create') }}"><i
-                        class="fas fa-fw fa-plus"></i> Tambah Data</a>
+                @if (Auth::user()->level == 'admin')
+                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('gallery/create') }}"><i
+                            class="fas fa-fw fa-plus"></i> Tambah Data</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -89,7 +91,7 @@
                     },
                     {
                         data: "aksi",
-                        className: "",
+                        className: "text-center",
                         orderable: false, // diiisi true jika ingin kolom ini bisa diurutkan
                         searchable: false // diiisi true jika ingin kolom ini bisa di cari
                     }

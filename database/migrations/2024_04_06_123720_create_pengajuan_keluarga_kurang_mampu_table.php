@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengajuanKeluargaKurangMampu', function (Blueprint $table) {
-            $table->string('noKK_pengajuan');
-            $table->integer('jumlah_tanggungan');
-            $table->float('pendapatan');
-            $table->integer('jumlah_kendaraan');
-            $table->integer('luas_tanah');
+        Schema::create('pengajuansuratpengantar', function (Blueprint $table) {
+            $table->string('NIK');
+            $table->string('pekerjaan');
+            $table->string('pendidikan');
+            $table->string('no_hp');
+            $table->string('keperluan');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-
-            $table->foreign('noKK_pengajuan')->references('noKK')->on('keluarga')->onDelete('cascade');
+            $table->foreign('NIK')->references('NIK')->on('warga')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengajuanKeluargaKurangMampu');
+        Schema::dropIfExists('pengajuansuratpengantar');
     }
 };

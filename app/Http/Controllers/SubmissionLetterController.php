@@ -6,16 +6,16 @@ use App\Models\SubmissionAddModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class SubmissionAddController extends Controller
+class SubmissionLetterController extends Controller
 {
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Data Pengajuan Tambah Keluarga Kurang Mampu',
-            'list' => ['Home', 'Pengajuan Tambah Keluarga Kurang Mampu']
+            'title' => 'Data Pengajuan Surat Pengantar',
+            'list' => ['Home', 'Pengajuan Surat Pengantar']
         ];
         return view(
-            'poor-family.submission-add.index',
+            'submission-letter.index',
             [
                 'breadcrumb' => $breadcrumb
             ]

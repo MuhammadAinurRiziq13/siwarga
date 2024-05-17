@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama', 30);
             $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
-            $table->char('jenis_kelamin', 1);
+            $table->char('jenis_kelamin', 10);
             $table->string('agama', 10);
             $table->string('status_pernikahan', 15);
             $table->boolean('kepala_keluarga')->default(false);

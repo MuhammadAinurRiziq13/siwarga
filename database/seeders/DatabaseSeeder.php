@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
                     'nama' => $nama, // Use truncated nama
                     'tempat_lahir' => $faker->city,
                     'tanggal_lahir' => $faker->dateTimeBetween($startDate, $endDate)->format('Y-m-d'),
-                    'jenis_kelamin' => $faker->randomElement(['L', 'P']),
+                    'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                     'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                     'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
                     'kepala_keluarga' => false, // Setiap warga tidak menjadi kepala keluarga secara default
@@ -140,37 +140,27 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('bukti_pengajuan_edit_data_warga')->insert($buktiPengajuanEditDataWargaData);
 
-        // Generate dummy pengajuaneditdatawarga data with references to warga
-        $pengajuanKeluargaKurangMampuData = [];
+        $pengajuanEditDataWargaData = [];
+        foreach ($wargaData as $warga) {
+            $keperluan = $faker->sentence; // Generate full sentence for keperluan
 
-        foreach ($keluargaData as $keluarga) {
-            // Generate pengajuaneditdatawarga with 10% chance
-            if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
-                $pengajuanKeluargaKurangMampuData[] = [
-                    'noKK_pengajuan' => $keluarga['noKK'],
-                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
-                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
-                    'luas_tanah' => $faker->numberBetween(100, 500),
+            // Truncate keperluan to 50 characters if it exceeds
+            if (strlen($keperluan) > 50) {
+                $keperluan = substr($keperluan, 0, 50);
+            }
+
+            // Generate pengajuan edit data warga with 10% chance
+            if (rand(0, 4) === 0) {
+                $pengajuanEditDataWargaData[] = [
+                    'NIK' => $warga['NIK'],
+                    'pekerjaan' => $faker->jobTitle,
+                    'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
+                    'no_hp' => $faker->phoneNumber,
+                    'keperluan' => $keperluan // Use truncated keterangan
                 ];
             }
         }
-        DB::table('pengajuankeluargakurangmampu')->insert($pengajuanKeluargaKurangMampuData);
-
-        $buktiPengajuanKurangMampuData = [];
-        foreach ($pengajuanKeluargaKurangMampuData as $pengajuanKurangMampu) {
-            $nama_bukti = $faker->sentence;
-
-            if (strlen($nama_bukti) > 20) {
-                $nama_bukti = substr($nama_bukti, 0, 20);
-            }
-
-            $buktiPengajuanKurangMampuData[] = [
-                'noKK_pengajuan' => $pengajuanKurangMampu['noKK_pengajuan'],
-                'nama_bukti' => $nama_bukti
-            ];
-        }
-        DB::table('bukti_pengajuan_kurang_mampu')->insert($buktiPengajuanKurangMampuData);
+        DB::table('pengajuansuratpengantar')->insert($pengajuanEditDataWargaData);
 
         // $keluargaKurangMampuData = [];
         // foreach ($keluargaData as $keluarga) {
@@ -202,7 +192,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'foto' => 'admin.jpg', // nama foto admin
             'username' => 'admin',
-            'level' => 1,
+            'level' => 'admin',
             'nama' => 'Admin',
             'password' => Hash::make('admin'), // sesuaikan dengan password yang diinginkan
         ]);
@@ -211,7 +201,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'foto' => 'superadmin.jpg', // nama foto superadmin
             'username' => 'superadmin',
-            'level' => 2,
+            'level' => 'superadmin',
             'nama' => 'Superadmin',
             'password' => Hash::make('superadmin'), // sesuaikan dengan password yang diinginkan
         ]);

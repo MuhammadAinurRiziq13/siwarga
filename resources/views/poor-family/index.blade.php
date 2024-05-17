@@ -6,8 +6,10 @@
             <div class="card-tools float-right">
                 <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('submission-add') }}">Daftar
                     Pengajuan</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
-                        class="fas fa-fw fa-plus"></i> Tambah</a>
+                @if (Auth::user()->level == 'admin')
+                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
+                            class="fas fa-fw fa-plus"></i> Tambah</a>
+                @endif
                 <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Import</a>
                 <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}"><i
@@ -74,7 +76,7 @@
                     },
                     {
                         data: "aksi",
-                        className: "",
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     }
