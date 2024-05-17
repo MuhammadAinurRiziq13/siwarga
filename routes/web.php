@@ -111,19 +111,19 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/{id}', [PoorFamilyController::class, 'show']);
 });
 
-Route::prefix('submission-add')->middleware('auth')->group(function () {
-    Route::get('/', [SubmissionAddController::class, 'index']);
-    Route::post('/list', [SubmissionAddController::class, 'list']);
+// Route::prefix('submission-add')->middleware('auth')->group(function () {
+//     Route::get('/', [SubmissionAddController::class, 'index']);
+//     Route::post('/list', [SubmissionAddController::class, 'list']);
 
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/create', [SubmissionAddController::class, 'create']);
-        Route::post('/', [SubmissionAddController::class, 'store']);
-        Route::get('/{id}/edit', [SubmissionAddController::class, 'edit']);
-        Route::put('/{id}', [SubmissionAddController::class, 'update']);
-        Route::delete('/{id}', [SubmissionAddController::class, 'destroy']);
-    });
-    Route::get('/{id}', [SubmissionAddController::class, 'show']);
-});
+//     Route::middleware('role:admin')->group(function () {
+//         Route::get('/create', [SubmissionAddController::class, 'create']);
+//         Route::post('/', [SubmissionAddController::class, 'store']);
+//         Route::get('/{id}/edit', [SubmissionAddController::class, 'edit']);
+//         Route::put('/{id}', [SubmissionAddController::class, 'update']);
+//         Route::delete('/{id}', [SubmissionAddController::class, 'destroy']);
+//     });
+//     Route::get('/{id}', [SubmissionAddController::class, 'show']);
+// });
 
 Route::prefix('gallery')->middleware('auth')->group(function () {
     Route::get('/', [GalleryController::class, 'index']);
