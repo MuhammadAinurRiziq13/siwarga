@@ -10,6 +10,7 @@ use App\Http\Controllers\PoorResidentController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\SubmissionAddController;
 use App\Http\Controllers\SubmissionChangesController;
+use App\Http\Controllers\SubmissionLetterController;
 use App\Models\PoorFamilyModel;
 use Illuminate\Support\Facades\Route;
 
@@ -111,19 +112,17 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/{id}', [PoorFamilyController::class, 'show']);
 });
 
-// Route::prefix('submission-add')->middleware('auth')->group(function () {
-//     Route::get('/', [SubmissionAddController::class, 'index']);
-//     Route::post('/list', [SubmissionAddController::class, 'list']);
+Route::prefix('submission-letter')->middleware('auth')->group(function () {
+    Route::get('/', [SubmissionLetterController::class, 'index']);
+    Route::post('/list', [SubmissionLetterController::class, 'list']);
 
-//     Route::middleware('role:admin')->group(function () {
-//         Route::get('/create', [SubmissionAddController::class, 'create']);
-//         Route::post('/', [SubmissionAddController::class, 'store']);
-//         Route::get('/{id}/edit', [SubmissionAddController::class, 'edit']);
-//         Route::put('/{id}', [SubmissionAddController::class, 'update']);
-//         Route::delete('/{id}', [SubmissionAddController::class, 'destroy']);
-//     });
-//     Route::get('/{id}', [SubmissionAddController::class, 'show']);
-// });
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/{id}/proses', [SubmissionLetterController::class, 'proses']);
+        Route::put('/{id}', [SubmissionLetterController::class, 'update']);
+        Route::delete('/{id}', [SubmissionLetterController::class, 'destroy']);
+    });
+    Route::get('/{id}', [SubmissionLetterController::class, 'show']);
+});
 
 Route::prefix('gallery')->middleware('auth')->group(function () {
     Route::get('/', [GalleryController::class, 'index']);
@@ -137,11 +136,4 @@ Route::prefix('gallery')->middleware('auth')->group(function () {
         Route::delete('/{id}', [GalleryController::class, 'destroy']);
     });
     Route::get('/{id}', [GalleryController::class, 'show']);
-<<<<<<< HEAD
-    Route::get('/{id}/edit', [GalleryController::class, 'edit']);
-    Route::put('/{id}', [GalleryController::class, 'update']);
-    Route::delete('/{id}', [GalleryController::class, 'destroy']);
 });
-=======
-});
->>>>>>> 10f1b62881a8b448f44bc5d444693a43e6f4fd0b

@@ -1,0 +1,76 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="card card-outline card-primary shadow">
+        <div class="card-header">
+            <h6 class="card-title mb-0">{{ $page->title }}</h6>
+        </div>
+        <div class="card-body">
+            @empty($letter)
+                <div class="alert alert-danger alert-dismissible">
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
+                    Data yang Anda cari tidak ditemukan.
+                </div>
+            @else
+                <form method="POST" action="{{ url('/submission-letter/' . $letter->NIK) }}">
+                    @csrf
+                    {!! method_field('PUT') !!}
+                    <input type="hidden" name="NIK" value="{{ $letter->NIK }}">
+                    <input type="hidden" name="pekerjaan" value="{{ $letter->pekerjaan }}">
+                    <input type="hidden" name="pendidikan" value="{{ $letter->pendidikan }}">
+                    <input type="hidden" name="keperluan" value="{{ $letter->keperluan }}">
+                    <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}">
+                    <input type="hidden" name="status" value="selesai">
+
+                    <table class="table table-bordered table-striped table-hover table-sm">
+                        <tr>
+                            <th>NIK</th>
+                            <td>{{ $letter->NIK }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nama</th>
+                            <td>{{ $letter->nama }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tempat Lahir</th>
+                            <td>{{ $letter->tempat_lahir }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tanggal Lahir</th>
+                            <td>{{ $letter->tanggal_lahir }}</td>
+                        </tr>
+                        <tr>
+                            <th>Agama</th>
+                            <td>{{ $letter->agama }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pekerjaan</th>
+                            <td>{{ $letter->pekerjaan }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pendidikan</th>
+                            <td>{{ $letter->pendidikan }}</td>
+                        </tr>
+                        <tr>
+                            <th>Keperluan</th>
+                            <td>{{ $letter->keperluan }}</td>
+                        </tr>
+                        <tr>
+                            <th>No Hp</th>
+                            <td>{{ $letter->no_hp }}</td>
+                        </tr>
+                    </table>
+
+                    <button type="submit" class="btn btn-sm btn-success m-2 float-right">Terima</button>
+                    <a href="{{ url('submission-letter') }}" class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
+                </form>
+            @endempty
+        </div>
+    </div>
+@endsection
+
+@push('css')
+@endpush
+
+@push('js')
+@endpush

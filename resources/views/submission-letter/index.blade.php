@@ -22,6 +22,7 @@
                         <th>Nama Pemohon</th>
                         <th>Waktu Pengajuan</th>
                         <th>Aksi</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
             </table>
@@ -37,7 +38,7 @@
             var dataFamily = $('#table_submission').DataTable({
                 serverSide: true,
                 ajax: {
-                    "url": "{{ url('submission-add/list') }}",
+                    "url": "{{ url('submission-letter/list') }}",
                     "dataType": "json",
                     "type": "POST",
                 },
@@ -67,7 +68,13 @@
                     },
                     {
                         data: "aksi",
-                        className: "",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "status",
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     }

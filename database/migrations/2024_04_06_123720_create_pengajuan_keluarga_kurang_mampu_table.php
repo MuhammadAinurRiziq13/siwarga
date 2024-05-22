@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('pendidikan');
             $table->string('no_hp');
             $table->string('keperluan');
+            $table->string('status');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

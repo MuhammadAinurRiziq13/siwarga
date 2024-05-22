@@ -156,7 +156,8 @@ class DatabaseSeeder extends Seeder
                     'pekerjaan' => $faker->jobTitle,
                     'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
                     'no_hp' => $faker->phoneNumber,
-                    'keperluan' => $keperluan // Use truncated keterangan
+                    'keperluan' => $keperluan, // Use truncated keterangan
+                    'status' =>  $faker->randomElement(['proses', 'selesai']), // Use truncated keterangan
                 ];
             }
         }
