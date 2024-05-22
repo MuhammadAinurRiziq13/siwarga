@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ResidentModel extends Model
 {
@@ -28,5 +29,10 @@ class ResidentModel extends Model
     public function submissionChanges(): HasMany
     {
         return $this->hasMany(SubmissionChangesModel::class, 'NIK_pengajuan', 'NIK');
+    }
+
+    public function submissionLetter(): HasOne
+    {
+        return $this->hasOne(SubmissionLetterModel::class, 'NIK', 'NIK');
     }
 }

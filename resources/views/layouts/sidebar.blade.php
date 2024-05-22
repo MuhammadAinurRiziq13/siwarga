@@ -61,8 +61,8 @@
         Pengajuan
     </div>
 
-    <li class="nav-item {{ request()->is('letter*') ? 'active' : '' }}">
-        <a href="{{ url('/letter') }}" class="nav-link">
+    <li class="nav-item {{ request()->is('submission-letter*') ? 'active' : '' }}">
+        <a href="{{ url('/submission-letter') }}" class="nav-link">
             <i class="fas fa-fw fa-file-pdf"></i>
             <span>Surat Pengantar</span></a>
     </li>
