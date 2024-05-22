@@ -72,30 +72,6 @@ class SubmissionLetterController extends Controller
         ]);
     }
 
-    // public function update(Request $request, string $NIK)
-    // {
-    //     $request->validate([
-    //         'NIK' => 'required|string|min:16|unique:warga,NIK,' . $NIK . ',NIK',
-    //         'pekerjaan' => 'required|string',
-    //         'pendidikan' => 'required|string',
-    //         'keperluan' => 'required|string',
-    //         'no_hp' => 'required|string',
-    //         'status' => 'required|string|in:selesai',
-    //     ]);
-
-    //     // Update data submission
-    //     SubmissionLetterModel::where('NIK', $NIK)->update([
-    //         'pekerjaan' => $request->pekerjaan,
-    //         'pendidikan' => $request->pendidikan,
-    //         'keperluan' => $request->keperluan,
-    //         'no_hp' => $request->no_hp,
-    //         'status' => $request->status,
-    //     ]);
-
-    //     // Jika data berhasil diupdate, akan kembali ke halaman utama
-    //     return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah');
-    // }
-
     public function update(Request $request, string $NIK)
     {
         $request->validate([
@@ -108,7 +84,10 @@ class SubmissionLetterController extends Controller
         ]);
 
         // Update data submission
-        $submission = SubmissionLetterModel::where('NIK', $NIK)->first();
+        // $submission = SubmissionLetterModel::where('NIK', $NIK)->first();
+        $submission = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $NIK)
+            ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
+            ->first();
         SubmissionLetterModel::where('NIK', $NIK)->update([
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
@@ -132,9 +111,9 @@ class SubmissionLetterController extends Controller
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
-                    'target' => '+62 812-3360-5196',
+                    'target' => '+62 851-5653-0441',
                     // 'target' => $submission->no_hp,
-                    'message' => 'Pengajuan Anda telah diterima.',
+                    'message' => 'Pengajuan Surat Pengantar Atas nama ' . $submission->nama . ' telah diterima.',
                     'countryCode' => '62', // Ubah sesuai kode negara Anda
                 ),
                 CURLOPT_HTTPHEADER => array(

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-center align-items-center">
     <div class="container" style="text-transform: uppercase; font-size:15px; font-weight:500;">
         <a class="navbar-brand fw-bolder fs-4" href="/">
             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/4d556d519b490944245704be3d8858cb517bea1d25db73158b6a1f1b782cf518?apiKey=cfbeda57ea98489b824f8f843623dee9&"
@@ -15,7 +15,8 @@
                     <a class="nav-link {{ request()->is('dataDiri') ? 'active' : '' }} " href="/dataDiri">data diri</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('prasejahtera') ? 'active' : '' }} " href="/prasejahtera">pengajuan surat prasejahtera</a>
+                    <a class="nav-link {{ request()->is('prasejahtera') ? 'active' : '' }} "
+                        href="/prasejahtera">pengajuan surat prasejahtera</a>
                 </li>
             </ul>
 
@@ -42,7 +43,8 @@
                             </li>
                     </li>
                 @else
-                    <li class="nav-item" style="background-color: #becfce; color: #072a27; border-radius: 10px; padding: 1px;">
+                    <li class="nav-item"
+                        style="background-color: #becfce; color: #072a27; border-radius: 10px; padding: 1px;">
                         <a href="/login" class="nav-link {{ request()->is('login') ? 'active' : '' }}">
                             <i class="fas fa-sign-in-alt"></i> Log in
                         </a>

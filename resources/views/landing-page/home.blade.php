@@ -17,7 +17,7 @@
                         Contact Us
                     </button>
                 </div>
-                <div class="container-population justify-content-center align-content-center">
+                <div class="container-population justify-content-center align-content-center mt-5">
                     <div class="stats-wrapper">
                         <div class="total-residents">
                             <div class="total-residents-content">
@@ -272,14 +272,14 @@
                 rgba(169, 253, 205, 0.55) 38%,
                 rgba(171, 222, 129, 0.20) 72%,
                 rgba(254, 253, 248, 0.60) 100%),
-                linear-gradient(180deg,
+            linear-gradient(180deg,
                 rgba(255, 255, 255, 0) 60%, white 100%);
 
     }
 
     .main-wrapper {
         padding: 40px;
-        margin: 20px auto;
+        margin: auto;
         max-width: 1200px;
         font-family: Poppins, sans-serif;
     }
