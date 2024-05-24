@@ -20,21 +20,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Alamat</label>
+                    <label class="col-2 control-label col-form-label">Provinsi</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat') }}"
-                            required>
-                        @error('alamat')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Kecamatan</label>
-                    <div class="col-10">
-                        <input type="text" class="form-control" id="kecamatan" name="kecamatan"
-                            value="{{ old('kecamatan') }}" required>
-                        @error('kecamatan')
+                        <input type="text" class="form-control" id="provinsi" name="provinsi"
+                            value="{{ old('provinsi') }}" required>
+                        @error('provinsi')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -50,11 +40,21 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Provinsi</label>
+                    <label class="col-2 control-label col-form-label">Kecamatan</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="provinsi" name="provinsi"
-                            value="{{ old('provinsi') }}" required>
-                        @error('provinsi')
+                        <input type="text" class="form-control" id="kecamatan" name="kecamatan"
+                            value="{{ old('kecamatan') }}" required>
+                        @error('kecamatan')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Alamat</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="alamat" name="alamat"
+                            value="{{ old('alamat') }}" required>
+                        @error('alamat')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
