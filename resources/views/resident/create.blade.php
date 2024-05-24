@@ -27,6 +27,7 @@
                             {{-- @foreach ($family as $item)
                                 <option value="{{ $item->noKK }}">{{ $item->noKK }}</option>
                             @endforeach --}}
+
                         </select>
                         @error('noKK')
                             <small class="form-text text-danger">{{ $message }}</small>
