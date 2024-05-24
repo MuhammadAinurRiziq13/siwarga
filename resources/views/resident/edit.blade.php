@@ -30,8 +30,8 @@
                     <div class="form-group row">
                         <label class="col-2 control-label col-form-label">No KK</label>
                         <div class="col-10">
-                            <select class="form-control" id="noKK" name="noKK" required>
-                                <option value="">No KK </option>
+                            <select class="form-control select2" id="noKK" name="noKK" required>
+                                {{-- <option value="">No KK </option> --}}
                                 @foreach ($family as $item)
                                     <option value="{{ $item->noKK }}" @if ($item->noKK == $resident->noKK) selected @endif>
                                         {{ $item->noKK }}</option>
@@ -194,6 +194,28 @@
                 alamatAsalInput.disabled = true;
             }
         }
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: 'No KK',
+                ajax: {
+                    url: '/noKK',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.text
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
 
         document.getElementById('kepala_keluarga').addEventListener('change', function() {
             var familyMembersDiv = document.querySelector('.family-members');

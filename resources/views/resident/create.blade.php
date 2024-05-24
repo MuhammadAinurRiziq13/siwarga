@@ -22,11 +22,11 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">No KK</label>
                     <div class="col-10">
-                        <select class="form-control" id="noKK" name="noKK" required>
-                            <option value="">No KK </option>
-                            @foreach ($family as $item)
+                        <select class="form-control select2" id="noKK" name="noKK" required>
+                            {{-- <option value="">No KK </option> --}}
+                            {{-- @foreach ($family as $item)
                                 <option value="{{ $item->noKK }}">{{ $item->noKK }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                         @error('noKK')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -158,5 +158,27 @@
                 alamatAsalInput.disabled = true;
             }
         }
+
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: 'No KK',
+                ajax: {
+                    url: '/noKK',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.text
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
     </script>
 @endpush

@@ -37,7 +37,7 @@ class SubmissionLetterController extends Controller
                 return date('Y-m-d H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
-                return '<a href="' . url('/submission-letter/' . $submission->NIK) . '" class="btn btn-primary btn-sm">Detail</a>';
+                return '<a href="' . url('/submission-letter/' . $submission->NIK) . '" class="btn btn-info btn-sm">Detail</a>';
             })
             ->addColumn('status', function ($submission) {
                 if ($submission->status == 'proses' && Auth::user()->level == 'admin') {

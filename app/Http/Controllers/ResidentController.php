@@ -89,6 +89,21 @@ class ResidentController extends Controller
         ]);
     }
 
+    public function getFamilyData(Request $request)
+    {
+        $families = FamilyModel::all();
+
+        $data = [];
+        foreach ($families as $family) {
+            $data[] = [
+                'id' => $family->noKK,
+                'text' => $family->noKK
+            ];
+        }
+
+        return response()->json($data);
+    }
+
 
     /**
      * Store a newly created resource in storage.

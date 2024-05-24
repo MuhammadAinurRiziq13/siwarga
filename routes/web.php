@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/noKK', [ResidentController::class, 'getFamilyData']);
+
+
 Route::get('/', function () {
     return view('landing-page.home', [
         "title" => "Home"
@@ -83,6 +86,7 @@ Route::prefix('resident')->middleware('auth')->group(function () {
     });
     Route::get('/{id}', [ResidentController::class, 'show']);
 });
+
 
 Route::prefix('submission-changes')->middleware('auth')->group(function () {
     Route::get('/', [SubmissionChangesController::class, 'index']);
