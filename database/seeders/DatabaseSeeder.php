@@ -72,12 +72,13 @@ class DatabaseSeeder extends Seeder
                     'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                     'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                     'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
-                    'kepala_keluarga' => false, // Setiap warga tidak menjadi kepala keluarga secara default
+                    'status_keluarga' => $faker->randomElement(['istri', 'anak']),
+                    // 'kepala_keluarga' => false, // Setiap warga tidak menjadi kepala keluarga secara default
                 ];
 
                 // Jika kepala keluarga belum ditambahkan dan ini adalah warga pertama dalam keluarga, tandai sebagai kepala keluarga
                 if (!$kepalaKelurahanAdded && $j === 0) {
-                    $warga['kepala_keluarga'] = true;
+                    $warga['status_keluarga'] = 'kepala keluarga';
                     $kepalaKelurahanAdded = true;
                 }
 

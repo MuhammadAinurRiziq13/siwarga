@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('warga', function (Blueprint $table) {
             $table->string('NIK')->primary();
             $table->string('noKK', 20);
-            $table->string('nama', 30);
+            $table->string('nama', 40);
             $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
             $table->char('jenis_kelamin', 10);
             $table->string('agama', 10);
             $table->string('status_pernikahan', 15);
-            $table->boolean('kepala_keluarga')->default(false);
+            $table->string('status_keluarga', 20);
+            // $table->boolean('kepala_keluarga')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

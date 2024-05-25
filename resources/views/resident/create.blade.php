@@ -105,6 +105,19 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Status Pernikahan</label>
+                    <div class="col-10">
+                        <select class="form-control" id="status_keluarga" name="status_keluarga" required>
+                            <option value="kepala keluarga">Kepala Keluarga</option>
+                            <option value="istri">Istri</option>
+                            <option value="anak">Anak</option>
+                        </select>
+                        @error('status_keluarga')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-2 control-label col-form-label"></label>
                     <div class="col-10">
                         <div>
