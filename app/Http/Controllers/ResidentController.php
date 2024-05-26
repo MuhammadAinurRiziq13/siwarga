@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FamilyModel;
+use App\Models\GalleryModel;
 use App\Models\ResidentModel;
 use App\Models\TemporaryResident;
 use Illuminate\Http\Request;
@@ -91,16 +92,21 @@ class ResidentController extends Controller
 
     public function getFamilyData(Request $request)
     {
-        $families = FamilyModel::all();
+        // Ambil data dari database dengan memfilter berdasarkan noKK
+        $families = FamilyModel::where('noKK', 'LIKE', '%' . $request->input('q') . '%')->paginate(10);
 
         $data = [];
+        // Looping untuk menyiapkan data yang akan dikirimkan ke Select2
         foreach ($families as $family) {
+            // Konversi nilai noKK menjadi string jika perlu
+            $noKK = (string)$family->noKK;
             $data[] = [
-                'id' => $family->noKK,
-                'text' => $family->noKK
+                'id' => $noKK,
+                'text' => $noKK
             ];
         }
 
+        // Kirim data dalam format JSON
         return response()->json($data);
     }
 
@@ -120,11 +126,11 @@ class ResidentController extends Controller
             'agama' => 'required',
             'status_pernikahan' => 'required',
             'alamat_asal' => 'required_if:alamat_asal_checkbox,on', // Jika checkbox di-check, alamat_asal harus diisi
-            'kepala_keluarga' => [
+            'status_keluarga' => [
                 function ($attribute, $value, $fail) use ($request) {
                     // Mengecek apakah ada kepala keluarga dengan nomor KK yang sama
                     $count = ResidentModel::where('noKK', $request->noKK)
-                        ->where('kepala_keluarga', true)
+                        ->where('status_keluarga', 'kepala keluarga')
                         ->count();
 
                     // Jika ada kepala keluarga lain dengan nomor KK yang sama
@@ -146,7 +152,7 @@ class ResidentController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'agama' => $request->agama,
             'status_pernikahan' => $request->status_pernikahan,
-            'kepala_keluarga' => $request->has('kepala_keluarga') ? 1 : 0,
+            'status_keluarga' => $request->status_keluarga,
         ]);
 
         // Jika checkbox di-check, tambahkan data ke tabel warga sementara
@@ -236,14 +242,14 @@ class ResidentController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'agama' => $request->agama,
             'status_pernikahan' => $request->status_pernikahan,
-            'kepala_keluarga' => $request->has('kepala_keluarga') ? true : false
+            'status_keluarga' => $request->status_keluarga,
         ]);
 
         // Set kepala keluarga untuk anggota yang dipilih
         if ($request->has('family_member')) {
             $selectedMember = ResidentModel::where('NIK', $request->family_member)->first();
             if ($selectedMember) {
-                $selectedMember->update(['kepala_keluarga' => true]);
+                $selectedMember->update(['status_keluarga' => 'kepala keluarga']);
             }
         }
 

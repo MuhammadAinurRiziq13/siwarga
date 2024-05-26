@@ -12,8 +12,8 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">NIK</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="NIK" name="NIK" value="{{ old('NIK') }}"
-                            required>
+                        <input type="text" class="form-control coba" id="NIK" name="NIK"
+                            value="{{ old('NIK') }}" required>
                         @error('NIK')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -23,11 +23,6 @@
                     <label class="col-2 control-label col-form-label">No KK</label>
                     <div class="col-10">
                         <select class="form-control select2" id="noKK" name="noKK" required>
-                            {{-- <option value="">No KK </option> --}}
-                            {{-- @foreach ($family as $item)
-                                <option value="{{ $item->noKK }}">{{ $item->noKK }}</option>
-                            @endforeach --}}
-
                         </select>
                         @error('noKK')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -105,12 +100,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Status Pernikahan</label>
+                    <label class="col-2 control-label col-form-label">Status Keluarga</label>
                     <div class="col-10">
                         <select class="form-control" id="status_keluarga" name="status_keluarga" required>
+                            <option value="anak">Anak</option>
                             <option value="kepala keluarga">Kepala Keluarga</option>
                             <option value="istri">Istri</option>
-                            <option value="anak">Anak</option>
                         </select>
                         @error('status_keluarga')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -120,14 +115,14 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label"></label>
                     <div class="col-10">
-                        <div>
+                        {{-- <div>
                             <input type="checkbox" id="kepala_keluarga" name="kepala_keluarga">
                             <label for="kepala_keluarga">Kepala Keluarga</label>
                             @error('kepala_keluarga')
                                 <small class="form-text text-danger">{{ $message }}</small>
                                 <br>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div>
                             <input type="checkbox" id="alamat_asal_checkbox" name="alamat_asal_checkbox"
                                 onclick="toggleAlamatAsal()">
@@ -178,11 +173,9 @@
                 placeholder: 'No KK',
                 ajax: {
                     url: '/noKK',
-                    dataType: 'json',
-                    delay: 250,
                     processResults: function(data) {
                         return {
-                            results: $.map(data, function(item) {
+                            results: data.map(function(item) {
                                 return {
                                     id: item.id,
                                     text: item.text

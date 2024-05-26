@@ -34,9 +34,12 @@ class GalleryController extends Controller
                 $btn = '<a href="' . url('/gallery/' . $gallery->id_galeri) . '" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a> ';
                 if (Auth::user()->level == 'admin') {
                     $btn .= '<a href="' . url('/gallery/' . $gallery->id_galeri . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
+                    // $btn .= '<form class="d-inline-block" method="POST" action="' . url('/gallery/' . $gallery->id_galeri) . '">'
+                    //     . csrf_field() . method_field('DELETE') .
+                    //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete(event);"><i class="fas fa-trash-alt"></i></button></form>';
                     $btn .= '<form class="d-inline-block" method="POST" action="' . url('/gallery/' . $gallery->id_galeri) . '">'
                         . csrf_field() . method_field('DELETE') .
-                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete(event);"><i class="fas fa-trash-alt"></i></button></form>';
+                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
                 }
                 return $btn;
             })

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('keluarga', function (Blueprint $table) {
             $table->string('noKK')->primary();
             $table->string('alamat', 100);
+            $table->string('kelurahan_desa', 30);
             $table->string('kecamatan', 30);
             $table->string('kabupaten_kota', 30);
             $table->string('provinsi', 30);

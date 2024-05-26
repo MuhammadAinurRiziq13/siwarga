@@ -61,8 +61,7 @@ class FamilyController extends Controller
 
     public function show(string $id)
     {
-        // $family = FamilyModel::where('noKK', $id)->first();
-        $family = FamilyModel::select('keluarga.*', 'warga.NIK', 'warga.nama', 'warga.tempat_lahir', 'warga.tanggal_lahir', 'warga.jenis_kelamin',)
+        $family = FamilyModel::select('keluarga.*', 'warga.NIK', 'warga.nama', 'warga.tempat_lahir', 'warga.tanggal_lahir', 'warga.jenis_kelamin', 'warga.status_keluarga')
             ->selectSub(function ($query) {
                 $query->from('warga')
                     ->selectRaw('COUNT(warga.nama)')
@@ -70,8 +69,15 @@ class FamilyController extends Controller
             }, 'jumlah_anggota')
             ->leftJoin('warga', 'keluarga.noKK', '=', 'warga.noKK')
             ->where('keluarga.noKK', $id)
+            ->orderByRaw(
+                "CASE 
+                    WHEN warga.status_keluarga = 'kepala keluarga' THEN 1 
+                    WHEN warga.status_keluarga = 'istri' THEN 2 
+                    WHEN warga.status_keluarga = 'anak' THEN 3 
+                    ELSE 4 
+                END"
+            )
             ->get();
-
 
         $breadcrumb = (object)[
             'title' => 'Data Keluarga',
@@ -109,6 +115,7 @@ class FamilyController extends Controller
         $request->validate([
             'noKK' => 'required|string|min:16|unique:keluarga,noKK',
             'alamat' => 'required|string',
+            'kelurahan_desa' => 'required|string',
             'kecamatan' => 'required|string',
             'kabupaten_kota' => 'required|string',
             'provinsi' => 'required|string',
@@ -119,6 +126,7 @@ class FamilyController extends Controller
         FamilyModel::create([
             'noKK' => $request->noKK,
             'alamat' => $request->alamat,
+            'kelurahan_desa' => $request->kelurahan_desa,
             'kecamatan' => $request->kecamatan,
             'kabupaten_kota' => $request->kabupaten_kota,
             'provinsi' => $request->provinsi,
@@ -151,6 +159,7 @@ class FamilyController extends Controller
             'alamat' => 'required|string',
             'kecamatan' => 'required|string',
             'kabupaten_kota' => 'required|string',
+            'kelurahan_desa' => 'required|string',
             'provinsi' => 'required|string',
         ]);
 
@@ -160,6 +169,7 @@ class FamilyController extends Controller
             'alamat' => $request->alamat,
             'kecamatan' => $request->kecamatan,
             'kabupaten_kota' => $request->kabupaten_kota,
+            'kelurahan_desa' => $request->kelurahan_desa,
             'provinsi' => $request->provinsi,
         ]);
 

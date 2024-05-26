@@ -28,7 +28,14 @@ class SubmissionLetterController extends Controller
     {
         $Submissions = SubmissionLetterModel::select('pengajuansuratpengantar.NIK', 'warga.nama', 'pengajuansuratpengantar.created_at', 'pengajuansuratpengantar.status')
             ->join('warga', 'pengajuansuratpengantar.NIK', '=', 'warga.NIK')
-            ->orderBy('pengajuansuratpengantar.status')
+            ->orderByRaw(
+                "CASE 
+                WHEN pengajuansuratpengantar.status = 'proses' THEN 1 
+                WHEN pengajuansuratpengantar.status = 'selesai' THEN 2 
+                WHEN pengajuansuratpengantar.status = 'ditolak' THEN 3 
+                ELSE 4 
+            END"
+            )
             ->get();
 
         return DataTables::of($Submissions)
@@ -46,6 +53,8 @@ class SubmissionLetterController extends Controller
                     return '<p class="text-primary">Proses</p>';
                 } else if ($submission->status == 'selesai') {
                     return '<p class="text-success">Selesai</p>';
+                } else if ($submission->status == 'ditolak') {
+                    return '<p class="text-danger">Ditolak</p>';
                 }
             })
             ->rawColumns(['aksi', 'status'])
@@ -83,11 +92,6 @@ class SubmissionLetterController extends Controller
             'status' => 'required|string|in:selesai',
         ]);
 
-        // Update data submission
-        // $submission = SubmissionLetterModel::where('NIK', $NIK)->first();
-        $submission = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $NIK)
-            ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
-            ->first();
         SubmissionLetterModel::where('NIK', $NIK)->update([
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
@@ -95,6 +99,17 @@ class SubmissionLetterController extends Controller
             'no_hp' => $request->no_hp,
             'status' => $request->status,
         ]);
+
+        $submission = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $NIK)
+            ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
+            ->first();
+
+        $message = '';
+        if ($submission->status == 'selesai') {
+            $message = 'Pengajuan edit data atas nama ' . $submission->nama . ' telah diterima.';
+        } else {
+            $message = 'Pengajuan edit data atas nama ' . $submission->nama . ' ditolak.';
+        }
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
         if ($submission) {
@@ -113,7 +128,7 @@ class SubmissionLetterController extends Controller
                 CURLOPT_POSTFIELDS => array(
                     'target' => '+62 851-5653-0441',
                     // 'target' => $submission->no_hp,
-                    'message' => 'Pengajuan Surat Pengantar Atas nama ' . $submission->nama . ' telah diterima.',
+                    'message' => $message,
                     'countryCode' => '62', // Ubah sesuai kode negara Anda
                 ),
                 CURLOPT_HTTPHEADER => array(

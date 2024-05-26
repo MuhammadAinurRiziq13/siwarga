@@ -87,21 +87,6 @@ Route::prefix('resident')->middleware('auth')->group(function () {
     Route::get('/{id}', [ResidentController::class, 'show']);
 });
 
-
-Route::prefix('submission-changes')->middleware('auth')->group(function () {
-    Route::get('/', [SubmissionChangesController::class, 'index']);
-    Route::post('/list', [SubmissionChangesController::class, 'list']);
-
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/create', [SubmissionChangesController::class, 'create']);
-        Route::post('/', [SubmissionChangesController::class, 'store']);
-        Route::get('/{id}/edit', [SubmissionChangesController::class, 'edit']);
-        Route::put('/{id}', [SubmissionChangesController::class, 'update']);
-        Route::delete('/{id}', [SubmissionChangesController::class, 'destroy']);
-    });
-    Route::get('/{id}', [SubmissionChangesController::class, 'show']);
-});
-
 Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/', [PoorFamilyController::class, 'index']);
     Route::post('/list', [PoorFamilyController::class, 'list']);
@@ -114,6 +99,30 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
         Route::delete('/{id}', [PoorFamilyController::class, 'destroy']);
     });
     Route::get('/{id}', [PoorFamilyController::class, 'show']);
+});
+
+Route::prefix('submission-changes')->middleware('auth')->group(function () {
+    Route::get('/', [SubmissionChangesController::class, 'index']);
+    Route::post('/list', [SubmissionChangesController::class, 'list']);
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/{id}/proses', [SubmissionChangesController::class, 'proses']);
+        Route::put('/{id}', [SubmissionChangesController::class, 'update']);
+        Route::delete('/{id}', [SubmissionChangesController::class, 'destroy']);
+    });
+    Route::get('/{id}', [SubmissionChangesController::class, 'show']);
+});
+
+Route::prefix('submission-add')->middleware('auth')->group(function () {
+    Route::get('/', [SubmissionAddController::class, 'index']);
+    Route::post('/list', [SubmissionAddController::class, 'list']);
+
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/{id}/proses', [SubmissionAddController::class, 'proses']);
+        Route::put('/{id}', [SubmissionAddController::class, 'update']);
+        Route::delete('/{id}', [SubmissionAddController::class, 'destroy']);
+    });
+    Route::get('/{id}', [SubmissionAddController::class, 'show']);
 });
 
 Route::prefix('submission-letter')->middleware('auth')->group(function () {

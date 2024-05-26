@@ -6,7 +6,7 @@
             <h6 class="card-title mb-0">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
-            @empty($resident)
+            @empty($changes)
                 <div class="alert alert-danger alert-dismissible">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
                     Data yang Anda cari tidak ditemukan.
@@ -15,49 +15,39 @@
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
                         <th>NIK</th>
-                        <td>{{ $resident->NIK }}</td>
-                    </tr>
-                    <tr>
-                        <th>No KK</th>
-                        <td>{{ $resident->noKK }}</td>
+                        <td>{{ $changes->NIK_pengajuan }}</td>
                     </tr>
                     <tr>
                         <th>Nama</th>
-                        <td>{{ $resident->nama }}</td>
+                        <td>{{ $changes->nama }}</td>
                     </tr>
                     <tr>
                         <th>Tempat Lahir</th>
-                        <td>{{ $resident->tempat_lahir }}</td>
+                        <td>{{ $changes->tempat_lahir }}</td>
                     </tr>
                     <tr>
                         <th>Tanggal Lahir</th>
-                        <td>{{ $resident->tanggal_lahir }}</td>
+                        <td>{{ $changes->tanggal_lahir }}</td>
                     </tr>
                     <tr>
                         <th>Jenis Kelamin</th>
-                        <td>{{ $resident->jenis_kelamin }}</td>
+                        <td>{{ $changes->jenis_kelamin }}</td>
                     </tr>
                     <tr>
                         <th>Agama</th>
-                        <td>{{ $resident->agama }}</td>
+                        <td>{{ $changes->agama }}</td>
                     </tr>
                     <tr>
                         <th>Status Pernikahan</th>
-                        <td>{{ $resident->status_pernikahan }}</td>
+                        <td>{{ $changes->status_pernikahan }}</td>
                     </tr>
                     <tr>
-                        <th>Status Keluarga</th>
-                        <td>{{ $resident->status_keluarga }}</td>
+                        <th>Keterangan</th>
+                        <td>{{ $changes->keterangan }}</td>
                     </tr>
-                    @if (!is_null($resident->alamat_asal))
-                        <tr>
-                            <th>Alamat Asal</th>
-                            <td>{{ $resident->alamat_asal }}</td>
-                        </tr>
-                    @endif
                 </table>
             @endempty
-            <a href="{{ url('resident') }}" class="btn btn-sm btn-secondary mt-2 float-right">Kembali</a>
+            <a href="{{ url('submission-changes') }}" class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
         </div>
     </div>
 @endsection

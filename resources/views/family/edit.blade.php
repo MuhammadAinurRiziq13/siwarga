@@ -28,21 +28,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 control-label col-form-label">Alamat</label>
+                        <label class="col-2 control-label col-form-label">Provinsi</label>
                         <div class="col-10">
-                            <input type="text" class="form-control" id="alamat" name="alamat"
-                                value="{{ old('alamat', $family->alamat) }}" required>
-                            @error('alamat')
-                                <small class="form-text text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-2 control-label col-form-label">Kecamatan</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan"
-                                value="{{ old('kecamatan', $family->kecamatan) }}" required>
-                            @error('kecamatan')
+                            <input type="text" class="form-control" id="provinsi" name="provinsi"
+                                value="{{ old('provinsi', $family->provinsi) }}" required>
+                            @error('provinsi')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -58,11 +48,31 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 control-label col-form-label">Provinsi</label>
+                        <label class="col-2 control-label col-form-label">Kecamatan</label>
                         <div class="col-10">
-                            <input type="text" class="form-control" id="provinsi" name="provinsi"
-                                value="{{ old('provinsi', $family->provinsi) }}" required>
-                            @error('provinsi')
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan"
+                                value="{{ old('kecamatan', $family->kecamatan) }}" required>
+                            @error('kecamatan')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 control-label col-form-label">Kelurahan / Desa</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="kelurahan_desa" name="kelurahan_desa"
+                                value="{{ old('kelurahan_desa', $family->kelurahan_desa) }}" required>
+                            @error('kelurahan_desa')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 control-label col-form-label">Alamat</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="alamat" name="alamat"
+                                value="{{ old('alamat', $family->alamat) }}" required>
+                            @error('alamat')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>

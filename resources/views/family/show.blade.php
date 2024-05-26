@@ -51,12 +51,13 @@
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
+                        <th>Status Keluarga</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($family as $family_member)
                         @if ($family_member->jumlah_anggota == 0)
-                            <td colspan="5" class="text-center">Tidak ada anggota keluarga</td>
+                            <td colspan="6" class="text-center">Tidak ada anggota keluarga</td>
                         @else
                             <tr>
                                 <td>{{ $family_member->NIK }}</td>
@@ -64,6 +65,7 @@
                                 <td>{{ $family_member->tempat_lahir }}</td>
                                 <td>{{ $family_member->tanggal_lahir }}</td>
                                 <td>{{ $family_member->jenis_kelamin }}</td>
+                                <td>{{ $family_member->status_keluarga }}</td>
                             </tr>
                         @endif
                     @endforeach

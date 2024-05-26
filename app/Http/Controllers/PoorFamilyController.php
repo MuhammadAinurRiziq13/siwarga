@@ -29,7 +29,7 @@ class PoorFamilyController extends Controller
         $Family = PoorFamilyModel::select('keluargakurangmampu.noKK', 'warga.nama')
             ->join('warga', function ($join) {
                 $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
-                    ->where('warga.kepala_keluarga', true);
+                    ->where('warga.status_keluarga', 'kepala keluarga');
             })
             ->selectSub(function ($query) {
                 $query->from('warga')

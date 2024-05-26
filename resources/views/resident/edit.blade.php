@@ -31,7 +31,6 @@
                         <label class="col-2 control-label col-form-label">No KK</label>
                         <div class="col-10">
                             <select class="form-control select2" id="noKK" name="noKK" required>
-                                {{-- <option value="">No KK </option> --}}
                                 @foreach ($family as $item)
                                     <option value="{{ $item->noKK }}" @if ($item->noKK == $resident->noKK) selected @endif>
                                         {{ $item->noKK }}</option>
@@ -128,21 +127,49 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-2 control-label col-form-label">Status Keluarga</label>
+                        <div class="col-10">
+                            @if ($resident->status_keluarga == 'kepala keluarga')
+                                <select class="form-control" id="status_keluarga" name="status_keluarga" required>
+                                    <option value="kepala keluarga">Kepala Keluarga</option>
+                                    <option value="anak">Anak</option>
+                                    <option value="istri">Istri</option>
+                                </select>
+                            @else
+                                <select class="form-control" id="status_keluarga" name="status_keluarga" required>
+                                    <option value="{{ $resident->status_keluarga }}"
+                                        @if ($resident->status_keluarga == 'anak') selected @endif> Anak </option>
+                                    <option value="{{ $resident->status_keluarga }}"
+                                        @if ($resident->status_keluarga == 'istri') selected @endif> Istri </option>
+                                    <option value="{{ $resident->status_keluarga }}"
+                                        @if ($resident->status_keluarga == 'kepala keluarga') selected @endif> Kepala Keluarga </option>
+                                </select>
+                            @endif
+                            @error('status_keluarga')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-2 control-label col-form-label"></label>
                         <div class="col-10">
-                            @if ($resident->kepala_keluarga)
-                                <div>
+                            @if ($resident->status_keluarga == 'kepala keluarga')
+                                <input type="hidden" id="kepala_keluarga" name="kepala_keluarga"
+                                    value="{{ $resident->status_keluarga }}">
+                                {{-- <div>
                                     <input type="checkbox" id="kepala_keluarga" name="kepala_keluarga" checked>
                                     <label for="kepala_keluarga">Kepala Keluarga</label>
                                     @error('kepala_keluarga')
                                         <small class="form-text text-danger">{{ $message }}</small>
                                         <br>
                                     @enderror
-                                </div>
-                                <div class="family-members" style="display: none;">
+                                </div> --}}
+                                <div class="family-members border-bottom mb-2" style="display: none;">
+                                    <p>Pilih kepala keluarga pengganti:</p>
                                     @foreach ($anggota as $member)
                                         @if ($member->noKK == $resident->noKK && $member->NIK != $resident->NIK)
-                                            <input type="radio" name="family_member" value="{{ $member->NIK }}">
+                                            <input type="radio" name="family_member" id=""
+                                                value="{{ $member->NIK }}">
                                             <label for="">{{ $member->nama }}</label><br>
                                         @endif
                                     @endforeach
@@ -217,17 +244,50 @@
             });
         });
 
-        document.getElementById('kepala_keluarga').addEventListener('change', function() {
-            var familyMembersDiv = document.querySelector('.family-members');
-            var radioInputs = document.querySelectorAll('.family-members input[type="radio"]');
-            if (this.checked) {
-                familyMembersDiv.style.display = 'none';
-                radioInputs.forEach(function(radio) {
-                    radio.checked = false;
-                });
-            } else {
-                familyMembersDiv.style.display = 'block';
+        document.addEventListener("DOMContentLoaded", function() {
+            var kepalaKeluargaInput = document.getElementById("kepala_keluarga");
+            var statusKeluargaSelect = document.getElementById("status_keluarga");
+            var familyMembersDiv = document.querySelector(".family-members");
+
+            // Function to check if kepala_keluarga value is "kepala keluarga"
+            function isKepalaKeluarga() {
+                return kepalaKeluargaInput.value === "kepala keluarga";
             }
+
+            // Function to check if status_keluarga select value is "anak" or "istri"
+            function isAnakOrIstriSelected() {
+                var selectedValue = statusKeluargaSelect.options[statusKeluargaSelect.selectedIndex].value;
+                return selectedValue === "anak" || selectedValue === "istri";
+            }
+
+            // Function to toggle display of family members based on conditions
+            function toggleFamilyMembersDisplay() {
+                if (isKepalaKeluarga() && isAnakOrIstriSelected()) {
+                    familyMembersDiv.style.display = "block";
+                } else {
+                    familyMembersDiv.style.display = "none";
+                }
+            }
+
+            // Initial check on page load
+            toggleFamilyMembersDisplay();
+
+            // Listen for changes in kepala_keluarga and status_keluarga inputs
+            kepalaKeluargaInput.addEventListener("change", toggleFamilyMembersDisplay);
+            statusKeluargaSelect.addEventListener("change", toggleFamilyMembersDisplay);
         });
+
+        // document.getElementById('kepala_keluarga').addEventListener('change', function() {
+        //     var familyMembersDiv = document.querySelector('.family-members');
+        //     var radioInputs = document.querySelectorAll('.family-members input[type="radio"]');
+        //     if (this.checked) {
+        //         familyMembersDiv.style.display = 'none';
+        //         radioInputs.forEach(function(radio) {
+        //             radio.checked = false;
+        //         });
+        //     } else {
+        //         familyMembersDiv.style.display = 'block';
+        //     }
+        // });
     </script>
 @endpush
