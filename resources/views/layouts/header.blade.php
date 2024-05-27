@@ -45,7 +45,7 @@
         </li> --}}
 
         <!-- Nav Item - Alerts -->
-        @if (Auth::user()->level == 'admin')
+        @if (Auth::user()->level == 'admin' || Auth::user()->level == 'warga')
             <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

@@ -8,6 +8,7 @@ use App\Http\Controllers\MigrantController;
 use App\Http\Controllers\PoorFamilyController;
 use App\Http\Controllers\PoorResidentController;
 use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\ResidentEditController;
 use App\Http\Controllers\SubmissionAddController;
 use App\Http\Controllers\SubmissionChangesController;
 use App\Http\Controllers\SubmissionLetterController;
@@ -149,4 +150,16 @@ Route::prefix('gallery')->middleware('auth')->group(function () {
         Route::delete('/{id}', [GalleryController::class, 'destroy']);
     });
     Route::get('/{id}', [GalleryController::class, 'show']);
+});
+
+Route::prefix('resident-edit')->middleware('auth')->group(function () {
+    // Route::get('/', [GalleryController::class, 'index']);
+    Route::get('/{id}', [ResidentEditController::class, 'index']);
+    Route::post('/list', [ResidentEditController::class, 'list']);
+    Route::get('/create', [ResidentEditController::class, 'create']);
+    Route::post('/', [ResidentEditController::class, 'store']);
+    Route::get('/{id}/edit', [ResidentEditController::class, 'edit']);
+    Route::put('/{id}', [ResidentEditController::class, 'update']);
+    Route::delete('/{id}', [ResidentEditController::class, 'destroy']);
+    // Route::get('/{id}', [GalleryController::class, 'show']);
 });

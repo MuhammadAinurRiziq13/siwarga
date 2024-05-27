@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('foto');
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('level', ['admin', 'superadmin']);
+            $table->enum('level', ['admin', 'superadmin', 'warga']);
             $table->string('nama');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

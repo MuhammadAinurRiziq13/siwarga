@@ -196,6 +196,18 @@ class DatabaseSeeder extends Seeder
 
         DB::table('galeri')->insert($galeriData);
 
+        $userAccount = [];
+        foreach ($wargaData as $warga) {
+            $userAccount[] = [
+                'foto' => 'warga.jpg', // nama foto admin
+                'level' => 'warga',
+                'nama' => $warga['nama'],
+                'username' => $warga['NIK'],
+                'password' => Hash::make($warga['NIK']),
+            ];
+        }
+        DB::table('users')->insert($userAccount);
+
         DB::table('users')->insert([
             'foto' => 'admin.jpg', // nama foto admin
             'username' => 'admin',

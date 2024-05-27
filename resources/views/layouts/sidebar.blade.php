@@ -21,51 +21,78 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Data Penduduk
-    </div>
+    @if (Auth::user()->level == 'admin' || Auth::user()->level == 'superadmin')
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Data Penduduk
+        </div>
 
-    <li class="nav-item {{ request()->is('family*') ? 'active' : '' }} ">
-        <a href="{{ url('/family') }}" class="nav-link">
-            <i class="fas fa-fw fa-user-alt"></i>
-            <span>Keluarga</span></a>
-    </li>
-    <li class="nav-item {{ request()->is('resident*') || request()->is('submission-changes*') ? 'active' : '' }}">
-        <a href="{{ url('/resident') }}" class="nav-link">
-            <i class="fas fa-fw fa-user-clock"></i>
-            <span>Data Warga</span>
-        </a>
-    </li>
-    <li class="nav-item {{ request()->is('poor-family*') || request()->is('submission-add*') ? 'active' : '' }}">
-        <a href="{{ url('/poor-family') }}" class="nav-link">
-            <i class="fas fa-fw fa-user-injured"></i>
-            <span>Keluarga Pra-Sejahtera</span></a>
-    </li>
+        <li class="nav-item {{ request()->is('family*') ? 'active' : '' }} ">
+            <a href="{{ url('/family') }}" class="nav-link">
+                <i class="fas fa-fw fa-user-alt"></i>
+                <span>Keluarga</span></a>
+        </li>
+        <li class="nav-item {{ request()->is('resident*') || request()->is('submission-changes*') ? 'active' : '' }}">
+            <a href="{{ url('/resident') }}" class="nav-link">
+                <i class="fas fa-fw fa-user-clock"></i>
+                <span>Data Warga</span>
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('poor-family*') || request()->is('submission-add*') ? 'active' : '' }}">
+            <a href="{{ url('/poor-family') }}" class="nav-link">
+                <i class="fas fa-fw fa-user-injured"></i>
+                <span>Keluarga Pra-Sejahtera</span></a>
+        </li>
 
-    <hr class="sidebar-divider">
+        <hr class="sidebar-divider">
 
-    <div class="sidebar-heading">
-        Landing Page
-    </div>
+        <div class="sidebar-heading">
+            Landing Page
+        </div>
 
-    <li class="nav-item {{ request()->is('gallery*') ? 'active' : '' }}">
-        <a href="{{ url('/gallery') }}" class="nav-link">
-            <i class="fas fa-fw fa-images"></i>
-            <span>Gallery</span></a>
-    </li>
+        <li class="nav-item {{ request()->is('gallery*') ? 'active' : '' }}">
+            <a href="{{ url('/gallery') }}" class="nav-link">
+                <i class="fas fa-fw fa-images"></i>
+                <span>Gallery</span></a>
+        </li>
 
-    <hr class="sidebar-divider">
+        <hr class="sidebar-divider">
 
-    <div class="sidebar-heading">
-        Pengajuan
-    </div>
+        <div class="sidebar-heading">
+            Pengajuan
+        </div>
 
-    <li class="nav-item {{ request()->is('submission-letter*') ? 'active' : '' }}">
-        <a href="{{ url('/submission-letter') }}" class="nav-link">
-            <i class="fas fa-fw fa-file-pdf"></i>
-            <span>Surat Pengantar</span></a>
-    </li>
+        <li class="nav-item {{ request()->is('submission-letter*') ? 'active' : '' }}">
+            <a href="{{ url('/submission-letter') }}" class="nav-link">
+                <i class="fas fa-fw fa-file-pdf"></i>
+                <span>Surat Pengantar</span></a>
+        </li>
+    @else
+        <div class="sidebar-heading">
+            Pengajuan
+        </div>
+
+        <li class="nav-item {{ request()->is('resident-edit*') || request()->is('resident-edit*') ? 'active' : '' }}">
+            <a href="{{ url('/resident-edit/' . Auth::user()->username) }}" class="nav-link">
+                <i class="fas fa-fw fa-user-clock"></i>
+                <span>Edit Data Warga</span>
+            </a>
+        </li>
+
+        <li class="nav-item {{ request()->is('') || request()->is('submission-changes*') ? 'active' : '' }}">
+            <a href="{{ url('/resident') }}" class="nav-link">
+                <i class="fas fa-fw fa-user-injured"></i>
+                <span>Keluarga Pra-Sejahtera</span>
+            </a>
+        </li>
+
+        <li class="nav-item {{ request()->is('') || request()->is('submission-changes*') ? 'active' : '' }}">
+            <a href="{{ url('/resident') }}" class="nav-link">
+                <i class="fas fa-fw fa-file-pdf"></i>
+                <span>Surat Pengantar</span>
+            </a>
+        </li>
+    @endif
 
     <hr class="sidebar-divider">
 
