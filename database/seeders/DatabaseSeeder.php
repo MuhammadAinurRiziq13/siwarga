@@ -198,18 +198,18 @@ class DatabaseSeeder extends Seeder
 
         $userAccount = [];
         foreach ($wargaData as $warga) {
-            $userAccount[] = [
-                'foto' => 'warga.jpg', // nama foto admin
-                'level' => 'warga',
-                'nama' => $warga['nama'],
-                'username' => $warga['NIK'],
-                'password' => Hash::make($warga['NIK']),
-            ];
+            if ($warga['status_keluarga'] == 'kepala keluarga') {
+                $userAccount[] = [
+                    'level' => 'warga',
+                    'nama' => $warga['nama'],
+                    'username' => $warga['NIK'],
+                    'password' => Hash::make($warga['NIK']),
+                ];
+            }
         }
         DB::table('users')->insert($userAccount);
 
         DB::table('users')->insert([
-            'foto' => 'admin.jpg', // nama foto admin
             'username' => 'admin',
             'level' => 'admin',
             'nama' => 'Admin',
@@ -218,7 +218,6 @@ class DatabaseSeeder extends Seeder
 
         // Seeder for superadmin user
         DB::table('users')->insert([
-            'foto' => 'superadmin.jpg', // nama foto superadmin
             'username' => 'superadmin',
             'level' => 'superadmin',
             'nama' => 'Superadmin',

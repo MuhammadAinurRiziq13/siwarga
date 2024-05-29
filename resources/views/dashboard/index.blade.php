@@ -94,8 +94,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     JUMLAH Keluarga Pra-Sejahtera</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPoorFamily }}
-                                    ({{ $presentacePoorFamily }}%)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPoorFamily }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user-injured fa-2x text-gray-300"></i>
@@ -193,8 +192,44 @@
         <div class="row">
 
             <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-8">
-
+            <div class="col-xl-12 col-lg-12">
+                <div class="card card-outline card-primary shadow">
+                    <div class="card-header bg-dark-blue">
+                        <h6 class="card-title mb-0 text-white">Data Keluarga</h6>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped table-hover table-sm">
+                            <tr>
+                                <th>No KK</th>
+                                <td id="noKK"></td>
+                            </tr>
+                            <tr>
+                                <th>Kepala Keluarga</th>
+                                <td id="nama"></td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td id="alamat"></td>
+                            </tr>
+                            <tr>
+                                <th>Kelurahan Desa</th>
+                                <td id="kelurahan_desa"></td>
+                            </tr>
+                            <tr>
+                                <th>Kecamatan</th>
+                                <td id="kecamatan"></td>
+                            </tr>
+                            <tr>
+                                <th>Kabupaten Kota</th>
+                                <td id="kabupaten_kota"></td>
+                            </tr>
+                            <tr>
+                                <th>Provinsi</th>
+                                <td id="provinsi"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- Pie Chart -->
@@ -235,4 +270,30 @@
     {{ $chart->script() }}
     {{ $chart1->script() }}
     {{ $chart2->script() }}
+
+    <script>
+        var id = '{{ Auth::user()->username }}';
+        console.log(id);
+
+        $(document).ready(function() {
+            $.ajax({
+                url: '/keluarga/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Mengisi tabel dengan data keluarga yang diterima dari server
+                    $('#noKK').text(response.noKK);
+                    $('#nama').text(response.nama);
+                    $('#alamat').text(response.alamat);
+                    $('#kecamatan').text(response.kecamatan);
+                    $('#kabupaten_kota').text(response.kabupaten_kota);
+                    $('#kelurahan_desa').text(response.kelurahan_desa);
+                    $('#provinsi').text(response.provinsi);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
 @endpush

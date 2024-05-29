@@ -1,14 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card shadow">
-        <div class="card-header bg-transparent">
-            <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1"
-                    href="{{ url('/resident-edit/' . Auth::user()->username . '/edit') }}"><i
-                        class="fas fa-pencil-alt mr-1"></i> Edit
-                    Data</a>
-            </div>
+    <div class="card card-outline card-primary shadow">
+        <div class="card-header">
+            <h6 class="card-title mb-0">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @empty($resident)
@@ -62,6 +57,8 @@
                     @endif
                 </table>
             @endempty
+            <a href="{{ url('resident-edit/' . Auth::user()->username) }}"
+                class="btn btn-sm btn-secondary mt-2 float-right">Kembali</a>
         </div>
     </div>
 @endsection

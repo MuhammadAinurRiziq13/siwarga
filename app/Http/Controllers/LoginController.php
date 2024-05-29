@@ -23,6 +23,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credential)) {
             $request->session()->regenerate();
+            if (Auth::user()->level == 'warga') {
+                return redirect()->intended('/dashboard')->with(['LoginBerhasil' => 'Login Successful!']);
+            }
             return redirect()->intended('/dashboard')->with('LoginBerhasil', 'Login Successful!');
         }
 

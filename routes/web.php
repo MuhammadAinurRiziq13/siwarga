@@ -7,11 +7,14 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MigrantController;
 use App\Http\Controllers\PoorFamilyController;
 use App\Http\Controllers\PoorResidentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\ResidentEditController;
 use App\Http\Controllers\SubmissionAddController;
 use App\Http\Controllers\SubmissionChangesController;
 use App\Http\Controllers\SubmissionLetterController;
+use App\Http\Controllers\SubmissionPengantarController;
+use App\Http\Controllers\SubmissionPrasejahteraController;
 use App\Models\PoorFamilyModel;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/noKK', [ResidentController::class, 'getFamilyData']);
-
+Route::get('/keluarga/{id}', [DashboardController::class, 'getFamilyData']);
 
 Route::get('/', function () {
     return view('landing-page.home', [
@@ -45,19 +48,14 @@ Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
 // });
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('role:admin');
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
+// Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
+//     Route::get('/', [DashboardController::class, 'index']);
+// });
+Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
 });
-
-// Route::group(['prefix' => 'family', 'middleware' => ['auth']], function () {
-//     Route::get('/', [FamilyController::class, 'index']);
-//     Route::post('/list', [FamilyController::class, 'list']);
-//     Route::get('/{id}', [FamilyController::class, 'show']);
-//     Route::get('/create', [FamilyController::class, 'create'])->middleware('role:admin');
-//     Route::post('/', [FamilyController::class, 'store'])->middleware('role:admin');
-//     Route::get('/{id}/edit', [FamilyController::class, 'edit'])->middleware('role:admin');
-//     Route::put('/{id}', [FamilyController::class, 'update'])->middleware('role:admin');
-//     Route::delete('/{id}', [FamilyController::class, 'destroy'])->middleware('role:admin');
+// Route::prefix('dashboard')->middleware('auth')->group(function () {
+//     Route::get('/{id}', [DashboardController::class, 'index2']);
 // });
 
 Route::prefix('family')->middleware('auth')->group(function () {
@@ -159,7 +157,35 @@ Route::prefix('resident-edit')->middleware('auth')->group(function () {
     Route::get('/create', [ResidentEditController::class, 'create']);
     Route::post('/', [ResidentEditController::class, 'store']);
     Route::get('/{id}/edit', [ResidentEditController::class, 'edit']);
+    Route::get('/{id}/show', [ResidentEditController::class, 'show']);
     Route::put('/{id}', [ResidentEditController::class, 'update']);
     Route::delete('/{id}', [ResidentEditController::class, 'destroy']);
     // Route::get('/{id}', [GalleryController::class, 'show']);
+});
+
+Route::prefix('submission-prasejahtera')->middleware('auth')->group(function () {
+    Route::get('/{id}', [SubmissionPrasejahteraController::class, 'index']);
+    Route::post('/list', [SubmissionPrasejahteraController::class, 'list']);
+    Route::get('/create', [SubmissionPrasejahteraController::class, 'create']);
+    Route::post('/', [SubmissionPrasejahteraController::class, 'store']);
+    Route::get('/{id}/edit', [SubmissionPrasejahteraController::class, 'edit']);
+    Route::put('/{id}', [SubmissionPrasejahteraController::class, 'update']);
+    Route::delete('/{id}', [SubmissionPrasejahteraController::class, 'destroy']);
+    // Route::get('/{id}', [GalleryController::class, 'show']);
+});
+
+Route::prefix('submission-pengantar')->middleware('auth')->group(function () {
+    Route::get('/{id}', [SubmissionPengantarController::class, 'index']);
+    Route::post('/list', [SubmissionPengantarController::class, 'list']);
+    Route::get('/create', [SubmissionPengantarController::class, 'create']);
+    Route::post('/', [SubmissionPengantarController::class, 'store']);
+    Route::get('/{id}/edit', [SubmissionPengantarController::class, 'edit']);
+    Route::put('/{id}', [SubmissionPengantarController::class, 'update']);
+    Route::delete('/{id}', [SubmissionPengantarController::class, 'destroy']);
+    // Route::get('/{id}', [GalleryController::class, 'show']);
+});
+
+Route::prefix('profile')->middleware('auth')->group(function () {
+    Route::get('/{id}', [ProfileController::class, 'index']);
+    Route::put('/{id}', [ProfileController::class, 'update']);
 });

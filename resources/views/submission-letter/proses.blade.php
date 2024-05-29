@@ -62,8 +62,22 @@
                     </table>
 
                     <button type="submit" class="btn btn-sm btn-success m-2 float-right">Terima</button>
-                    <a href="{{ url('submission-letter') }}" class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
                 </form>
+
+                <form method="POST" action="{{ url('/submission-letter/' . $letter->NIK) }}">
+                    @csrf
+                    {!! method_field('PUT') !!}
+                    <input type="hidden" name="NIK" value="{{ $letter->NIK }}">
+                    <input type="hidden" name="pekerjaan" value="{{ $letter->pekerjaan }}">
+                    <input type="hidden" name="pendidikan" value="{{ $letter->pendidikan }}">
+                    <input type="hidden" name="keperluan" value="{{ $letter->keperluan }}">
+                    <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}">
+                    <input type="hidden" name="status" value="ditolak">
+
+                    <button type="submit" class="btn btn-sm btn-danger m-2 float-right">Tolak</button>
+                </form>
+
+                <a href="{{ url('submission-letter') }}" class="btn btn-sm btn-secondary m-2 float-left">Kembali</a>
             @endempty
         </div>
     </div>

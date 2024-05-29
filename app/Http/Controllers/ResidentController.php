@@ -6,8 +6,10 @@ use App\Models\FamilyModel;
 use App\Models\GalleryModel;
 use App\Models\ResidentModel;
 use App\Models\TemporaryResident;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class ResidentController extends Controller
@@ -163,6 +165,15 @@ class ResidentController extends Controller
             ]);
         }
 
+        if ($request->status_keluarga == 'kepala keluarga') {
+            User::create([
+                'username' => $request->NIK,
+                'password' =>  Hash::make($request->NIK),
+                'nama' => $request->nama,
+                'level' => 'warga',
+            ]);
+        }
+
         return redirect('/resident')->with('success', 'Data warga berhasil disimpan');
     }
 
@@ -292,6 +303,7 @@ class ResidentController extends Controller
         }
 
         try {
+            User::where('username', $id)->delete();
             ResidentModel::destroy($id);
             return redirect('/resident')->with('success', 'Data warga berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {

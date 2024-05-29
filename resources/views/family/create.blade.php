@@ -10,7 +10,7 @@
             <form method="POST" action="{{ url('family') }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">noKK</label>
+                    <label class="col-2 control-label col-form-label">No KK</label>
                     <div class="col-10">
                         <input type="text" class="form-control" id="noKK" name="noKK" value="{{ old('noKK') }}"
                             required>

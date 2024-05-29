@@ -79,15 +79,15 @@
             </a>
         </li>
 
-        <li class="nav-item {{ request()->is('') || request()->is('submission-changes*') ? 'active' : '' }}">
-            <a href="{{ url('/resident') }}" class="nav-link">
+        <li class="nav-item {{ request()->is('') || request()->is('submission-prasejahtera*') ? 'active' : '' }}">
+            <a href="{{ url('/submission-prasejahtera/' . Auth::user()->username) }}" class="nav-link">
                 <i class="fas fa-fw fa-user-injured"></i>
                 <span>Keluarga Pra-Sejahtera</span>
             </a>
         </li>
 
-        <li class="nav-item {{ request()->is('') || request()->is('submission-changes*') ? 'active' : '' }}">
-            <a href="{{ url('/resident') }}" class="nav-link">
+        <li class="nav-item {{ request()->is('') || request()->is('submission-pengantar*') ? 'active' : '' }}">
+            <a href="{{ url('/submission-pengantar/' . Auth::user()->username) }}" class="nav-link">
                 <i class="fas fa-fw fa-file-pdf"></i>
                 <span>Surat Pengantar</span>
             </a>

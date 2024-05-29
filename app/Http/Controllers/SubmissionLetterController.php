@@ -89,7 +89,7 @@ class SubmissionLetterController extends Controller
             'pendidikan' => 'required|string',
             'keperluan' => 'required|string',
             'no_hp' => 'required|string',
-            'status' => 'required|string|in:selesai',
+            'status' => 'required|string',
         ]);
 
         SubmissionLetterModel::where('NIK', $NIK)->update([
