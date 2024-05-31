@@ -26,7 +26,7 @@ class SubmissionLetterController extends Controller
 
     public function list(Request $request)
     {
-        $Submissions = SubmissionLetterModel::select('pengajuansuratpengantar.NIK', 'warga.nama', 'pengajuansuratpengantar.created_at', 'pengajuansuratpengantar.status')
+        $Submissions = SubmissionLetterModel::select('pengajuansuratpengantar.id', 'pengajuansuratpengantar.NIK', 'warga.nama', 'pengajuansuratpengantar.created_at', 'pengajuansuratpengantar.status')
             ->join('warga', 'pengajuansuratpengantar.NIK', '=', 'warga.NIK')
             ->orderByRaw(
                 "CASE 
@@ -44,11 +44,11 @@ class SubmissionLetterController extends Controller
                 return date('Y-m-d H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
-                return '<a href="' . url('/submission-letter/' . $submission->NIK) . '" class="btn btn-info btn-sm">Detail</a>';
+                return '<a href="' . url('/submission-letter/' . $submission->id) . '" class="btn btn-info btn-sm">Detail</a>';
             })
             ->addColumn('status', function ($submission) {
                 if ($submission->status == 'proses' && Auth::user()->level == 'admin') {
-                    return '<a href="' . url('/submission-letter/' . $submission->NIK . '/proses') . '" class="btn btn-primary btn-sm">Proses</a> ';
+                    return '<a href="' . url('/submission-letter/' . $submission->id . '/proses') . '" class="btn btn-primary btn-sm">Proses</a> ';
                 } else if ($submission->status == 'proses' && Auth::user()->level == 'superadmin') {
                     return '<p class="text-primary">Proses</p>';
                 } else if ($submission->status == 'selesai') {
@@ -61,11 +61,9 @@ class SubmissionLetterController extends Controller
             ->make(true);
     }
 
-    public function proses(string $nik)
+    public function proses(string $id)
     {
-        $letter = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $nik)
-            ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
-            ->first();
+        $letter = SubmissionLetterModel::find($id);
 
         $breadcrumb = (object)[
             'title' => 'Proses Pengajuan Surat Pengantar',
@@ -81,10 +79,10 @@ class SubmissionLetterController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $NIK)
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'NIK' => 'required|string|min:16|unique:warga,NIK,' . $NIK . ',NIK',
+            'NIK' => 'required|string|min:16',
             'pekerjaan' => 'required|string',
             'pendidikan' => 'required|string',
             'keperluan' => 'required|string',
@@ -92,7 +90,7 @@ class SubmissionLetterController extends Controller
             'status' => 'required|string',
         ]);
 
-        SubmissionLetterModel::where('NIK', $NIK)->update([
+        SubmissionLetterModel::where('id', $id)->update([
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
             'keperluan' => $request->keperluan,
@@ -100,7 +98,7 @@ class SubmissionLetterController extends Controller
             'status' => $request->status,
         ]);
 
-        $submission = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $NIK)
+        $submission = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $request->NIK)
             ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
             ->first();
 
@@ -111,61 +109,61 @@ class SubmissionLetterController extends Controller
             $message = 'Pengajuan edit data atas nama ' . $submission->nama . ' ditolak.';
         }
 
+        return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
+
         // Jika data berhasil diupdate, akan kembali ke halaman utama
-        if ($submission) {
-            // Kirim pesan ke WhatsApp menggunakan API dari Fonte
-            $curl = curl_init();
+        // if ($submission) {
+        //     // Kirim pesan ke WhatsApp menggunakan API dari Fonte
+        //     $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.fonnte.com/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'target' => '+62 851-5653-0441',
-                    // 'target' => $submission->no_hp,
-                    'message' => $message,
-                    'countryCode' => '62', // Ubah sesuai kode negara Anda
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: u6hZ_-54X2!u14_41aN9', // Ganti YOUR_API_TOKEN dengan token API Anda
-                ),
-            ));
+        //     curl_setopt_array($curl, array(
+        //         CURLOPT_URL => 'https://api.fonnte.com/send',
+        //         CURLOPT_RETURNTRANSFER => true,
+        //         CURLOPT_ENCODING => '',
+        //         CURLOPT_MAXREDIRS => 10,
+        //         CURLOPT_TIMEOUT => 0,
+        //         CURLOPT_FOLLOWLOCATION => true,
+        //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //         CURLOPT_CUSTOMREQUEST => 'POST',
+        //         CURLOPT_POSTFIELDS => array(
+        //             'target' => '+62 851-5653-0441',
+        //             // 'target' => $submission->no_hp,
+        //             'message' => $message,
+        //             'countryCode' => '62', // Ubah sesuai kode negara Anda
+        //         ),
+        //         CURLOPT_HTTPHEADER => array(
+        //             'Authorization: u6hZ_-54X2!u14_41aN9', // Ganti YOUR_API_TOKEN dengan token API Anda
+        //         ),
+        //     ));
 
-            $response = curl_exec($curl);
-            if (curl_errno($curl)) {
-                $error_msg = curl_error($curl);
-            }
-            curl_close($curl);
+        //     $response = curl_exec($curl);
+        //     if (curl_errno($curl)) {
+        //         $error_msg = curl_error($curl);
+        //     }
+        //     curl_close($curl);
 
-            if (isset($error_msg)) {
-                return redirect('/submission-letter')->with('error', 'Gagal mengirim pesan WhatsApp: ' . $error_msg);
-            } else {
-                return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
-            }
-        } else {
-            return redirect('/submission-letter')->with('error', 'Gagal memperbarui data surat');
-        }
+        //     if (isset($error_msg)) {
+        //         return redirect('/submission-letter')->with('error', 'Gagal mengirim pesan WhatsApp: ' . $error_msg);
+        //     } else {
+        //         return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
+        //     }
+        // } else {
+        //     return redirect('/submission-letter')->with('error', 'Gagal memperbarui data surat');
+        // }
     }
 
 
 
-    public function show(string $nik)
+    public function show(string $id)
     {
-        $letter = SubmissionLetterModel::where('pengajuansuratpengantar.NIK', $nik)
-            ->leftJoin('warga', 'warga.NIK', '=', 'pengajuansuratpengantar.NIK')
-            ->first();
+        $letter = SubmissionLetterModel::find($id);
 
         $breadcrumb = (object)[
-            'title' => 'Proses Pengajuan Surat Pengantar',
+            'title' => 'Detail Pengajuan Surat Pengantar',
             'list' => ['Home', 'Pengajuan', 'Proses']
         ];
         $page = (object)[
-            'title' => 'Proses Pengajuan Surat Pengantar'
+            'title' => 'Detail Pengajuan Surat Pengantar'
         ];
         return view('submission-letter.show', [
             'breadcrumb' => $breadcrumb,

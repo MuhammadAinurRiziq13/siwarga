@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bukti_pengajuan_edit_data_warga', function (Blueprint $table) {
-            $table->string("NIK_pengajuan");
+            $table->bigInteger("edit")->unsigned();
             $table->string("nama_bukti");
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->foreign('NIK_pengajuan')->references('NIK_pengajuan')->on('pengajuanEditDataWarga');
+            $table->foreign('edit')->references('id')->on('pengajuanEditDataWarga')->onDelete('cascade');
         });
     }
 

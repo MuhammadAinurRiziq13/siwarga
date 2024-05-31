@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/noKK', [ResidentController::class, 'getFamilyData']);
 Route::get('/keluarga/{id}', [DashboardController::class, 'getFamilyData']);
+Route::get('/warga/{id}', [SubmissionPengantarController::class, 'getFamilyData']);
+
 
 Route::get('/', function () {
     return view('landing-page.home', [
@@ -154,11 +156,12 @@ Route::prefix('resident-edit')->middleware('auth')->group(function () {
     // Route::get('/', [GalleryController::class, 'index']);
     Route::get('/{id}', [ResidentEditController::class, 'index']);
     Route::post('/list', [ResidentEditController::class, 'list']);
-    Route::get('/create', [ResidentEditController::class, 'create']);
+    // Route::get('/create', [ResidentEditController::class, 'create']);
     Route::post('/', [ResidentEditController::class, 'store']);
     Route::get('/{id}/edit', [ResidentEditController::class, 'edit']);
     Route::get('/{id}/show', [ResidentEditController::class, 'show']);
-    Route::put('/{id}', [ResidentEditController::class, 'update']);
+    Route::get('/{id}/show1', [ResidentEditController::class, 'show1']);
+    // Route::put('/{id}', [ResidentEditController::class, 'update']);
     Route::delete('/{id}', [ResidentEditController::class, 'destroy']);
     // Route::get('/{id}', [GalleryController::class, 'show']);
 });
@@ -166,23 +169,23 @@ Route::prefix('resident-edit')->middleware('auth')->group(function () {
 Route::prefix('submission-prasejahtera')->middleware('auth')->group(function () {
     Route::get('/{id}', [SubmissionPrasejahteraController::class, 'index']);
     Route::post('/list', [SubmissionPrasejahteraController::class, 'list']);
-    Route::get('/create', [SubmissionPrasejahteraController::class, 'create']);
+    Route::get('/{id}/create', [SubmissionPrasejahteraController::class, 'create']);
     Route::post('/', [SubmissionPrasejahteraController::class, 'store']);
-    Route::get('/{id}/edit', [SubmissionPrasejahteraController::class, 'edit']);
-    Route::put('/{id}', [SubmissionPrasejahteraController::class, 'update']);
-    Route::delete('/{id}', [SubmissionPrasejahteraController::class, 'destroy']);
+    Route::get('/{id}/show', [SubmissionPrasejahteraController::class, 'show']);
+    // Route::post('/', [SubmissionPrasejahteraController::class, 'store']);
+    // Route::get('/{id}/edit', [SubmissionPrasejahteraController::class, 'edit']);
+    // Route::put('/{id}', [SubmissionPrasejahteraController::class, 'update']);
+    // Route::delete('/{id}', [SubmissionPrasejahteraController::class, 'destroy']);
     // Route::get('/{id}', [GalleryController::class, 'show']);
 });
 
 Route::prefix('submission-pengantar')->middleware('auth')->group(function () {
     Route::get('/{id}', [SubmissionPengantarController::class, 'index']);
+    Route::get('/{id}/create', [SubmissionPengantarController::class, 'create']);
     Route::post('/list', [SubmissionPengantarController::class, 'list']);
-    Route::get('/create', [SubmissionPengantarController::class, 'create']);
     Route::post('/', [SubmissionPengantarController::class, 'store']);
-    Route::get('/{id}/edit', [SubmissionPengantarController::class, 'edit']);
-    Route::put('/{id}', [SubmissionPengantarController::class, 'update']);
+    Route::get('/{id}/show', [SubmissionPengantarController::class, 'show']);
     Route::delete('/{id}', [SubmissionPengantarController::class, 'destroy']);
-    // Route::get('/{id}', [GalleryController::class, 'show']);
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {

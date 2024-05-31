@@ -14,6 +14,24 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
+                        <th style="width: 30%">NIK</th>
+                        <td>{{ $letter->NIK }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Pekerjaan</th>
+                        <td>{{ $letter->pekerjaan }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Pendidikan</th>
+                        <td>{{ $letter->pendidikan }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Keperluan</th>
+                        <td>{{ $letter->keperluan }}</td>
+                    </tr>
+                </table>
+                {{-- <table class="table table-bordered table-striped table-hover table-sm">
+                    <tr>
                         <th>NIK</th>
                         <td>{{ $letter->NIK }}</td>
                     </tr>
@@ -49,7 +67,7 @@
                         <th>No Hp</th>
                         <td>{{ $letter->no_hp }}</td>
                     </tr>
-                </table>
+                </table> --}}
             @endempty
             <a href="{{ url('submission-letter') }}" class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
         </div>

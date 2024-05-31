@@ -54,11 +54,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Jumlah Kendaraan</label>
+                    <label class="col-2 control-label col-form-label">Pengeluaran</label>
                     <div class="col-10">
-                        <input type="number" class="form-control" id="jumlah_kendaraan" name="jumlah_kendaraan"
-                            value="{{ old('jumlah_kendaraan') }}" required>
-                        @error('jumlah_kendaraan')
+                        <input type="number" class="form-control" id="pengeluaran" name="pengeluaran"
+                            value="{{ old('pengeluaran') }}" required>
+                        @error('pengeluaran')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>

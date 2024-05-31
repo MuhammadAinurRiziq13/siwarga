@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('noKK');
             $table->integer('jumlah_tanggungan');
             $table->integer('pendapatan');
-            $table->integer('jumlah_kendaraan');
+            $table->integer('aset_kendaraan');
             $table->integer('luas_tanah');
             $table->integer('kondisi_rumah');
             $table->timestamp('created_at')->useCurrent();

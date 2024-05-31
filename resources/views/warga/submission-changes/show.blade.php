@@ -49,7 +49,7 @@
                         <th>Status Keluarga</th>
                         <td>{{ $resident->status_keluarga }}</td>
                     </tr>
-                    @if (!is_null($resident->alamat_asal))
+                    @if ($resident->alamat_asal)
                         <tr>
                             <th>Alamat Asal</th>
                             <td>{{ $resident->alamat_asal }}</td>

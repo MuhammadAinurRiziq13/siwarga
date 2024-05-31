@@ -59,7 +59,7 @@
                         searchable: false
                     },
                     {
-                        data: "NIK_pengajuan",
+                        data: "NIK",
                         className: "",
                         orderable: true,
                         searchable: true

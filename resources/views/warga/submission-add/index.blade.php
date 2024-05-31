@@ -7,9 +7,12 @@
         </div> --}}
         <div class="card-header bg-transparent bg-dark-blue">
             <h6 class="card-title my-2 text-white float-left">{{ $page->title }}</h6>
-            <a class="btn btn-sm text-white bg-gradient-primary float-right" href="{{ url('resident/create') }}"><i
-                    class="fas fa-fw fa-plus"></i>
-                Tambah</a>
+            @empty($poorFamily)
+                <a class="btn btn-sm text-white bg-gradient-primary float-right"
+                    href="{{ url('/submission-prasejahtera/' . Auth::user()->username . '/create') }}"><i
+                        class="fas fa-fw fa-plus"></i>
+                    Tambah</a>
+            @endempty
         </div>
         <div class="card-body">
             @empty($poorFamily)
@@ -33,7 +36,7 @@
                     </tr>
                     <tr>
                         <th>Jumlah Kendaraan</th>
-                        <td>{{ $poorFamily->jumlah_kendaraan }}</td>
+                        <td>{{ $poorFamily->pengeluaran }}</td>
                     </tr>
                     <tr>
                         <th>Luas Tanah</th>

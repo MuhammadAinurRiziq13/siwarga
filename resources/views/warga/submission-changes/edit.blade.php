@@ -14,8 +14,7 @@
                 </div>
                 <a href="{{ url('resident') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
             @else
-                <form method="POST" action="{{ url('/resident-edit/' . $resident->NIK) }}" class="form-horizontal"
-                    enctype="multipart/form-data">
+                <form method="POST" action="{{ url('/resident-edit/') }}" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row mx-auto">
                         <div class="col-6">
@@ -123,6 +122,24 @@
                     </div>
                     <div class="form-group row mx-auto">
                         <div class="col-6">
+                            <label class="control-label col-form-label">No Hp</label>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp"
+                                value="{{ old('no_hp') }}" required>
+                            @error('no_hp')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label col-form-label">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                value="{{ old('keterangan') }}" required>
+                            @error('keterangan')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                        <div class="col-6">
                             <label class="control-label col-form-label">Status Keluarga</label>
                             @if ($resident->status_keluarga == 'kepala keluarga')
                                 <select class="form-control" id="status_keluarga" name="status_keluarga" required>
@@ -144,12 +161,35 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
+                        {{-- <div class="col-6">
+                            <label class="control-label col-form-label">Foto Kegiatan</label>
+                            <img class="img-preview img-fluid col-sm-5 m-0 p-0 mb-2" style="display:none;">
+                            <img class="img-current img-fluid col-sm-5 m-0 p-0 mb-2"
+                                src="{{ asset('storage/' . $resident->nama_bukti) }}">
+                            <input type="hidden" name="oldImage" value="{{ $resident->nama_bukti }}">
+                            <input
+                                class="form-control
+                                @error('nama_bukti') is-invalid @enderror"
+                                type="file" id="image" name="nama_bukti" onchange="previewImage()"
+                                value="{{ old('tanggal_kegiatan', $resident->nama_bukti) }}">
+                            @error(' nama_bukti')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div> --}}
                         <div class="col-6">
-                            <label class="control-label col-form-label">Keterangan</label>
-                            <input type="text" class="form-control" id="keterangan" name="keterangan"
-                                value="{{ old('keterangan', $resident->keterangan) }}" required>
-                            @error('keterangan')
-                                <small class="form-text text-danger">{{ $message }}</small>
+                            <label class="control-label col-form-label">Foto Bukti</label>
+                            <div class="preview-container gap-2">
+                                <!-- Placeholder for image previews -->
+                            </div>
+                            <input class="form-control @error('nama_bukti') is-invalid @enderror" type="file"
+                                id="image" name="nama_bukti[]" multiple onchange="previewImages()">
+                            @error('nama_bukti')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                     </div>
@@ -178,43 +218,13 @@
                         </div>
                     </div>
                     <div class="form-group row mx-auto">
-                        <div class="col-6">
+                        <div class="col-12">
                             <label class="control-label col-form-label">Alamat Asal</label>
                             <input type="text" class="form-control" id="alamat_asal" name="alamat_asal"
                                 value="{{ old('alamat_asal', $resident->alamat_asal) }}" required
                                 @if (is_null($resident->alamat_asal)) disabled @endif>
                             @error('alamat_asal')
                                 <small class="form-text text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        {{-- <div class="col-6">
-                            <label class="control-label col-form-label">Foto Kegiatan</label>
-                            <img class="img-preview img-fluid col-sm-5 m-0 p-0 mb-2" style="display:none;">
-                            <img class="img-current img-fluid col-sm-5 m-0 p-0 mb-2"
-                                src="{{ asset('storage/' . $resident->nama_bukti) }}">
-                            <input type="hidden" name="oldImage" value="{{ $resident->nama_bukti }}">
-                            <input
-                                class="form-control
-                                @error('nama_foto') is-invalid @enderror"
-                                type="file" id="image" name="nama_foto" onchange="previewImage()"
-                                value="{{ old('tanggal_kegiatan', $resident->nama_bukti) }}">
-                            @error(' nama_foto')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-                        <div class="col-6">
-                            <label class="control-label col-form-label">Foto Bukti</label>
-                            <div class="preview-container gap-2">
-                                <!-- Placeholder for image previews -->
-                            </div>
-                            <input class="form-control @error('nama_foto') is-invalid @enderror" type="file"
-                                id="image" name="nama_foto[]" multiple onchange="previewImages()">
-                            @error('nama_foto')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
                             @enderror
                         </div>
                     </div>

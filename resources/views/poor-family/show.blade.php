@@ -26,8 +26,8 @@
                         <td>{{ $poorFamily->pendapatan }}</td>
                     </tr>
                     <tr>
-                        <th>Jumlah Kendaraan</th>
-                        <td>{{ $poorFamily->jumlah_kendaraan }}</td>
+                        <th>Pengeluaran</th>
+                        <td>{{ $poorFamily->pengeluaran }}</td>
                     </tr>
                     <tr>
                         <th>Luas Tanah</th>

@@ -97,7 +97,7 @@ class PoorFamilyController extends Controller
             'noKK' => 'required',
             'jumlah_tanggungan' => 'required',
             'pendapatan' => 'required',
-            'jumlah_kendaraan' => 'required',
+            'pengeluaran' => 'required',
             'luas_tanah' => 'required',
             'kondisi_rumah' => 'required',
         ]);
@@ -108,7 +108,7 @@ class PoorFamilyController extends Controller
             'noKK' => $request->noKK,
             'jumlah_tanggungan' => $request->jumlah_tanggungan,
             'pendapatan' => $request->pendapatan,
-            'jumlah_kendaraan' => $request->jumlah_kendaraan,
+            'pengeluaran' => $request->pengeluaran,
             'luas_tanah' => $request->luas_tanah,
             'kondisi_rumah' => $request->kondisi_rumah,
         ]);
@@ -141,7 +141,7 @@ class PoorFamilyController extends Controller
             'noKK' => 'required',
             'jumlah_tanggungan' => 'required',
             'pendapatan' => 'required',
-            'jumlah_kendaraan' => 'required',
+            'pengeluaran' => 'required',
             'luas_tanah' => 'required',
             'kondisi_rumah' => 'required',
         ]);
@@ -151,7 +151,7 @@ class PoorFamilyController extends Controller
             'noKK' => $request->noKK,
             'jumlah_tanggungan' => $request->jumlah_tanggungan,
             'pendapatan' => $request->pendapatan,
-            'jumlah_kendaraan' => $request->jumlah_kendaraan,
+            'pengeluaran' => $request->pengeluaran,
             'luas_tanah' => $request->luas_tanah,
             'kondisi_rumah' => $request->kondisi_rumah,
         ]);

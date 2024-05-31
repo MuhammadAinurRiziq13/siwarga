@@ -15,6 +15,10 @@ class FamilyModel extends Model
 
     protected $guarded = [''];
 
+    protected $casts = [
+        'noKK' => 'string',
+    ];
+
     public function warga(): HasMany
     {
         return $this->hasMany(ResidentModel::class, 'noKK', 'noKK');

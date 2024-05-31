@@ -16,6 +16,10 @@ class ResidentModel extends Model
 
     protected $guarded = [''];
 
+    protected $casts = [
+        'NIK' => 'string',
+    ];
+
     public function family(): BelongsTo
     {
         return $this->belongsTo(FamilyModel::class, 'noKK', 'noKK');
@@ -28,7 +32,7 @@ class ResidentModel extends Model
 
     public function submissionChanges(): HasMany
     {
-        return $this->hasMany(SubmissionChangesModel::class, 'NIK_pengajuan', 'NIK');
+        return $this->hasMany(SubmissionChangesModel::class, 'NIK', 'NIK');
     }
 
     public function submissionLetter(): HasOne

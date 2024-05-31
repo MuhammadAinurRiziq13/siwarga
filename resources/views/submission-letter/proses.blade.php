@@ -12,7 +12,7 @@
                     Data yang Anda cari tidak ditemukan.
                 </div>
             @else
-                <form method="POST" action="{{ url('/submission-letter/' . $letter->NIK) }}">
+                <form method="POST" action="{{ url('/submission-letter/' . $letter->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
                     <input type="hidden" name="NIK" value="{{ $letter->NIK }}">
@@ -23,6 +23,24 @@
                     <input type="hidden" name="status" value="selesai">
 
                     <table class="table table-bordered table-striped table-hover table-sm">
+                        <tr>
+                            <th style="width: 30%">NIK</th>
+                            <td>{{ $letter->NIK }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Pekerjaan</th>
+                            <td>{{ $letter->pekerjaan }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Pendidikan</th>
+                            <td>{{ $letter->pendidikan }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Keperluan</th>
+                            <td>{{ $letter->keperluan }}</td>
+                        </tr>
+                    </table>
+                    {{-- <table class="table table-bordered table-striped table-hover table-sm">
                         <tr>
                             <th>NIK</th>
                             <td>{{ $letter->NIK }}</td>
@@ -59,12 +77,12 @@
                             <th>No Hp</th>
                             <td>{{ $letter->no_hp }}</td>
                         </tr>
-                    </table>
+                    </table> --}}
 
                     <button type="submit" class="btn btn-sm btn-success m-2 float-right">Terima</button>
                 </form>
 
-                <form method="POST" action="{{ url('/submission-letter/' . $letter->NIK) }}">
+                <form method="POST" action="{{ url('/submission-letter/' . $letter->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
                     <input type="hidden" name="NIK" value="{{ $letter->NIK }}">

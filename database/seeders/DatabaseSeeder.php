@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
                     'noKK' => $noKK,
                     'jumlah_tanggungan' => $faker->numberBetween(1, 5),
                     'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+                    'aset_kendaraan' => $faker->randomFloat(2, 10000, 20000),
                     'luas_tanah' => $faker->numberBetween(100, 500),
                     'kondisi_rumah' => $faker->numberBetween(1, 5),
                 ];
@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
             // Generate pengajuaneditdatawarga with 10% chance
             if (rand(0, 9) === 0) { // 10% chance to generate pengajuaneditdatawarga
                 $pengajuanEditDataWargaData[] = [
-                    'NIK_pengajuan' => $warga['NIK'],
+                    'NIK' => $warga['NIK'],
                     'nama' => $warga['nama'], // Generate different name for pengajuan
                     'tempat_lahir' => $faker->city,
                     'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
@@ -129,20 +129,20 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('pengajuaneditdatawarga')->insert($pengajuanEditDataWargaData);
 
-        $buktiPengajuanEditDataWargaData = [];
-        foreach ($pengajuanEditDataWargaData as $pengajuan) {
-            $nama_bukti = $faker->sentence;
+        // $buktiPengajuanEditDataWargaData = [];
+        // foreach ($pengajuanEditDataWargaData as $pengajuan) {
+        //     $nama_bukti = $faker->sentence;
 
-            if (strlen($nama_bukti) > 20) {
-                $nama_bukti = substr($nama_bukti, 0, 20);
-            }
+        //     if (strlen($nama_bukti) > 20) {
+        //         $nama_bukti = substr($nama_bukti, 0, 20);
+        //     }
 
-            $buktiPengajuanEditDataWargaData[] = [
-                'NIK_pengajuan' => $pengajuan['NIK_pengajuan'],
-                'nama_bukti' => $nama_bukti
-            ];
-        }
-        DB::table('bukti_pengajuan_edit_data_warga')->insert($buktiPengajuanEditDataWargaData);
+        //     $buktiPengajuanEditDataWargaData[] = [
+        //         'NIK' => $pengajuan['NIK'],
+        //         'nama_bukti' => $nama_bukti
+        //     ];
+        // }
+        // DB::table('bukti_pengajuan_edit_data_warga')->insert($buktiPengajuanEditDataWargaData);
 
         $pengajuanSuratPengantar = [];
         foreach ($wargaData as $warga) {
@@ -174,7 +174,7 @@ class DatabaseSeeder extends Seeder
                     'noKK' => $keluarga['noKK'],
                     'jumlah_tanggungan' => $faker->numberBetween(1, 5),
                     'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'jumlah_kendaraan' => $faker->numberBetween(1, 5),
+                    'aset_kendaraan' => $faker->randomFloat(2, 10000, 20000),
                     'luas_tanah' => $faker->numberBetween(100, 500),
                     'kondisi_rumah' => $faker->numberBetween(1, 5),
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']),

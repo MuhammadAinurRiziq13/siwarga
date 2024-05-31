@@ -63,6 +63,28 @@
             </table>
         </div>
     </div>
+
+    @if ($message = Session::get('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session('success') }}"
+                });
+            });
+        </script>
+    @endif
 @endsection
 
 
@@ -86,7 +108,7 @@
                         searchable: false
                     },
                     {
-                        data: "NIK_pengajuan",
+                        data: "NIK",
                         className: "",
                         orderable: true,
                         searchable: true

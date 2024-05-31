@@ -4,7 +4,8 @@
     <div class="card card-outline card-primary shadow">
         <div class="card-header bg-dark-blue">
             <h6 class="card-title my-2 text-white float-left">{{ $page->title }}</h6>
-            <a class="btn btn-sm text-white bg-gradient-primary float-right" href="{{ url('resident/create') }}"><i
+            <a class="btn btn-sm text-white bg-gradient-primary float-right"
+                href="{{ url('/submission-pengantar/' . Auth::user()->username . '/create') }}"><i
                     class="fas fa-fw fa-plus"></i>
                 Tambah</a>
         </div>
@@ -23,6 +24,28 @@
             </table>
         </div>
     </div>
+
+    @if ($message = Session::get('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session('success') }}"
+                });
+            });
+        </script>
+    @endif
 @endsection
 
 @push('js')
