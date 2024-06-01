@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\Topsis;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -31,23 +32,23 @@ class PoorFamilyController extends Controller
     }
 
     public function calculate()
-{
-    // Fetch the data
-    $families = PoorFamilyModel::select(
-        // 'keluargakurangmampu.noKK',
-        // 'warga.nama',
-        // 'keluargakurangmampu.jumlah_tanggungan',
-        // 'keluargakurangmampu.pendapatan',
-        // 'keluargakurangmampu.aset_kendaraan',
-        // 'keluargakurangmampu.luas_tanah',
-        // 'keluargakurangmampu.kondisi_rumah'
+    {
+        // Fetch the data
+        $families = PoorFamilyModel::select(
+            // 'keluargakurangmampu.noKK',
+            // 'warga.nama',
+            // 'keluargakurangmampu.jumlah_tanggungan',
+            // 'keluargakurangmampu.pendapatan',
+            // 'keluargakurangmampu.aset_kendaraan',
+            // 'keluargakurangmampu.luas_tanah',
+            // 'keluargakurangmampu.kondisi_rumah'
         )
-        ->join('warga', function ($join) {
-            $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
-            ->where('warga.status_keluarga', 'kepala keluarga');
-        })
-        ->get();
-        
+            ->join('warga', function ($join) {
+                $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
+                    ->where('warga.status_keluarga', 'kepala keluarga');
+            })
+            ->get();
+
         $criteriaData = CriteriaPraSejahteraModel::all();
         // Ambil nama kriteria, bobot, dan jenis kriteria dari data yang diambil
         $criteria = $criteriaData->pluck('nama')->toArray();
@@ -58,120 +59,120 @@ class PoorFamilyController extends Controller
         // $weights = [0.3, 0.25, 0.15, 0.1, 0.2];
         // $weights = [4, 2, 4, 3, 2];
 
-    // Prepare data for TOPSIS
-    $alternatives = $families->pluck('noKK')->toArray();
-    $decisionMatrix = $families->map(function ($family) {
+        // Prepare data for TOPSIS
+        $alternatives = $families->pluck('noKK')->toArray();
+        $decisionMatrix = $families->map(function ($family) {
             return [
-                    $this->convertTanggunganToScore($family->C1),
-                    $this->convertPendapatanToScore($family->C2),
-                    $this->convertAsetKendaraanToScore($family->C3),
-                    $this->convertLuasTanahToScore($family->C4),
-                    $family->C5
-                ];
-            })->toArray();
-    // $decisionMatrix = $families->map(function ($family) use ($criteria) {
-    //     $row = [];
-    //     foreach ($criteria as $criterion) {
-    //         $row[] = $family->$criterion; // Misalnya, ambil nilai langsung dari kolom dengan nama kriteria
-    //     }
-    //     return $row;
-    // })->toArray();
+                $this->convertTanggunganToScore($family->C1),
+                $this->convertPendapatanToScore($family->C2),
+                $this->convertAsetKendaraanToScore($family->C3),
+                $this->convertLuasTanahToScore($family->C4),
+                $family->C5
+            ];
+        })->toArray();
+        // $decisionMatrix = $families->map(function ($family) use ($criteria) {
+        //     $row = [];
+        //     foreach ($criteria as $criterion) {
+        //         $row[] = $family->$criterion; // Misalnya, ambil nilai langsung dari kolom dengan nama kriteria
+        //     }
+        //     return $row;
+        // })->toArray();
 
 
-    // Langkah Normalisasi bobot
-    $totalWeight = array_sum($weights);
-    $normalizedWeights = [];
-    foreach ($weights as $weight) {
-        $normalizedWeight = $weight / $totalWeight;
-        $normalizedWeights[] = $normalizedWeight;
-    }
-    $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
-    $rankings = $topsis->run();
-    $steps = $topsis->getSteps();
-    // $noKKtabel = $families->firstWhere('noKK');
+        // Langkah Normalisasi bobot
+        $totalWeight = array_sum($weights);
+        $normalizedWeights = [];
+        foreach ($weights as $weight) {
+            $normalizedWeight = $weight / $totalWeight;
+            $normalizedWeights[] = $normalizedWeight;
+        }
+        $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
+        $rankings = $topsis->run();
+        $steps = $topsis->getSteps();
+        // $noKKtabel = $families->firstWhere('noKK');
 
-    $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
-        $family = $families->firstWhere('noKK', $ranking['alternative']);
-        return [
-            'noKK' => $family->noKK,
-            'nama' => $family->nama,
-            'jumlah_anggota' => $family->C1,
-            'pendapatan' => $family->C2,
-            'aset_kendaraan' => $family->C3,
-            'luas_tanah' => $family->C4,
-            'kondisi_rumah' => $family->C5,
-            'score' => $ranking['score']
+        $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
+            $family = $families->firstWhere('noKK', $ranking['alternative']);
+            return [
+                'noKK' => $family->noKK,
+                'nama' => $family->nama,
+                'jumlah_anggota' => $family->C1,
+                'pendapatan' => $family->C2,
+                'aset_kendaraan' => $family->C3,
+                'luas_tanah' => $family->C4,
+                'kondisi_rumah' => $family->C5,
+                'score' => $ranking['score']
+            ];
+        });
+
+        $breadcrumb = (object)[
+            'title' => 'Data Keluarga Pra-Sejahtera',
+            'list' => ['Home', 'Keluarga Pra-Sejahtera']
         ];
-    });
 
-    $breadcrumb = (object)[
-        'title' => 'Data Keluarga Pra-Sejahtera',
-        'list' => ['Home', 'Keluarga Pra-Sejahtera']
-    ];
+        // Pass the data to the view
+        return view('poor-family.calculate', [
+            'breadcrumb' => $breadcrumb,
+            'rankedFamilies' => $rankedFamilies,
+            'steps' => $steps,
+            'criteria' => $criteria,
+            'alternatives' => $alternatives,
+            'weight' => $normalizedWeights
+        ]);
+    }
+    // public function calculate()
+    // {
+    //     // Ambil definisi kriteria dari tabel 'criteriaprasejahtera'
+    //     $criteriaData = CriteriaPraSejahteraModel::all();
 
-    // Pass the data to the view
-    return view('poor-family.calculate', [
-        'breadcrumb' => $breadcrumb,
-        'rankedFamilies' => $rankedFamilies,
-        'steps' => $steps,
-        'criteria' => $criteria,
-        'alternatives' => $alternatives,
-        'weight' => $normalizedWeights
-    ]);
-}
-// public function calculate()
-// {
-//     // Ambil definisi kriteria dari tabel 'criteriaprasejahtera'
-//     $criteriaData = CriteriaPraSejahteraModel::all();
+    //     // Ambil nama kriteria, bobot, dan jenis kriteria dari data yang diambil
+    //     $criteria = $criteriaData->pluck('nama')->toArray();
+    //     $weights = $criteriaData->pluck('bobot')->toArray();
+    //     $criteriaType = $criteriaData->pluck('jenis')->toArray();
 
-//     // Ambil nama kriteria, bobot, dan jenis kriteria dari data yang diambil
-//     $criteria = $criteriaData->pluck('nama')->toArray();
-//     $weights = $criteriaData->pluck('bobot')->toArray();
-//     $criteriaType = $criteriaData->pluck('jenis')->toArray();
+    //     // Ambil data keluarga dari tabel 'keluargakurangmampu'
+    //     $families = PoorFamilyModel::select('*')->get();
 
-//     // Ambil data keluarga dari tabel 'keluargakurangmampu'
-//     $families = PoorFamilyModel::select('*')->get();
+    //     // Siapkan data untuk perhitungan TOPSIS
+    //     $alternatives = $families->pluck('noKK')->toArray();
+    //     $decisionMatrix = $families->map(function ($family) use ($criteria) {
+    //         $row = [];
+    //         foreach ($criteria as $criterion) {
+    //             $row[] = $family->$criterion; // Misalnya, ambil nilai langsung dari kolom dengan nama kriteria
+    //         }
+    //         return $row;
+    //     })->toArray();
 
-//     // Siapkan data untuk perhitungan TOPSIS
-//     $alternatives = $families->pluck('noKK')->toArray();
-//     $decisionMatrix = $families->map(function ($family) use ($criteria) {
-//         $row = [];
-//         foreach ($criteria as $criterion) {
-//             $row[] = $family->$criterion; // Misalnya, ambil nilai langsung dari kolom dengan nama kriteria
-//         }
-//         return $row;
-//     })->toArray();
+    //     // Normalisasi bobot
+    //     $totalWeight = array_sum($weights);
+    //     $normalizedWeights = array_map(function ($weight) use ($totalWeight) {
+    //         return $weight / $totalWeight;
+    //     }, $weights);
 
-//     // Normalisasi bobot
-//     $totalWeight = array_sum($weights);
-//     $normalizedWeights = array_map(function ($weight) use ($totalWeight) {
-//         return $weight / $totalWeight;
-//     }, $weights);
+    //     // Lakukan perhitungan TOPSIS
+    //     $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
+    //     $rankings = $topsis->run();
+    //     $steps = $topsis->getSteps();
 
-//     // Lakukan perhitungan TOPSIS
-//     $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
-//     $rankings = $topsis->run();
-//     $steps = $topsis->getSteps();
+    //     // Ubah data keluarga menjadi format yang sesuai dengan hasil perhitungan TOPSIS
+    //     $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
+    //         $family = $families->firstWhere('noKK', $ranking['alternative']);
+    //         return [
+    //             'noKK' => $family->noKK,
+    //             // Tambahkan data lainnya sesuai kebutuhan
+    //             'score' => $ranking['score']
+    //         ];
+    //     });
 
-//     // Ubah data keluarga menjadi format yang sesuai dengan hasil perhitungan TOPSIS
-//     $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
-//         $family = $families->firstWhere('noKK', $ranking['alternative']);
-//         return [
-//             'noKK' => $family->noKK,
-//             // Tambahkan data lainnya sesuai kebutuhan
-//             'score' => $ranking['score']
-//         ];
-//     });
-
-//     // Pass data to the view
-//     return view('poor-family.calculate', [
-//         'rankedFamilies' => $rankedFamilies,
-//         'steps' => $steps,
-//         'criteria' => $criteria,
-//         'alternatives' => $alternatives,
-//         'weight' => $normalizedWeights
-//     ]);
-// }
+    //     // Pass data to the view
+    //     return view('poor-family.calculate', [
+    //         'rankedFamilies' => $rankedFamilies,
+    //         'steps' => $steps,
+    //         'criteria' => $criteria,
+    //         'alternatives' => $alternatives,
+    //         'weight' => $normalizedWeights
+    //     ]);
+    // }
 
 
     private function convertTanggunganToScore($jumlahTanggungan)
@@ -217,6 +218,7 @@ class PoorFamilyController extends Controller
             return 1;
         }
     }
+
     private function convertLuasTanahToScore($luas)
     {
         if ($luas > 50) {
@@ -279,6 +281,7 @@ class PoorFamilyController extends Controller
         ]);
     }
 
+    //tambah keluarga prasejahtera
     public function create()
     {
         $family = FamilyModel::all();
@@ -300,9 +303,9 @@ class PoorFamilyController extends Controller
         ]);
     }
 
+    //tambah kriteria
     public function createCriteria()
     {
-        // $family = FamilyModel::all();
         $breadcrumb = (object)[
             'title' => 'Tambah Criteria',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
@@ -315,7 +318,6 @@ class PoorFamilyController extends Controller
         return view('poor-family.criteria.createCriteria', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            // 'family' => $family,
         ]);
     }
     public function criteria()
@@ -339,7 +341,7 @@ class PoorFamilyController extends Controller
     public function showCriteria(string $id)
     {
         // $poorFamily = PoorFamilyModel::where('noKK', $id)->first();
-        $criteria = CriteriaPraSejahteraModel::where('id',$id)->first();
+        $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
         $breadcrumb = (object)[
             'title' => 'Jenis Criteria',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Criteria']
@@ -356,74 +358,91 @@ class PoorFamilyController extends Controller
         ]);
     }
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'noKK' => 'required',
-    //         'jumlah_tanggungan' => 'required',
-    //         'pendapatan' => 'required',
-    //         'aset_kendaraan' => 'required',
-    //         'luas_tanah' => 'required',
-    //         'kondisi_rumah' => 'required',
-    //     ]);
-
-
-    //     // Fungsi eloquent untuk menambah data
-    //     PoorFamilyModel::create([
-    //         'noKK' => $request->noKK,
-    //         'jumlah_tanggungan' => $request->jumlah_tanggungan,
-    //         'pendapatan' => $request->pendapatan,
-    //         'aset_kendaraan' => $request->aset_kendaraan,
-    //         'luas_tanah' => $request->luas_tanah,
-    //         'kondisi_rumah' => $request->kondisi_rumah,
-    //     ]);
-
-    //     return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil disimpan');
-    // }
     public function store(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        // 'noKK' => 'required',
-        // Tambahkan validasi lainnya sesuai kebutuhan
-    ]);
+    {
+        // Ambil semua kriteria
+        $criteria = CriteriaPraSejahteraModel::all();
 
-    try {
-        // Mulai transaksi database
-        DB::beginTransaction();
+        // Buat array kosong untuk data yang akan dibuat
+        $dataToCreate = [];
 
-        // Buat objek PoorFamilyModel dan isi kolom dengan data dari request
-        $poorFamily = new PoorFamilyModel();
-        $poorFamily->noKK = $request->noKK;
+        // Tambahkan 'noKK' ke dalam array data
+        $dataToCreate['noKK'] = $request->noKK;
 
-        // Loop melalui request untuk menemukan data kriteria
-        foreach ($request->except('_token', 'noKK') as $key => $value) {
-            // Cari kriteria berdasarkan kode
-            $criterion = CriteriaPraSejahteraModel::where('kode', $key)->first();
-
-            // Jika kriteria ditemukan, simpan nilainya ke dalam kolom yang sesuai
-            if ($criterion) {
-                $columnName = 'c' . $criterion->kode;
-                $poorFamily->$columnName = $value;
-            }
+        // Loop melalui setiap kriteria dan tambahkan ke array data yang akan dibuat
+        foreach ($criteria as $criterion) {
+            $dataToCreate[$criterion->kode] = $request[$criterion->kode];
         }
 
-        // Simpan data keluarga pra-sejahtera
-        $poorFamily->save();
+        // Buat entri baru dengan data yang telah dikumpulkan
+        PoorFamilyModel::create($dataToCreate);
 
-        // Commit transaksi database
-        DB::commit();
-
-        // Redirect dengan pesan sukses
         return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil disimpan');
-    } catch (\Exception $e) {
-        // Rollback transaksi database jika terjadi kesalahan
-        DB::rollBack();
-
-        // Redirect dengan pesan error
-        return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan. Data Keluarga Pra-Sejahtera gagal disimpan.');
     }
-}
+
+    public function storeCriteria(Request $request)
+    {
+        // Tambahkan kolom baru dengan nama yang diambil dari $request->kode
+        Schema::table('keluargakurangmampu', function (Blueprint $table) use ($request) {
+            $table->string($request->kode)->nullable();
+        });
+
+        // Tambahkan data ke CriteriaPraSejahteraModel
+        CriteriaPraSejahteraModel::create([
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+            'bobot' => $request->bobot,
+            'jenis' => $request->jenis,
+        ]);
+
+        return redirect('/poor-family/criteria')->with('success', 'Data Kriteria berhasil disimpan');
+    }
+
+
+    // public function store(Request $request)
+    // {
+    //     // Validasi input
+    //     $request->validate([
+    //         // 'noKK' => 'required',
+    //         // Tambahkan validasi lainnya sesuai kebutuhan
+    //     ]);
+
+    //     try {
+    //         // Mulai transaksi database
+    //         DB::beginTransaction();
+
+    //         // Buat objek PoorFamilyModel dan isi kolom dengan data dari request
+    //         $poorFamily = new PoorFamilyModel();
+    //         $poorFamily->noKK = $request->noKK;
+
+    //         // Loop melalui request untuk menemukan data kriteria
+    //         foreach ($request->except('_token', 'noKK') as $key => $value) {
+    //             // Cari kriteria berdasarkan kode
+    //             $criterion = CriteriaPraSejahteraModel::where('kode', $key)->first();
+
+    //             // Jika kriteria ditemukan, simpan nilainya ke dalam kolom yang sesuai
+    //             if ($criterion) {
+    //                 $columnName = 'c' . $criterion->kode;
+    //                 $poorFamily->$columnName = $value;
+    //             }
+    //         }
+
+    //         // Simpan data keluarga pra-sejahtera
+    //         $poorFamily->save();
+
+    //         // Commit transaksi database
+    //         DB::commit();
+
+    //         // Redirect dengan pesan sukses
+    //         return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil disimpan');
+    //     } catch (\Exception $e) {
+    //         // Rollback transaksi database jika terjadi kesalahan
+    //         DB::rollBack();
+
+    //         // Redirect dengan pesan error
+    //         return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan. Data Keluarga Pra-Sejahtera gagal disimpan.');
+    //     }
+    // }
 
 
     public function edit(string $id)
@@ -447,78 +466,114 @@ class PoorFamilyController extends Controller
         ]);
     }
 
-    // public function update(Request $request, string $noKK)
-    // {
-    //     $request->validate([
-    //         'noKK' => 'required',
-    //         // 'jumlah_tanggungan' => 'required',
-    //         // 'pendapatan' => 'required',
-    //         // 'aset_kendaraan' => 'required',
-    //         // 'luas_tanah' => 'required',
-    //         // 'kondisi_rumah' => 'required',
-    //     ]);
-
-    //     // Update data Keluarga Pra-Sejahtera
-    //     PoorFamilyModel::where('noKK', $noKK)->update([
-    //         'noKK' => $request->noKK,
-    //         'jumlah_tanggungan' => $request->jumlah_tanggungan,
-    //         'pendapatan' => $request->pendapatan,
-    //         'aset_kendaraan' => $request->aset_kendaraan,
-    //         'luas_tanah' => $request->luas_tanah,
-    //         'kondisi_rumah' => $request->kondisi_rumah,
-    //     ]);
-
-    //     // Jika data berhasil diupdate, akan kembali ke halaman utama
-    //     return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera Berhasil Diubah');
-    // }
-    public function update(Request $request, string $noKK)
+    public function editCriteria(string $id)
     {
-        
-        // Validasi input
-        $request->validate([
-            'noKK' => 'required',
-            // Tambahkan validasi lainnya sesuai kebutuhan
+        $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
+        $breadcrumb = (object)[
+            'title' => 'Edit Kriteria',
+            'list' => ['Home', 'Kriteria', 'Edit']
+        ];
+        $page = (object)[
+            'title' => 'Edit Kriteria'
+        ];
+        return view('poor-family.criteria.editCriteria', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'criteria' => $criteria
+        ]);
+    }
+
+    public function updateCriteria(Request $request, string $id)
+    {
+        $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
+
+        // Ubah nama kolom pada tabel 'keluargakurangmampu' dari $criteria->kode menjadi $request->kode
+        Schema::table('keluargakurangmampu', function (Blueprint $table) use ($criteria, $request) {
+            $table->renameColumn($criteria->kode, $request->kode);
+        });
+
+        CriteriaPraSejahteraModel::find($id)->update([
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+            'bobot' => $request->bobot,
+            'jenis' => $request->jenis,
         ]);
 
-        try {
-            // Mulai transaksi database
-            DB::beginTransaction();
-
-            // Temukan data keluarga berdasarkan ID
-            $poorFamily = PoorFamilyModel::findOrFail($noKK);
-            
-            // Perbarui nilai kolom dari model dengan data dari request
-            $poorFamily->noKK = $request->noKK;
-
-            // Loop melalui request untuk menemukan data kriteria
-            foreach ($request->except('_token', '_method', 'noKK') as $key => $value) {
-                // Cari kriteria berdasarkan kode
-                $criterion = CriteriaPraSejahteraModel::where('kode', $key)->first();
-
-                // Jika kriteria ditemukan, perbarui nilai kolom yang sesuai
-                if ($criterion) {
-                    $columnName = 'c' . $criterion->kode;
-                    $poorFamily->$columnName = $value;
-                }
-            }
-
-            // Simpan perubahan pada model
-            $poorFamily->save();
-
-            // Commit transaksi database
-            DB::commit();
-
-            // Redirect dengan pesan sukses
-            return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil diperbarui');
-        } catch (\Exception $e) {
-            // Rollback transaksi database jika terjadi kesalahan
-            DB::rollBack();
-
-            // Redirect dengan pesan error
-            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan. Data Keluarga Pra-Sejahtera gagal diperbarui.');
-        }
+        // Jika data berhasil diupdate, akan kembali ke halaman utama
+        return redirect('/poor-family/criteria')->with('success', 'Data Kriteria Berhasil Diubah');
     }
-    
+
+    public function update(Request $request, string $noKK)
+    {
+        // Ambil semua kriteria
+        $criteria = CriteriaPraSejahteraModel::all();
+
+        // Buat array kosong untuk data yang akan dibuat
+        $dataToCreate = [];
+
+        // Tambahkan 'noKK' ke dalam array data
+        $dataToCreate['noKK'] = $request->noKK;
+
+        // Loop melalui setiap kriteria dan tambahkan ke array data yang akan dibuat
+        foreach ($criteria as $criterion) {
+            $dataToCreate[$criterion->kode] = $request[$criterion->kode];
+        }
+
+        // Buat entri baru dengan data yang telah dikumpulkan
+        PoorFamilyModel::where('noKK', $noKK)->update($dataToCreate);
+
+        // Jika data berhasil diupdate, akan kembali ke halaman utama
+        return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera Berhasil Diubah');
+    }
+
+    // public function update(Request $request, string $noKK)
+    // {
+
+    //     // Validasi input
+    //     $request->validate([
+    //         'noKK' => 'required',
+    //         // Tambahkan validasi lainnya sesuai kebutuhan
+    //     ]);
+
+    //     try {
+    //         // Mulai transaksi database
+    //         DB::beginTransaction();
+
+    //         // Temukan data keluarga berdasarkan ID
+    //         $poorFamily = PoorFamilyModel::findOrFail($noKK);
+
+    //         // Perbarui nilai kolom dari model dengan data dari request
+    //         $poorFamily->noKK = $request->noKK;
+
+    //         // Loop melalui request untuk menemukan data kriteria
+    //         foreach ($request->except('_token', '_method', 'noKK') as $key => $value) {
+    //             // Cari kriteria berdasarkan kode
+    //             $criterion = CriteriaPraSejahteraModel::where('kode', $key)->first();
+
+    //             // Jika kriteria ditemukan, perbarui nilai kolom yang sesuai
+    //             if ($criterion) {
+    //                 $columnName = 'c' . $criterion->kode;
+    //                 $poorFamily->$columnName = $value;
+    //             }
+    //         }
+
+    //         // Simpan perubahan pada model
+    //         $poorFamily->save();
+
+    //         // Commit transaksi database
+    //         DB::commit();
+
+    //         // Redirect dengan pesan sukses
+    //         return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil diperbarui');
+    //     } catch (\Exception $e) {
+    //         // Rollback transaksi database jika terjadi kesalahan
+    //         DB::rollBack();
+
+    //         // Redirect dengan pesan error
+    //         return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan. Data Keluarga Pra-Sejahtera gagal diperbarui.');
+    //     }
+    // }
+
 
     public function destroy(string $noKK)
     {
@@ -535,6 +590,28 @@ class PoorFamilyController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/poor-family')->with('error', 'Data Keluarga Pra-Sejahtera gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
+    }
+
+    public function destroyCriteria(string $id)
+    {
+        $check = CriteriaPraSejahteraModel::where('id', $id)->first();
+        if (!$check) {
+            return redirect('/poor-family/criteria')->with('error', 'Data Kriteria tidak ditemukan');
+        }
+
+        try {
+            // Hapus kolom dari tabel 'keluargakurangmampu' dengan nama yang diambil dari $check->kode
+            Schema::table('keluargakurangmampu', function (Blueprint $table) use ($check) {
+                $table->dropColumn($check->kode);
+            });
+            // Hapus data dari tabel anak (keluargaKurangMampu)
+            CriteriaPraSejahteraModel::where('id', $id)->delete();
+
+            return redirect('/poor-family/criteria')->with('success', 'Data Kriteria berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
+            return redirect('/poor-family/criteria')->with('error', 'Data Kriteria gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 }

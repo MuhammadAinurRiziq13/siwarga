@@ -7,12 +7,13 @@
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('poor-family/storeCriteria') }}" class="form-horizontal">
+            <form method="POST" action="{{ url('poor-family/storeCriteria/' . $criteria->id) }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Nama Criteria</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="nama" name="nama" required>
+                        <input type="text" class="form-control" id="nama" name="nama"
+                            value="{{ old('kode', $criteria->nama) }}" required>
                         @error('nama')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -21,8 +22,8 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Code Criteria</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="kode" value="{{ old('kode') }}" name="kode"
-                            required>
+                        <input type="text" class="form-control" id="kode" value="{{ old('kode', $criteria->kode) }}"
+                            name="kode" required>
                         @error('kode')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -31,8 +32,8 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Bobot Criteria</label>
                     <div class="col-10">
-                        <input type="number" class="form-control" id="bobot" name="bobot" value="{{ old('bobot') }}"
-                            required>
+                        <input type="number" class="form-control" id="bobot" name="bobot"
+                            value="{{ old('bobot', $criteria->bobot) }}" required>
                         @error('bobot')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -42,8 +43,8 @@
                     <label class="col-2 control-label col-form-label">Jenis Criteria</label>
                     <div class="col-10">
                         <select class="form-control" id="jenis" name="jenis" required>
-                            <option value="benefit">Benefit</option>
-                            <option value="cost">Cost</option>
+                            <option value="benefit" @if ($criteria->jenis == 'benefit') selected @endif>Benefit</option>
+                            <option value="cost" @if ($criteria->jenis == 'cost') selected @endif>Cost</option>
                         </select>
                         @error('jenis')
                             <small class="form-text text-danger">{{ $message }}</small>

@@ -35,11 +35,11 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 8) === 0) {
                 $keluargaKurangMampuData[] = [
                     'noKK' => $noKK,
-                    'C1' => $faker->numberBetween(1, 5),
-                    'C2' => $faker->randomFloat(2, 10000, 20000),
-                    'C3' => $faker->randomFloat(2, 10000, 20000),
-                    'C4' => $faker->numberBetween(100, 500),
-                    'C5' => $faker->numberBetween(1, 5),
+                    'c1' => $faker->numberBetween(1, 5),
+                    'c2' => $faker->randomFloat(2, 10000, 20000),
+                    'c3' => $faker->randomFloat(2, 10000, 20000),
+                    'c4' => $faker->numberBetween(100, 500),
+                    'c5' => $faker->numberBetween(1, 5),
                 ];
             }
 
@@ -244,15 +244,15 @@ class DatabaseSeeder extends Seeder
         $criteria = [
             [
                 'kode' => 'C1',
-                'nama' => 'Pendapatan',
-                'bobot' => 4,
-                'jenis' => 'Benefit',
-            ],
-            [
-                'kode' => 'C2',
                 'nama' => 'Jumlah Tanggungan',
                 'bobot' => 6,
                 'jenis' => 'Cost',
+            ],
+            [
+                'kode' => 'C2',
+                'nama' => 'Pendapatan',
+                'bobot' => 4,
+                'jenis' => 'Benefit',
             ],
             [
                 'kode' => 'C3',

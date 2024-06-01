@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('C3');
             $table->integer('C4');
             $table->integer('C5');
-            // $table->timestamp('created_at')->useCurrent();
-            // $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('noKK')->references('noKK')->on('keluarga')->onDelete('cascade');
         });

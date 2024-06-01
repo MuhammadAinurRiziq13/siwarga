@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-class Topsis {
+class Topsis
+{
     private $alternatives;
     private $criteria;
     private $weights;
@@ -16,7 +17,8 @@ class Topsis {
     private $criteriaType;
     private $steps;
 
-    public function __construct($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType) {
+    public function __construct($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType)
+    {
         $this->alternatives = $alternatives;
         $this->criteria = $criteria;
         $this->weights = $weights;
@@ -24,16 +26,20 @@ class Topsis {
         $this->criteriaType = $criteriaType; // 'benefit' or 'cost'
         $this->steps = [];
     }
+
     public function getSteps()
     {
         return $this->steps;
     }
-    private function addStep($stepName, $stepData) {
+
+    private function addStep($stepName, $stepData)
+    {
         $this->steps[$stepName] = $stepData;
     }
-    
+
     // Modifikasi fungsi normalizeMatrix()
-    public function normalizeMatrix() {
+    public function normalizeMatrix()
+    {
         $this->normalizedMatrix = [];
         foreach ($this->criteria as $j => $criterion) {
             $sum = 0;
@@ -50,7 +56,8 @@ class Topsis {
     }
 
     // Modifikasi fungsi weightNormalizedMatrix()
-    public function weightNormalizedMatrix() {
+    public function weightNormalizedMatrix()
+    {
         $this->weightedNormalizedMatrix = [];
         foreach ($this->normalizedMatrix as $i => $values) {
             foreach ($values as $j => $value) {
@@ -61,7 +68,8 @@ class Topsis {
     }
 
     // Modifikasi fungsi determineIdealSolutions()
-    public function determineIdealSolutions() {
+    public function determineIdealSolutions()
+    {
         $this->idealBest = [];
         $this->idealWorst = [];
         foreach ($this->criteria as $j => $criterion) {
@@ -78,7 +86,8 @@ class Topsis {
     }
 
     // Modifikasi fungsi calculateDistances()
-    public function calculateDistances() {
+    public function calculateDistances()
+    {
         $this->distances = ['best' => [], 'worst' => []];
         foreach ($this->weightedNormalizedMatrix as $i => $values) {
             $sumBest = 0;
@@ -94,7 +103,8 @@ class Topsis {
     }
 
     // Modifikasi fungsi calculateScores()
-    public function calculateScores() {
+    public function calculateScores()
+    {
         $this->scores = [];
         foreach ($this->distances['best'] as $i => $distanceBest) {
             $this->scores[$i] = $this->distances['worst'][$i] / ($distanceBest + $this->distances['worst'][$i]);
@@ -103,7 +113,8 @@ class Topsis {
     }
 
     // Fungsi getRankings() tidak perlu dimodifikasi karena tidak ada langkah tambahan
-    public function getRankings() {
+    public function getRankings()
+    {
         arsort($this->scores);
         $rankings = [];
         foreach ($this->scores as $i => $score) {
@@ -115,7 +126,8 @@ class Topsis {
         return $rankings;
     }
     // Modifikasi fungsi run()
-    public function run() {
+    public function run()
+    {
         $this->normalizeMatrix();
         $this->weightNormalizedMatrix();
         $this->determineIdealSolutions();
@@ -124,15 +136,14 @@ class Topsis {
         return $this->getRankings();
     }
 }
-    
 
-    // public function run() {
-    //     $this->normalizeMatrix();
-    //     $this->weightNormalizedMatrix();
-    //     $this->determineIdealSolutions();
-    //     $this->calculateDistances();
-    //     $this->calculateScores();
-    //     return $this->getRankings();
-    // }
+
+// public function run() {
+//     $this->normalizeMatrix();
+//     $this->weightNormalizedMatrix();
+//     $this->determineIdealSolutions();
+//     $this->calculateDistances();
+//     $this->calculateScores();
+//     return $this->getRankings();
 // }
-?>
+// }

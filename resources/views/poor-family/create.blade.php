@@ -9,20 +9,6 @@
         <div class="card-body">
             <form method="POST" action="{{ url('poor-family') }}" class="form-horizontal">
                 @csrf
-                {{-- <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">No KK</label>
-                    <div class="col-10">
-                        <select class="form-control" id="noKK" name="noKK" required>
-                            <option value="">No KK </option>
-                            @foreach ($family as $item)
-                                <option value="{{ $item->noKK }}">{{ $item->noKK }}</option>
-                            @endforeach
-                        </select>
-                        @error('noKK')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div> --}}
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">No KK</label>
                     <div class="col-10">
@@ -89,23 +75,26 @@
                     </div>
                 </div> --}}
                 @foreach ($criteria as $c)
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">{{ $c->nama }}</label>
-                    <div class="col-10">
-                        {{-- @if ($c->jenis == 'number') --}}
-                        <input type="number" class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" value="{{ old($c->kode) }}" required>
-                        {{-- @elseif ($c->jenis == 'select')
-                        <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
-                            @foreach ($c->options as $option)
-                            <option value="{{ $option->value }}">{{ $option->label }}</option>
-                            @endforeach
-                        </select> --}}
-                        {{-- @endif --}}
-                        @error($c->kode)
-                        <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="form-group row">
+                        <label class="col-2 control-label col-form-label">{{ $c->nama }}</label>
+                        <div class="col-10">
+                            @if ($c->nama == 'Kondisi Rumah')
+                                <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
+                                    <option value="5">Sangat Baik</option>
+                                    <option value="4">Baik</option>
+                                    <option value="3">Cukup</option>
+                                    <option value="2">Kurang</option>
+                                    <option value="1">Buruk</option>
+                                </select>
+                            @else
+                                <input type="number" class="form-control" id="{{ $c->kode }}"
+                                    name="{{ $c->kode }}" value="{{ old($c->kode) }}" required>
+                            @endif
+                            @error($c->kode)
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
                 @endforeach
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label"></label>

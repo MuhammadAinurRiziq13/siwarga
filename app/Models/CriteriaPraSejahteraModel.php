@@ -10,7 +10,7 @@ class CriteriaPraSejahteraModel extends Model
     use HasFactory;
 
     protected $table = 'criteriaprasejahtera'; // Sesuaikan dengan nama tabel yang Anda gunakan
-
+    protected $primaryKey = 'id';
     protected $guarded = [];
 
     // Relationship with KeluargaPraSejahtera model

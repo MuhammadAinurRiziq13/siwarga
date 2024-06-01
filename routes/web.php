@@ -96,14 +96,17 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/calculate', [PoorFamilyController::class, 'calculate']);
     Route::get('/criteria', [PoorFamilyController::class, 'criteria']);
     Route::get('/createCriteria', [PoorFamilyController::class, 'createCriteria']);
-    Route::get('/create', [PoorFamilyController::class, 'create']);
-    // Route::get('/criteria/{id}', [PoorFamilyController::class, 'showCriteria']);
-    
+    Route::post('/storeCriteria', [PoorFamilyController::class, 'storeCriteria']);
+    Route::get('/{id}/edit-criteria', [PoorFamilyController::class, 'EditCriteria']);
+    Route::post('/storeCriteria/{id}', [PoorFamilyController::class, 'updateCriteria']);
+
     Route::middleware('role:admin')->group(function () {
+        Route::get('/create', [PoorFamilyController::class, 'create']);
         Route::post('/', [PoorFamilyController::class, 'store']);
         Route::get('/{id}/edit', [PoorFamilyController::class, 'edit']);
         Route::put('/{id}', [PoorFamilyController::class, 'update']);
         Route::delete('/{id}', [PoorFamilyController::class, 'destroy']);
+        Route::delete('/delete-criteria/{id}', [PoorFamilyController::class, 'destroyCriteria']);
     });
     Route::get('/{id}', [PoorFamilyController::class, 'show']);
 });

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('bobot');
             $table->enum('jenis', ['cost', 'benefit']);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
