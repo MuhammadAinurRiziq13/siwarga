@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         // Generate dummy keluarga data
         $keluargaData = [];
         $keluargaKurangMampuData = [];
+        $keluargaPraSejahteraData = [];
         for ($i = 0; $i < 50; $i++) {
             $noKK = rand(1, 9) . $faker->unique()->numerify('################');
             $keluargaData[] = [
@@ -34,16 +35,28 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 8) === 0) {
                 $keluargaKurangMampuData[] = [
                     'noKK' => $noKK,
-                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
-                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'aset_kendaraan' => $faker->randomFloat(2, 10000, 20000),
-                    'luas_tanah' => $faker->numberBetween(100, 500),
-                    'kondisi_rumah' => $faker->numberBetween(1, 5),
+                    'c1' => $faker->numberBetween(1, 5),
+                    'c2' => $faker->randomFloat(2, 10000, 20000),
+                    'c3' => $faker->randomFloat(2, 10000, 20000),
+                    'c4' => $faker->numberBetween(100, 500),
+                    'c5' => $faker->numberBetween(1, 5),
                 ];
             }
+            
+            // if (rand(0, 8) === 0) {
+            //     $keluargaPraSejahteraData[] = [
+            //         'noKK' => $noKK,
+            //         'c1' => $faker->numberBetween(1, 5),
+            //         'c2' => $faker->randomFloat(2, 10000, 20000),
+            //         'c3' => $faker->randomFloat(2, 10000, 20000),
+            //         'c4' => $faker->numberBetween(100, 500),
+            //         'c5' => $faker->numberBetween(1, 5),
+            //         // Add more columns as needed
+            //     ];
+            // }
         }
-
         DB::table('keluarga')->insert($keluargaData);
+        // DB::table('keluargaprasejahtera')->insert($keluargaPraSejahteraData);
         DB::table('keluargakurangmampu')->insert($keluargaKurangMampuData);
 
 
@@ -223,5 +236,43 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Superadmin',
             'password' => Hash::make('superadmin'), // sesuaikan dengan password yang diinginkan
         ]);
+
+        //seeder criteria ps
+        $criteria = [
+            [
+                'kode' => 'C1',
+                'nama' => 'Pendapatan',
+                'bobot' => 4,
+                'jenis' => 'Benefit',
+            ],
+            [
+                'kode' => 'C2',
+                'nama' => 'Jumlah Tanggungan',
+                'bobot' => 6,
+                'jenis' => 'Cost',
+            ],
+            [
+                'kode' => 'C3',
+                'nama' => 'Aset Kendaraan',
+                'bobot' => 5,
+                'jenis' => 'Cost',
+            ],
+            [
+                'kode' => 'C4',
+                'nama' => 'Luas tanah',
+                'bobot' => 3,
+                'jenis' => 'Cost',
+            ],
+            [
+                'kode' => 'C5',
+                'nama' => 'Kondisi Rumah',
+                'bobot' => 2,
+                'jenis' => 'Cost',
+            ],
+        ];
+
+        DB::table('criteriaprasejahtera')->insert($criteria);
+
+       
     }
 }

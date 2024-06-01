@@ -24,9 +24,9 @@
                     </div>
                 </div> --}}
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">No KK</label>
+                    <label class="col-2 control-label col-form-label">Nama Criteria</label>
                     <div class="col-10">
-                        <select class="form-control select2" id="noKK" name="noKK" required>
+                        <input type="text" class="form-control" id="nama_criteria" name="nama_criteria" required>
                         </select>
                         @error('noKK')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -34,16 +34,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Jumlah Tanggungan</label>
+                    <label class="col-2 control-label col-form-label">Bobot Criteria</label>
                     <div class="col-10">
-                        <input type="number" class="form-control" id="jumlah_tanggungan" name="jumlah_tanggungan"
-                            value="{{ old('jumlah_tanggungan') }}" required>
-                        @error('jumlah_tanggungan')
+                        <input type="number" class="form-control" id="bobot_criteria" name="bobot_criteria"
+                            value="{{ old('bobot_criteria') }}" required>
+                        @error('bobot_criteria')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Pendapatan</label>
                     <div class="col-10">
                         <input type="number" class="form-control" id="pendapatan" name="pendapatan"
@@ -87,7 +87,7 @@
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label"></label>
                     <div class="col-10">
@@ -104,27 +104,4 @@
 @endpush
 
 @push('js')
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                placeholder: 'No KK',
-                ajax: {
-                    url: '/noKK',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.text
-                                };
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-        });
-    </script>
 @endpush

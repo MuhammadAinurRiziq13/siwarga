@@ -9,7 +9,7 @@
             @empty($poorFamily)
                 <div class="alert alert-danger alert-dismissible">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
-                    Data yang Anda cari tidak ditemukan.
+                    Data yang Anda cari tidak ditemukan shiw.
                 </div>
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
@@ -26,8 +26,8 @@
                         <td>{{ $poorFamily->pendapatan }}</td>
                     </tr>
                     <tr>
-                        <th>Pengeluaran</th>
-                        <td>{{ $poorFamily->pengeluaran }}</td>
+                        <th>Nilai Aset Kendaraan</th>
+                        <td>{{ $poorFamily->aset_kendaraan }}</td>
                     </tr>
                     <tr>
                         <th>Luas Tanah</th>
