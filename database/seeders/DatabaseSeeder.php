@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
                     'c5' => $faker->numberBetween(1, 5),
                 ];
             }
-            
+
             // if (rand(0, 8) === 0) {
             //     $keluargaPraSejahteraData[] = [
             //         'noKK' => $noKK,
@@ -87,12 +87,14 @@ class DatabaseSeeder extends Seeder
                     'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                     'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
                     'status_keluarga' => $faker->randomElement(['istri', 'anak']),
+                    'status_kerja' => $faker->randomElement(['Kerja', 'Tidak Kerja']),
                     // 'kepala_keluarga' => false, // Setiap warga tidak menjadi kepala keluarga secara default
                 ];
 
                 // Jika kepala keluarga belum ditambahkan dan ini adalah warga pertama dalam keluarga, tandai sebagai kepala keluarga
                 if (!$kepalaKelurahanAdded && $j === 0) {
                     $warga['status_keluarga'] = 'kepala keluarga';
+                    $warga['status_kerja'] = 'Kerja';
                     $kepalaKelurahanAdded = true;
                 }
 
@@ -129,11 +131,12 @@ class DatabaseSeeder extends Seeder
                 $pengajuanEditDataWargaData[] = [
                     'NIK' => $warga['NIK'],
                     'nama' => $warga['nama'], // Generate different name for pengajuan
-                    'tempat_lahir' => $faker->city,
-                    'tanggal_lahir' => $faker->date('Y-m-d', '-18 years'),
-                    'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
-                    'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
-                    'status_pernikahan' => $faker->randomElement(['Belum Menikah', 'Menikah']),
+                    'tempat_lahir' => $warga['tempat_lahir'],
+                    'tanggal_lahir' => $warga['tanggal_lahir'],
+                    'jenis_kelamin' => $warga['jenis_kelamin'],
+                    'agama' => $warga['agama'],
+                    'status_pernikahan' => $warga['status_pernikahan'],
+                    'status_kerja' => $warga['status_kerja'],
                     'keterangan' => $keterangan, // Use truncated keterangan
                     'status' => $faker->randomElement(['selesai', 'proses', 'ditolak']),
                     'no_hp' => $faker->phoneNumber,
@@ -272,7 +275,5 @@ class DatabaseSeeder extends Seeder
         ];
 
         DB::table('criteriaprasejahtera')->insert($criteria);
-
-       
     }
 }

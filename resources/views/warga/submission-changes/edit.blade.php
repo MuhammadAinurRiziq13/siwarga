@@ -68,11 +68,9 @@
                         <div class="col-6">
                             <label class="control-label col-form-label">Jenis Kelamin</label>
                             <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                                <option value="{{ $resident->jenis_kelamin }}"
-                                    @if ($resident->jenis_kelamin == 'L') selected @endif>
+                                <option value="Laki-laki" @if ($resident->jenis_kelamin == 'Laki-laki') selected @endif>
                                     Laki-Laki</option>
-                                <option value="{{ $resident->jenis_kelamin }}"
-                                    @if ($resident->jenis_kelamin == 'P') selected @endif>
+                                <option value="Perempuan" @if ($resident->jenis_kelamin == 'Perempuan') selected @endif>
                                     Perempuan</option>
                             </select>
                             @error('jenis_kelamin')
@@ -84,22 +82,19 @@
                         <div class="col-6">
                             <label class="control-label col-form-label">Agama</label>
                             <select class="form-control" id="agama" name="agama" required>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Islam') selected @endif>
-                                    Islam
+                                <option value="Islam" @if ($resident->agama == 'Islam') selected @endif>Islam
                                 </option>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Kristen') selected @endif>
+                                <option value="Kristen" @if ($resident->agama == 'Kristen') selected @endif>
                                     Kristen
                                 </option>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Katolik') selected @endif>
+                                <option value="Katolik" @if ($resident->agama == 'Katolik') selected @endif>
                                     Katolik
                                 </option>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Hindu') selected @endif>
-                                    Hindu
+                                <option value="Hindu" @if ($resident->agama == 'Hindu') selected @endif>Hindu
                                 </option>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Budha') selected @endif>
-                                    Budha
+                                <option value="Budha" @if ($resident->agama == 'Budha') selected @endif>Budha
                                 </option>
-                                <option value="{{ $resident->agama }}" @if ($resident->agama == 'Konghucu') selected @endif>
+                                <option value="Konghucu" @if ($resident->agama == 'Konghucu') selected @endif>
                                     Konghucu
                                 </option>
                             </select>
@@ -110,10 +105,9 @@
                         <div class="col-6">
                             <label class="control-label col-form-label">Status Pernikahan</label>
                             <select class="form-control" id="status_pernikahan" name="status_pernikahan" required>
-                                <option value="{{ $resident->status_pernikahan }}"
-                                    @if ($resident->status_pernikahan == 'Menikah') selected @endif>Menikah</option>
-                                <option value="{{ $resident->status_pernikahan }}"
-                                    @if ($resident->status_pernikahan == 'Belum Menikah') selected @endif> Belum Menikah</option>
+                                <option value="Menikah" @if ($resident->status_pernikahan == 'Menikah') selected @endif>Menikah</option>
+                                <option value="Belum Menikah" @if ($resident->status_pernikahan == 'Belum Menikah') selected @endif>Belum Menikah
+                                </option>
                             </select>
                             @error('status_pernikahan')
                                 <small class="form-text text-danger">{{ $message }}</small>
@@ -162,16 +156,14 @@
                             @enderror
                         </div>
                         <div class="col-6">
-                            <label class="control-label col-form-label">Foto Bukti</label>
-                            <div class="preview-container gap-2">
-                                <!-- Placeholder for image previews -->
-                            </div>
-                            <input class="form-control @error('nama_bukti') is-invalid @enderror" type="file"
-                                id="image" name="nama_bukti[]" multiple onchange="previewImages()" accept="image/*">
-                            @error('nama_bukti')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            <label class="control-label col-form-label">Status Kerja</label>
+                            <select class="form-control" id="status_kerja" name="status_kerja">
+                                <option value="Kerja" @if ($resident->status_kerja == 'Kerja') selected @endif>Kerja</option>
+                                <option value="Tidak Kerja" @if ($resident->status_kerja == 'Tidak Kerja') selected @endif>Tidak Kerja
+                                </option>
+                            </select>
+                            @error('status_kerja')
+                                <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>
@@ -200,13 +192,26 @@
                         </div>
                     </div>
                     <div class="form-group row mx-auto">
-                        <div class="col-12">
+                        <div class="col-6">
                             <label class="control-label col-form-label">Alamat Asal</label>
                             <input type="text" class="form-control" id="alamat_asal" name="alamat_asal"
                                 value="{{ old('alamat_asal', $resident->alamat_asal) }}" required
                                 @if (is_null($resident->alamat_asal)) disabled @endif>
                             @error('alamat_asal')
                                 <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label col-form-label">Foto Bukti</label>
+                            <div class="preview-container gap-2">
+                                <!-- Placeholder for image previews -->
+                            </div>
+                            <input class="form-control @error('nama_bukti') is-invalid @enderror" type="file"
+                                id="image" name="nama_bukti[]" multiple onchange="previewImages()" accept="image/*">
+                            @error('nama_bukti')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                     </div>

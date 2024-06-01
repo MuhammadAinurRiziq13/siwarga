@@ -70,6 +70,8 @@ Route::prefix('family')->middleware('auth')->group(function () {
         Route::get('/{id}/edit', [FamilyController::class, 'edit']);
         Route::put('/{id}', [FamilyController::class, 'update']);
         Route::delete('/{id}', [FamilyController::class, 'destroy']);
+        Route::get('/{id}/create', [FamilyController::class, 'create1']);
+        Route::post('/resident', [FamilyController::class, 'store1']);
     });
     Route::get('/{id}', [FamilyController::class, 'show']);
 });
@@ -93,7 +95,7 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::post('/list', [PoorFamilyController::class, 'list']);
     Route::get('/calculate', [PoorFamilyController::class, 'calculate']);
     Route::get('/criteria/{id}', [PoorFamilyController::class, 'showCriteria']);
-    
+
     Route::middleware('role:admin')->group(function () {
         Route::get('/criteria', [PoorFamilyController::class, 'criteria']);
         Route::get('/createCriteria', [PoorFamilyController::class, 'createCriteria']);

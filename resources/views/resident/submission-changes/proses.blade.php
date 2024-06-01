@@ -23,6 +23,7 @@
                     <input type="hidden" name="agama" value="{{ $changes->agama }}">
                     <input type="hidden" name="status_pernikahan" value="{{ $changes->status_pernikahan }}">
                     <input type="hidden" name="status_keluarga" value="{{ $changes->status_keluarga }}">
+                    <input type="hidden" name="status_kerja" value="{{ $changes->status_kerja }}">
                     <input type="hidden" name="alamat_asal" value="{{ $changes->alamat_asal }}">
                     <input type="hidden" name="keterangan" value="{{ $changes->keterangan }}">
                     <input type="hidden" name="no_hp" value="{{ $changes->no_hp }}">
@@ -61,6 +62,10 @@
                         <tr>
                             <th style="width: 30%">Status Keluarga</th>
                             <td>{{ $changes->status_keluarga }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Status Kerja</th>
+                            <td>{{ $changes->status_kerja }}</td>
                         </tr>
                         <tr>
                             <th style="width: 30%">Keterangan</th>
@@ -104,6 +109,7 @@
                     <input type="hidden" name="agama" value="{{ $changes->agama }}">
                     <input type="hidden" name="status_pernikahan" value="{{ $changes->status_pernikahan }}">
                     <input type="hidden" name="status_keluarga" value="{{ $changes->status_keluarga }}">
+                    <input type="hidden" name="status_kerja" value="{{ $changes->status_kerja }}">
                     <input type="hidden" name="alamat_asal" value="{{ $changes->alamat_asal }}">
                     <input type="hidden" name="family_member" value="{{ $changes->family_member }}">
                     <input type="hidden" name="keterangan" value="{{ $changes->keterangan }}">

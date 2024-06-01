@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\FamilyModel;
+use App\Models\ResidentModel;
+use App\Models\TemporaryResident;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class FamilyController extends Controller
 {
@@ -110,6 +114,30 @@ class FamilyController extends Controller
         ]);
     }
 
+    public function create1(string $id)
+    {
+        $data = FamilyModel::where('noKK', $id)->get();
+        $jml = ResidentModel::where('noKK', $id)->get();
+        $count = $jml->count();
+        $breadcrumb = (object)[
+            'title' => '',
+            'list' => ['Home', 'Warga', 'Tambah']
+        ];
+
+        $page = (object)[
+            'title' => 'Form Tambah Data Warga Baru'
+        ];
+
+        return view('family.create1', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'data' => $data,
+            'count' => $count,
+        ]);
+    }
+
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -132,7 +160,70 @@ class FamilyController extends Controller
             'provinsi' => $request->provinsi,
         ]);
 
-        return redirect('/family')->with('success', 'Data keluarga berhasil disimpan');
+        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah anda ingin input data warga??');
+    }
+
+    public function store1(Request $request)
+    {
+        $request->validate([
+            'NIK' => 'required|string|min:16|unique:warga,NIK',
+            'noKK' => 'required',
+            'nama' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|string',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+            'status_pernikahan' => 'required',
+            'status_kerja' => 'required',
+            'alamat_asal' => 'required_if:alamat_asal_checkbox,on', // Jika checkbox di-check, alamat_asal harus diisi
+            'status_keluarga' => [
+                function ($fail) use ($request) {
+                    // Mengecek apakah ada kepala keluarga dengan nomor KK yang sama
+                    $count = ResidentModel::where('noKK', $request->noKK)
+                        ->where('status_keluarga', 'kepala keluarga')
+                        ->count();
+
+                    // Jika ada kepala keluarga lain dengan nomor KK yang sama
+                    if ($count > 0 && $request->status_keluarga == 'kepala keluarga') {
+                        $fail('Nomor KK ini sudah memiliki kepala keluarga.');
+                    }
+                },
+            ],
+        ]);
+
+
+        // Fungsi eloquent untuk menambah data
+        ResidentModel::create([
+            'NIK' => $request->NIK,
+            'noKK' => $request->noKK,
+            'nama' => $request->nama,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama' => $request->agama,
+            'status_pernikahan' => $request->status_pernikahan,
+            'status_keluarga' => $request->status_keluarga,
+            'status_kerja' => $request->status_kerja,
+        ]);
+
+        // Jika checkbox di-check, tambahkan data ke tabel warga sementara
+        if ($request->has('alamat_asal_checkbox')) {
+            TemporaryResident::create([
+                'NIK_warga_sementara' => $request->NIK,
+                'alamat_asal' => $request->alamat_asal
+            ]);
+        }
+
+        if ($request->status_keluarga == 'kepala keluarga') {
+            User::create([
+                'username' => $request->NIK,
+                'password' =>  Hash::make($request->NIK),
+                'nama' => $request->nama,
+                'level' => 'warga',
+            ]);
+        }
+
+        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah anda ingin input data warga lagi??');
     }
 
     public function edit(string $id)

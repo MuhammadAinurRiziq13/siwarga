@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('agama', 10);
             $table->string('status_pernikahan', 15);
             $table->string('status_keluarga', 20);
+            $table->string('status_kerja', 20);
             // $table->boolean('kepala_keluarga')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

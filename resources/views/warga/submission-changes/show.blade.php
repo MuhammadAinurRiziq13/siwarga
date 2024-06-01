@@ -49,6 +49,10 @@
                         <th>Status Keluarga</th>
                         <td>{{ $resident->status_keluarga }}</td>
                     </tr>
+                    <tr>
+                        <th>Status Kerja</th>
+                        <td>{{ $resident->status_kerja }}</td>
+                    </tr>
                     @if ($resident->alamat_asal)
                         <tr>
                             <th>Alamat Asal</th>

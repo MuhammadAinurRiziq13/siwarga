@@ -95,6 +95,7 @@ class SubmissionChangesController extends Controller
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'agama' => $request->agama,
                 'status_pernikahan' => $request->status_pernikahan,
+                'status_kerja' => $request->status_kerja,
                 'status_keluarga' => $request->status_keluarga,
             ]);
         }

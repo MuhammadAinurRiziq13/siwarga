@@ -173,6 +173,7 @@ class ResidentEditController extends Controller
             'agama' => $request->agama,
             'status_pernikahan' => $request->status_pernikahan,
             'status_keluarga' => $request->status_keluarga,
+            'status_kerja' => $request->status_kerja,
             'keterangan' => $request->keterangan,
             'no_hp' => $request->no_hp,
             'status' => 'proses',

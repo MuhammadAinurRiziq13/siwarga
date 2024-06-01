@@ -6,7 +6,7 @@
             <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('resident') }}" class="form-horizontal">
+            <form method="POST" action="{{ url('family/resident') }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row mx-auto">
                     <div class="col-6">
@@ -19,8 +19,8 @@
                     </div>
                     <div class="col-6">
                         <label class="control-label col-form-label">No KK</label>
-                        <select class="form-control select2" id="noKK" name="noKK" required>
-                        </select>
+                        <input type="text" class="form-control coba" id="noKK" name="noKK"
+                            value="{{ old('noKK', $data->first()->noKK) }}" required>
                         @error('noKK')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -94,9 +94,12 @@
                     <div class="col-6">
                         <label class="control-label col-form-label">Status Keluarga</label>
                         <select class="form-control" id="status_keluarga" name="status_keluarga" required>
-                            <option value="kepala keluarga">Kepala Keluarga</option>
-                            <option value="anak">Anak</option>
-                            <option value="istri">Istri</option>
+                            @if ($count == 0)
+                                <option value="kepala keluarga">Kepala Keluarga</option>
+                            @else
+                                <option value="anak">Anak</option>
+                                <option value="istri">Istri</option>
+                            @endif
                         </select>
                         @error('status_keluarga')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -145,12 +148,35 @@
                     <div class="col-2 mx-auto">
                         <label class="control-label col-form-label"></label>
                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-sm btn-secondary ml-1" href="{{ url('resident') }}">Kembali</a>
+                        <a class="btn btn-sm btn-secondary ml-1" href="{{ url('family') }}">Kembali</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    @if ($message = Session::get('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "{{ session('success') }}",
+                    text: "",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya",
+                    cancelButtonText: "Tidak"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // window.location.href = "/family/{{ $data->first()->noKK }}/create";
+                    } else {
+                        window.location.href = "{{ url('family') }}"; // Redirect ke halaman utama
+                    }
+                });
+            });
+        </script>
+    @endif
 @endsection
 
 @push('css')

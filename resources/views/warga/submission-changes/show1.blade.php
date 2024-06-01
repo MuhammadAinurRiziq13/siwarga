@@ -46,6 +46,10 @@
                         <td>{{ $changes->status_keluarga }}</td>
                     </tr>
                     <tr>
+                        <th>Status Kerja</th>
+                        <td>{{ $changes->status_kerja }}</td>
+                    </tr>
+                    <tr>
                         <th style="width: 30%">Keterangan</th>
                         <td>{{ $changes->keterangan }}</td>
                     </tr>

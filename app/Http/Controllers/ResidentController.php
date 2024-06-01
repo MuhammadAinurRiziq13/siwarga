@@ -127,16 +127,17 @@ class ResidentController extends Controller
             'jenis_kelamin' => 'required',
             'agama' => 'required',
             'status_pernikahan' => 'required',
+            'status_kerja' => 'required',
             'alamat_asal' => 'required_if:alamat_asal_checkbox,on', // Jika checkbox di-check, alamat_asal harus diisi
             'status_keluarga' => [
-                function ($attribute, $value, $fail) use ($request) {
+                function ($fail) use ($request) {
                     // Mengecek apakah ada kepala keluarga dengan nomor KK yang sama
                     $count = ResidentModel::where('noKK', $request->noKK)
                         ->where('status_keluarga', 'kepala keluarga')
                         ->count();
 
                     // Jika ada kepala keluarga lain dengan nomor KK yang sama
-                    if ($count > 0 && $value) {
+                    if ($count > 0 && $request->status_keluarga == 'kepala keluarga') {
                         $fail('Nomor KK ini sudah memiliki kepala keluarga.');
                     }
                 },
@@ -155,6 +156,7 @@ class ResidentController extends Controller
             'agama' => $request->agama,
             'status_pernikahan' => $request->status_pernikahan,
             'status_keluarga' => $request->status_keluarga,
+            'status_kerja' => $request->status_kerja,
         ]);
 
         // Jika checkbox di-check, tambahkan data ke tabel warga sementara
@@ -239,11 +241,12 @@ class ResidentController extends Controller
             'jenis_kelamin' => 'required',
             'agama' => 'required',
             'status_pernikahan' => 'required',
+            'status_kerja' => 'required',
         ]);
 
         // Update data warga
-        $resident = ResidentModel::find($id);
-        $resident->update([
+        // $resident = ResidentModel::find($id);
+        ResidentModel::find($id)->update([
             'NIK' => $request->NIK,
             'noKK' => $request->noKK,
             'nama' => $request->nama,
@@ -253,6 +256,7 @@ class ResidentController extends Controller
             'agama' => $request->agama,
             'status_pernikahan' => $request->status_pernikahan,
             'status_keluarga' => $request->status_keluarga,
+            'status_kerja' => $request->status_kerja,
         ]);
 
         // Set kepala keluarga untuk anggota yang dipilih
