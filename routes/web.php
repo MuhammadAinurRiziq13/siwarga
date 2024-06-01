@@ -172,6 +172,7 @@ Route::prefix('submission-prasejahtera')->middleware('auth')->group(function () 
     Route::get('/{id}/create', [SubmissionPrasejahteraController::class, 'create']);
     Route::post('/', [SubmissionPrasejahteraController::class, 'store']);
     Route::get('/{id}/show', [SubmissionPrasejahteraController::class, 'show']);
+    Route::delete('/{id}', [SubmissionPrasejahteraController::class, 'destroy']);
     // Route::post('/', [SubmissionPrasejahteraController::class, 'store']);
     // Route::get('/{id}/edit', [SubmissionPrasejahteraController::class, 'edit']);
     // Route::put('/{id}', [SubmissionPrasejahteraController::class, 'update']);

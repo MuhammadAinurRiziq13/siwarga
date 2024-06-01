@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h5 class="card-title mb-0">{{ $page->title }}</h5>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
@@ -161,31 +161,13 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-
-                        {{-- <div class="col-6">
-                            <label class="control-label col-form-label">Foto Kegiatan</label>
-                            <img class="img-preview img-fluid col-sm-5 m-0 p-0 mb-2" style="display:none;">
-                            <img class="img-current img-fluid col-sm-5 m-0 p-0 mb-2"
-                                src="{{ asset('storage/' . $resident->nama_bukti) }}">
-                            <input type="hidden" name="oldImage" value="{{ $resident->nama_bukti }}">
-                            <input
-                                class="form-control
-                                @error('nama_bukti') is-invalid @enderror"
-                                type="file" id="image" name="nama_bukti" onchange="previewImage()"
-                                value="{{ old('tanggal_kegiatan', $resident->nama_bukti) }}">
-                            @error(' nama_bukti')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
                         <div class="col-6">
                             <label class="control-label col-form-label">Foto Bukti</label>
                             <div class="preview-container gap-2">
                                 <!-- Placeholder for image previews -->
                             </div>
                             <input class="form-control @error('nama_bukti') is-invalid @enderror" type="file"
-                                id="image" name="nama_bukti[]" multiple onchange="previewImages()">
+                                id="image" name="nama_bukti[]" multiple onchange="previewImages()" accept="image/*">
                             @error('nama_bukti')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -232,7 +214,8 @@
                         {{-- <label class="col-6 control-label col-form-label"></label> --}}
                         <div class="col-2 mx-auto">
                             <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                            <a class="btn btn-sm btn-secondary ml-1" href="{{ url('resident') }}">Kembali</a>
+                            <a class="btn btn-sm btn-secondary ml-1"
+                                href="{{ url('resident-edit/' . Auth::user()->username) }}">Kembali</a>
                         </div>
                     </div>
                 </form>

@@ -143,7 +143,7 @@ class FamilyController extends Controller
             'list' => ['Home', 'Keluarga', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Keluarga'
+            'title' => 'Form Edit Keluarga'
         ];
         return view('family.edit', [
             'breadcrumb' => $breadcrumb,

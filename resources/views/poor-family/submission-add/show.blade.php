@@ -18,7 +18,7 @@
                         <td>{{ $add->noKK }}</td>
                     </tr>
                     <tr>
-                        <th>Kepala Keluarga</th>
+                        <th>Nama Pemohon</th>
                         <td>{{ $add->kepala_keluarga }}</td>
                     </tr>
                     <tr>
@@ -26,8 +26,8 @@
                         <td>{{ $add->jumlah_tanggungan }}</td>
                     </tr>
                     <tr>
-                        <th>Jumlah Kendaraan</th>
-                        <td>{{ $add->jumlah_kendaraan }}</td>
+                        <th>Nilai Aset Kendaraan</th>
+                        <td>{{ $add->aset_kendaraan }}</td>
                     </tr>
                     <tr>
                         <th>Kondisi Rumah</th>
@@ -44,6 +44,15 @@
                     <tr>
                         <th>No HP</th>
                         <td>{{ $add->no_hp }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Bukti Foto</th>
+                        <td>
+                            @foreach ($bukti as $foto)
+                                <img src="{{ asset('storage/' . $foto->nama_bukti) }}" style="max-width:400px; max-height:400px"
+                                    class="rounded mb-2">
+                            @endforeach
+                        </td>
                     </tr>
                 </table>
             @endempty

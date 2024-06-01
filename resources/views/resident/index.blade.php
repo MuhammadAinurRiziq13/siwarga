@@ -2,17 +2,18 @@
 
 @section('content')
     <div class="card shadow">
-        <div class="card-header bg-transparent">
+        <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('submission-changes') }}">Daftar
+                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary"
+                    href="{{ url('submission-changes') }}">Daftar
                     Pengajuan</a>
                 @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('resident/create') }}"><i
+                    <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
                             class="fas fa-fw fa-plus"></i> Tambah</a>
                 @endif
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('resident/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('resident/create') }}"><i
+                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
                         class="fas fa-regular fa-file-excel"></i> Export</a>
             </div>
         </div>

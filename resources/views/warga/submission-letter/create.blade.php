@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h class="card-title mb-0">{{ $page->title }}</h>
+        <div class="card-header bg-dark-blue">
+            <h class="card-title mb-0 text-white">{{ $page->title }}</h>
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
@@ -19,20 +19,6 @@
                         @enderror
                     </div>
                 </div>
-                {{-- <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">NIK</label>
-                    <div class="col-10">
-                        <select class="form-control" id="NIK" name="NIK" required>
-                            @foreach ($warga as $item)
-                                <option value="{{ $item->NIK }}">
-                                    {{ $item->NIK }}</option>
-                            @endforeach
-                        </select>
-                        @error('NIK')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div> --}}
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Pekerjaan</label>
                     <div class="col-10">
@@ -77,7 +63,8 @@
                     <label class="col-2 control-label col-form-label"></label>
                     <div class="col-10">
                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                        <a class="btn btn-sm btn-secondary ml-1" href="{{ url('family') }}">Kembali</a>
+                        <a class="btn btn-sm btn-secondary ml-1"
+                            href="{{ url('submission-pengantar/' . Auth::user()->username) }}">Kembali</a>
                     </div>
                 </div>
             </form>

@@ -12,12 +12,12 @@
                     Data yang Anda cari tidak ditemukan.
                 </div>
             @else
-                <form method="POST" action="{{ url('/submission-add/' . $add->noKK) }}">
+                <form method="POST" action="{{ url('/submission-add/' . $add->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
                     <input type="hidden" name="noKK" value="{{ $add->noKK }}">
                     <input type="hidden" name="jumlah_tanggungan" value="{{ $add->jumlah_tanggungan }}">
-                    <input type="hidden" name="jumlah_kendaraan" value="{{ $add->jumlah_kendaraan }}">
+                    <input type="hidden" name="aset_kendaraan" value="{{ $add->aset_kendaraan }}">
                     <input type="hidden" name="kondisi_rumah" value="{{ $add->kondisi_rumah }}">
                     <input type="hidden" name="luas_tanah" value="{{ $add->luas_tanah }}">
                     <input type="hidden" name="pendapatan" value="{{ $add->pendapatan }}">
@@ -30,16 +30,16 @@
                             <td>{{ $add->noKK }}</td>
                         </tr>
                         <tr>
-                            <th>Kepala Keluarga</th>
-                            <td>{{ $add->kepala_keluarga }}</td>
+                            <th>Nama Pemohon</th>
+                            <td>{{ $nama->kepala_keluarga }}</td>
                         </tr>
                         <tr>
                             <th>Jumlah tanggungan</th>
                             <td>{{ $add->jumlah_tanggungan }}</td>
                         </tr>
                         <tr>
-                            <th>Jumlah Kendaraan</th>
-                            <td>{{ $add->jumlah_kendaraan }}</td>
+                            <th>Nilai Aset Kendaraan</th>
+                            <td>{{ $add->aset_kendaraan }}</td>
                         </tr>
                         <tr>
                             <th>Kondisi Rumah</th>
@@ -57,18 +57,27 @@
                             <th>No HP</th>
                             <td>{{ $add->no_hp }}</td>
                         </tr>
+                        <tr>
+                            <th style="width: 30%">Bukti Foto</th>
+                            <td>
+                                @foreach ($bukti as $foto)
+                                    <img src="{{ asset('storage/' . $foto->nama_bukti) }}"
+                                        style="max-width:400px; max-height:400px" class="rounded mb-2">
+                                @endforeach
+                            </td>
+                        </tr>
                     </table>
 
                     <button type="submit" class="btn btn-sm btn-success m-2 float-right">Terima</button>
                 </form>
 
                 <!-- Form untuk tombol "Tolak" -->
-                <form method="POST" action="{{ url('/submission-add/' . $add->noKK) }}">
+                <form method="POST" action="{{ url('/submission-add/' . $add->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
                     <input type="hidden" name="noKK" value="{{ $add->noKK }}">
                     <input type="hidden" name="jumlah_tanggungan" value="{{ $add->jumlah_tanggungan }}">
-                    <input type="hidden" name="jumlah_kendaraan" value="{{ $add->jumlah_kendaraan }}">
+                    <input type="hidden" name="aset_kendaraan" value="{{ $add->aset_kendaraan }}">
                     <input type="hidden" name="kondisi_rumah" value="{{ $add->kondisi_rumah }}">
                     <input type="hidden" name="luas_tanah" value="{{ $add->luas_tanah }}">
                     <input type="hidden" name="pendapatan" value="{{ $add->pendapatan }}">

@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h class="card-title mb-0">{{ $page->title }}</h>
-            <div class="card-tools"></div>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ url('family') }}" class="form-horizontal">

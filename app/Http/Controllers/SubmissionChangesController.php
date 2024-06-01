@@ -43,7 +43,7 @@ class SubmissionChangesController extends Controller
         return DataTables::of($Submissions)
             ->addIndexColumn()
             ->addColumn('waktu_pengajuan', function ($submission) {
-                return date('Y-m-d H:i:s', strtotime($submission->created_at));
+                return date('d-m-Y H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
                 return '<a href="' . url('/submission-changes/' . $submission->id) . '" class="btn btn-info btn-sm">Detail</a>';
@@ -70,11 +70,11 @@ class SubmissionChangesController extends Controller
         $pengganti = ResidentModel::find($changes->family_member);
 
         $breadcrumb = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga',
-            'list' => ['Home', 'Pengajuan', 'Show']
+            'title' => 'Proses Pengajuan Edit Data Warga',
+            'list' => ['Home', 'Pengajuan', 'Proses']
         ];
         $page = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga'
+            'title' => 'Proses Pengajuan Edit Data Warga'
         ];
         return view('resident.submission-changes.proses', [
             'breadcrumb' => $breadcrumb,
@@ -87,15 +87,17 @@ class SubmissionChangesController extends Controller
 
     public function update(Request $request, string $id)
     {
-        ResidentModel::where('NIK', $request->NIK)->update([
-            'nama' => $request->nama,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama' => $request->agama,
-            'status_pernikahan' => $request->status_pernikahan,
-            'status_keluarga' => $request->status_keluarga,
-        ]);
+        if ($request->status == 'selesai') {
+            ResidentModel::where('NIK', $request->NIK)->update([
+                'nama' => $request->nama,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'agama' => $request->agama,
+                'status_pernikahan' => $request->status_pernikahan,
+                'status_keluarga' => $request->status_keluarga,
+            ]);
+        }
 
         if ($request->has('family_member')) {
             $selectedMember = ResidentModel::where('NIK', $request->family_member)->first();
@@ -192,11 +194,11 @@ class SubmissionChangesController extends Controller
         $pengganti = ResidentModel::find($changes->family_member);
 
         $breadcrumb = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga',
-            'list' => ['Home', 'Pengajuan', 'Show']
+            'title' => 'Detail Pengajuan Edit Data Warga',
+            'list' => ['Home', 'Pengajuan', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga'
+            'title' => 'Detail Pengajuan Edit Data Warga'
         ];
         return view('resident.submission-changes.show', [
             'breadcrumb' => $breadcrumb,

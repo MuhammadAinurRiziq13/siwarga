@@ -5,7 +5,7 @@
         {{-- <div class="card-header bg-dark-blue">
             <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div> --}}
-        <div class="card-header bg-transparent bg-dark-blue">
+        <div class="card-header bg-dark-blue">
             <h6 class="card-title my-2 text-white float-left">{{ $page->title }}</h6>
             @empty($poorFamily)
                 <a class="btn btn-sm text-white bg-gradient-primary float-right"
@@ -35,8 +35,8 @@
                         <td>{{ $poorFamily->pendapatan }}</td>
                     </tr>
                     <tr>
-                        <th>Jumlah Kendaraan</th>
-                        <td>{{ $poorFamily->pengeluaran }}</td>
+                        <th>Nilai Aset Kendaraan</th>
+                        <td>{{ $poorFamily->aset_kendaraan }}</td>
                     </tr>
                     <tr>
                         <th>Luas Tanah</th>
@@ -70,6 +70,28 @@
             </table>
         </div>
     </div>
+
+    @if ($message = Session::get('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "{{ session('success') }}"
+                });
+            });
+        </script>
+    @endif
 @endsection
 
 @push('js')

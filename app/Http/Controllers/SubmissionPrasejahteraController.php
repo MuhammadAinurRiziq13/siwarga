@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuktiAddModel;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
 use App\Models\ResidentModel;
 use App\Models\SubmissionAddModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubmissionPrasejahteraController extends Controller
@@ -52,11 +54,10 @@ class SubmissionPrasejahteraController extends Controller
             )
             ->get();
 
-
         return DataTables::of($Submissions)
             ->addIndexColumn()
             ->addColumn('waktu_pengajuan', function ($submission) {
-                return date('Y-m-d H:i:s', strtotime($submission->created_at));
+                return date('d-m-Y H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
                 $btn = '<a href="' . url('/submission-prasejahtera/' . $submission->id . '/show') . '" class="btn btn-info btn-sm mr-2"><i class="fas fa-eye"></i></a> ';
@@ -84,12 +85,12 @@ class SubmissionPrasejahteraController extends Controller
         $family = FamilyModel::all();
 
         $breadcrumb = (object)[
-            'title' => 'Tambah Warga',
+            'title' => 'Pengajuan Keluarga Pra Sejahtera',
             'list' => ['Home', 'Warga', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Warga Baru'
+            'title' => 'Form Pengajuan Keluarga Pra Sejahtera'
         ];
 
         return view('warga.submission-add.create', [
@@ -110,10 +111,11 @@ class SubmissionPrasejahteraController extends Controller
             'luas_tanah' => 'required',
             'kondisi_rumah' => 'required',
             'no_hp' => 'required',
+            'nama_bukti.*' => 'image',
         ]);
 
         // Fungsi eloquent untuk menambah data
-        SubmissionAddModel::create([
+        $submission = SubmissionAddModel::create([
             'noKK' => $request->noKK,
             'jumlah_tanggungan' => $request->jumlah_tanggungan,
             'pendapatan' => $request->pendapatan,
@@ -124,24 +126,68 @@ class SubmissionPrasejahteraController extends Controller
             'status' => 'proses',
         ]);
 
+        if ($request->hasFile('nama_bukti')) {
+            foreach ($request->file('nama_bukti') as $image) {
+                $imageName = $image->store('gallery'); // Menyimpan gambar dan mendapatkan nama file
+
+                // Menyimpan nama file gambar sebagai bukti edit
+                BuktiAddModel::create([
+                    'add' => $submission->id,
+                    'nama_bukti' => $imageName,
+                ]);
+            }
+        }
+
         return redirect('/submission-prasejahtera/' . Auth::user()->username)->with('success', 'Pengajuan Keluarga Pra-Sejahtera berhasil disimpan');
     }
 
     public function show(string $id)
     {
         $add = SubmissionAddModel::find($id);
+        $nama = SubmissionAddModel::select('warga.nama as kepala_keluarga')
+            ->where('pengajuanprasejahtera.noKK', $add->noKK)
+            ->leftJoin('keluarga', 'keluarga.noKK', '=', 'pengajuanprasejahtera.noKK')
+            ->leftJoin('warga', function ($join) {
+                $join->on('keluarga.noKK', '=', 'warga.noKK')
+                    ->where('warga.status_keluarga', '=', 'kepala keluarga');
+            })
+            ->first();
+        $bukti = BuktiAddModel::where('add', $id)->get();
 
         $breadcrumb = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga',
-            'list' => ['Home', 'Pengajuan', 'Show']
+            'title' => 'Detail Pengajuan Keluarga Pra Sejahtera',
+            'list' => ['Home', 'Pengajuan', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga'
+            'title' => 'Detail Pengajuan Keluarga Pra Sejahtera'
         ];
         return view('warga.submission-add.show', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'add' => $add,
+            'nama' => $nama,
+            'bukti' => $bukti,
         ]);
+    }
+
+    public function destroy(string $id)
+    {
+        $check = SubmissionAddModel::find($id);
+        $bukti = BuktiAddModel::where('add', $id)->pluck('nama_bukti');
+        if (!$check) {
+            redirect('/submission-prasejahtera/' . Auth::user()->username)->with('error', 'Data Pengajuan tidak ditemukan');
+        }
+
+        try {
+            foreach ($bukti as $namaBukti) {
+                // Hapus file dari storage dengan menggunakan nama file
+                Storage::delete($namaBukti);
+            }
+            SubmissionAddModel::destroy($id);
+            return redirect('/submission-prasejahtera/' . Auth::user()->username)->with('success', 'Data Pengajuan Berhasil Dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            //jika terjadi eror ketika menghapus data, redirect kembali ke halaman dengan membawa pesan eror
+            return redirect('/submission-prasejahtera/' . Auth::user()->username)->with('error', 'Data Pengajuan gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
     }
 }

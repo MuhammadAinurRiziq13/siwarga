@@ -41,7 +41,7 @@ class SubmissionLetterController extends Controller
         return DataTables::of($Submissions)
             ->addIndexColumn()
             ->addColumn('waktu_pengajuan', function ($submission) {
-                return date('Y-m-d H:i:s', strtotime($submission->created_at));
+                return date('d-m-Y H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
                 return '<a href="' . url('/submission-letter/' . $submission->id) . '" class="btn btn-info btn-sm">Detail</a>';

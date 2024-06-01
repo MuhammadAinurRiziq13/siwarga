@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h6 class="card-title mb-0">{{ $page->title }}</h6>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @empty($changes)
@@ -72,7 +72,8 @@
                     </tr>
                 </table>
             @endempty
-            <a href="{{ url('submission-changes') }}" class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
+            <a href="{{ url('resident-edit/' . Auth::user()->username) }}"
+                class="btn btn-sm btn-secondary m-2 float-right">Kembali</a>
         </div>
     </div>
 @endsection

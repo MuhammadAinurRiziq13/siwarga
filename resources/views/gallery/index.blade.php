@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="card ">
-        <div class="card-header bg-transparent">
+        <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
                 @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('gallery/create') }}"><i
+                    <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('gallery/create') }}"><i
                             class="fas fa-fw fa-plus"></i> Tambah Data</a>
                 @endif
             </div>
@@ -35,7 +35,7 @@
                         <th>Judul</th>
                         <th>Tanggal Kegiatan</th>
                         <th>Keterangan</th>
-                        <th style="width: 12%">Aksi</th>
+                        <th style="width: 13%">Aksi</th>
                     </tr>
                 </thead>
             </table>

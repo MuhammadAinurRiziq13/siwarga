@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header bg-transparent">
+        <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
-                <a class="btn btn-sm btn-secondary ml-1" href="{{ url('poor-family') }}">Kembali</a>
+                <a class="btn btn-sm btn-secondary ml-1" href="{{ url('resident') }}">Kembali</a>
             </div>
         </div>
         <div class="card-body">

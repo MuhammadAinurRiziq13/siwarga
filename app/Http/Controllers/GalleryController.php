@@ -53,12 +53,12 @@ class GalleryController extends Controller
     public function create()
     {
         $breadcrumb = (object)[
-            'title' => 'Tambah Gallery',
+            'title' => '',
             'list' => ['Home', 'Gallery', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Gallery Baru'
+            'title' => 'Form Tambah Data Gallery'
         ];
 
         return view('gallery.create', [
@@ -97,11 +97,11 @@ class GalleryController extends Controller
     {
         $gallery = GalleryModel::find($id);
         $breadcrumb = (object)[
-            'title' => 'Data Galeri',
+            'title' => '',
             'list' => ['Home', 'Galeri', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Detail Galeri'
+            'title' => 'Detail Data Galeri'
         ];
         return view('gallery.show', [
             'breadcrumb' => $breadcrumb,
@@ -117,11 +117,11 @@ class GalleryController extends Controller
     {
         $gallery = GalleryModel::find($id);
         $breadcrumb = (object)[
-            'title' => 'Edit Galeri',
+            'title' => '',
             'list' => ['Home', 'Galeri', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Galeri'
+            'title' => 'Form Edit Data Galeri'
         ];
         return view('gallery.edit', [
             'breadcrumb' => $breadcrumb,

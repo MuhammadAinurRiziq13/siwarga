@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SubmissionAddModel extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id';
     protected $table = 'pengajuanprasejahtera';
     protected $guarded = [''];
 

@@ -75,12 +75,12 @@ class ResidentController extends Controller
     public function create()
     {
         $breadcrumb = (object)[
-            'title' => 'Tambah Warga',
+            'title' => '',
             'list' => ['Home', 'Warga', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Warga Baru'
+            'title' => 'Form Tambah Data Warga Baru'
         ];
 
         $family = FamilyModel::all();
@@ -182,16 +182,15 @@ class ResidentController extends Controller
      */
     public function show(string $nik)
     {
-        // $resident = ResidentModel::where('NIK', $nik)->first();
         $resident = ResidentModel::where('NIK', $nik)
             ->leftJoin('wargasementara', 'warga.NIK', '=', 'wargasementara.NIK_warga_sementara')
             ->first();
         $breadcrumb = (object)[
-            'title' => 'Data Warga',
+            'title' => '',
             'list' => ['Home', 'Warga', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Detail Warga'
+            'title' => 'Detail Data Warga'
         ];
         return view('resident.show', [
             'breadcrumb' => $breadcrumb,
@@ -211,11 +210,11 @@ class ResidentController extends Controller
         $family = FamilyModel::all();
         $anggota = ResidentModel::where('noKK', $resident->noKK)->get();
         $breadcrumb = (object)[
-            'title' => 'Edit Warga',
+            'title' => '',
             'list' => ['Home', 'Warga', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Warga'
+            'title' => 'Form Edit Data Warga'
         ];
         return view('resident.edit', [
             'breadcrumb' => $breadcrumb,

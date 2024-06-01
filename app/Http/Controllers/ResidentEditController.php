@@ -62,7 +62,7 @@ class ResidentEditController extends Controller
             'list' => ['Home', 'Warga', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Warga'
+            'title' => 'Form Pengajuan Edit Data Warga'
         ];
         return view('warga.submission-changes.edit', [
             'breadcrumb' => $breadcrumb,
@@ -117,7 +117,6 @@ class ResidentEditController extends Controller
 
     public function show(string $nik)
     {
-        // $resident = ResidentModel::where('NIK', $nik)->first();
         $resident = ResidentModel::where('NIK', $nik)
             ->leftJoin('wargasementara', 'warga.NIK', '=', 'wargasementara.NIK_warga_sementara')
             ->first();
@@ -204,11 +203,11 @@ class ResidentEditController extends Controller
         $pengganti = ResidentModel::find($changes->family_member);
 
         $breadcrumb = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga',
-            'list' => ['Home', 'Pengajuan', 'Show']
+            'title' => 'Detail Pengajuan Edit Data Warga',
+            'list' => ['Home', 'Pengajuan', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Show Pengajuan Edit Data Warga'
+            'title' => 'Detail Pengajuan Edit Data Warga'
         ];
         return view('warga.submission-changes.show1', [
             'breadcrumb' => $breadcrumb,
@@ -223,12 +222,19 @@ class ResidentEditController extends Controller
     public function destroy(string $id)
     {
         $check = SubmissionChangesModel::find($id);
+        $bukti = BuktiEditModel::where('edit', $id)->pluck('nama_bukti');
+
         if (!$check) {
             redirect('/resident-edit/' . Auth::user()->username)->with('error', 'Data warga tidak ditemukan');
         }
 
         try {
+            foreach ($bukti as $namaBukti) {
+                // Hapus file dari storage dengan menggunakan nama file
+                Storage::delete($namaBukti);
+            }
             SubmissionChangesModel::destroy($id);
+
             return redirect('/resident-edit/' . Auth::user()->username)->with('success', 'Data Pengajuan Berhasil Dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             //jika terjadi eror ketika menghapus data, redirect kembali ke halaman dengan membawa pesan eror

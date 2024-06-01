@@ -48,7 +48,7 @@ class SubmissionPengantarController extends Controller
         return DataTables::of($Submissions)
             ->addIndexColumn()
             ->addColumn('waktu_pengajuan', function ($submission) {
-                return date('Y-m-d H:i:s', strtotime($submission->created_at));
+                return date('d-m-Y H:i:s', strtotime($submission->created_at));
             })
             ->addColumn('aksi', function ($submission) {
                 $btn = '<a href="' . url('/submission-pengantar/' . $submission->id . '/show') . '" class="btn btn-info btn-sm mr-2"><i class="fas fa-eye"></i></a> ';
