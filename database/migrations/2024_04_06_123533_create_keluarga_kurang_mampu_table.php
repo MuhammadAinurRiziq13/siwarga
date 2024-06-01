@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('keluargaKurangMampu', function (Blueprint $table) {
             $table->string('noKK');
-            $table->integer('c1');
-            $table->integer('c2');
-            $table->integer('c3');
-            $table->integer('c4');
-            $table->integer('c5');
+            $table->integer('C1');
+            $table->integer('C2');
+            $table->integer('C3');
+            $table->integer('C4');
+            $table->integer('C5');
             // $table->timestamp('created_at')->useCurrent();
             // $table->timestamp('updated_at')->useCurrent();
 

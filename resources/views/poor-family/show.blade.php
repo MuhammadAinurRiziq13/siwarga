@@ -13,7 +13,16 @@
                 </div>
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
-                    <tr>
+                    @foreach ($criteria as $c)
+                        @if (isset($poorFamily->{$c->kode})) 
+                            <tr>
+                                <th>{{ $c->nama }}</th>
+                                <td>{{ $poorFamily->{$c->kode} }}</td> <!-- Mengambil nilai berdasarkan kode kriteria -->
+                            </tr>
+                        @endif
+                    @endforeach
+                    {{-- @endforeach --}}
+                    {{-- <tr>
                         <th>No KK</th>
                         <td>{{ $poorFamily->noKK }}</td>
                     </tr>
@@ -36,7 +45,7 @@
                     <tr>
                         <th>Kondisi Rumah</th>
                         <td>{{ $poorFamily->kondisi_rumah }}</td>
-                    </tr>
+                    </tr> --}}
                 </table>
             @endempty
             <a href="{{ url('poor-family') }}" class="btn btn-sm btn-secondary mt-2 float-right">Kembali</a>
