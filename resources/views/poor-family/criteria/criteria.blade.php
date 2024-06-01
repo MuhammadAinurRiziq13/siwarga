@@ -7,9 +7,10 @@
             {{-- <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/createCriteria') }}">Criteria</a> --}}
         </div>
         <div class="card-tools float-right">
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}">
+            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/createCriteria') }}">
                 <i class="fas fa-fw fa-plus"></i> Tambah
             </a>
+            <a class="btn btn-sm btn-secondary mt-1" href="{{ url('poor-family') }}">Kembali</a>
             {{-- @endif
             <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/import') }}">
                 <i class="fas fa-regular fa-file-excel"></i> Import
@@ -46,10 +47,10 @@
                         <td>{{ $column['bobot'] }}</td>
                         <td>{{ $column['jenis'] }}</td>
                         <td class="text-center">
-                            <a href="{{ url('/poor-family/criteria/' . $column['id']) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                            {{-- <a href="{{ url('/poor-family/criteria/' . $column['id']) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a> --}}
                             @if (Auth::user()->level == 'admin')
-                                <a href="{{ url('/poor-family/' . $column['noKK'] . '/edit') }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                <form class="d-inline-block" method="POST" action="{{ url('/poor-family/' . $column['noKK']) }}">
+                                <a href="{{ url('/poor-family/' . $column['id'] . '/edit') }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                <form class="d-inline-block" method="POST" action="{{ url('/poor-family/' . $column['id']) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin menghapus data ini?');">

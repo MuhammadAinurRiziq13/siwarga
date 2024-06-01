@@ -32,7 +32,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-2 control-label col-form-label">Jumlah Tanggungan</label>
                         <div class="col-10">
                             <input type="number" class="form-control" id="jumlah_tanggungan" name="jumlah_tanggungan"
@@ -86,7 +86,26 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+                    </div> --}}
+                    @foreach ($criteria as $c)
+                    <div class="form-group row">
+                        <label class="col-2 control-label col-form-label">{{ $c->nama }}</label>
+                        <div class="col-10">
+                            {{-- @if ($c->jenis == 'number') --}}
+                            <input type="number" class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" value="{{ old($c->kode, $poorFamily->{$c->kode} ?? '') }}" required>
+                            {{-- @elseif ($c->jenis == 'select')
+                            <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
+                                @foreach ($c->options as $option)
+                                <option value="{{ $option->value }}">{{ $option->label }}</option>
+                                @endforeach
+                            </select> --}}
+                            {{-- @endif --}}
+                            @error($c->kode)
+                            <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
+                    @endforeach
                     <div class="form-group row">
                         <label class="col-2 control-label col-form-label"></label>
                         <div class="col-10">
