@@ -48,7 +48,7 @@ class AgeChart
             ->addData('Laki-laki', array_values($laki_laki_data))
             ->addData('Perempuan', array_values($perempuan_data))
             ->setColors(['#4ccdfe', '#ff6384'])
-            ->setHeight(400)
+            ->setHeight(455)
             ->setXAxis(['0 - 4', '5 - 11', '12 - 24', '25 - 44', '45 - 60', ' > 60']);
     }
 }
