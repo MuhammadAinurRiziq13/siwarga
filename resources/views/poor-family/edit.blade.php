@@ -53,11 +53,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 control-label col-form-label">Pengeluaran</label>
+                        <label class="col-2 control-label col-form-label">Nilai Aset Kendaraan</label>
                         <div class="col-10">
-                            <input type="number" class="form-control" id="pengeluaran" name="pengeluaran"
-                                value="{{ old('pengeluaran', $poorFamily->pengeluaran) }}" required>
-                            @error('pengeluaran')
+                            <input type="number" class="form-control" id="aset_kendaraan" name="aset_kendaraan"
+                                value="{{ old('aset_kendaraan', $poorFamily->aset_kendaraan) }}" required>
+                            @error('aset_kendaraan')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
