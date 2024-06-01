@@ -94,16 +94,11 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/', [PoorFamilyController::class, 'index']);
     Route::post('/list', [PoorFamilyController::class, 'list']);
     Route::get('/calculate', [PoorFamilyController::class, 'calculate']);
-<<<<<<< HEAD
-    Route::get('/criteria/{id}', [PoorFamilyController::class, 'showCriteria']);
-
-=======
     Route::get('/criteria', [PoorFamilyController::class, 'criteria']);
     Route::get('/createCriteria', [PoorFamilyController::class, 'createCriteria']);
     Route::get('/create', [PoorFamilyController::class, 'create']);
     // Route::get('/criteria/{id}', [PoorFamilyController::class, 'showCriteria']);
     
->>>>>>> 6713d8a4cb3de5c93ccfc3ef7a08367d388c7285
     Route::middleware('role:admin')->group(function () {
         Route::post('/', [PoorFamilyController::class, 'store']);
         Route::get('/{id}/edit', [PoorFamilyController::class, 'edit']);
