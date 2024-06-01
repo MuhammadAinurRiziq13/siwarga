@@ -1,415 +1,517 @@
 @extends('landing-page.main')
 
-@section('container')
-    <div class="container-main">
-        <div class="main-wrapper">
-            <div class="Hero">
-                <div class="banners">
-                    rt 05 rw 01<br />ranuklindungan
-                </div>
-                <div class="visi-misi">
-                    Visi menciptakan lingkungan yang aman, nyaman, tentram, bersih, indah, sehat dan religius.<br />
-                    <br />Misi memberikan pelayanan prima kepada warga, mempererat silaturahmi, membina generasi muda,
-                    melakukan kebersihan bersama, dan mufakat untuk menciptakan lingkungan yang sejahtera.
-                </div>
-                <div class="Group15">
-                    <button class="contact-us">
-                        Contact Us
-                    </button>
-                </div>
-                <div class="container-population justify-content-center align-content-center mt-5">
-                    <div class="stats-wrapper">
-                        <div class="total-residents">
-                            <div class="total-residents-content">
-                                <div class="total-residents-number">2300</div>
-                                <div class="total-residents-label">jumlah warga</div>
-                            </div>
-                        </div>
-                        <div class="other-stats">
-                            <div class="other-stats-wrapper">
-                                <div class="total-families">
-                                    <div class="total-families-content">
-                                        <div class="total-families-number">40</div>
-                                        <div class="total-families-label">Jumlah keluarga</div>
-                                    </div>
-                                </div>
-                                <div class="total-families">
-                                    <div class="total-families-content">
-                                        <div class="total-families-number">40</div>
-                                        <div class="total-families-label">Jumlah keluarga</div>
-                                    </div>
-                                </div>
-                                <div class="total-families">
-                                    <div class="total-families-content">
-                                        <div class="total-families-number">40</div>
-                                        <div class="total-families-label">Jumlah keluarga</div>
-                                    </div>
-                                </div>
-                            </div>
+@section('hero')
+    <section id="hero" class="hero d-flex align-items-center">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <h1 data-aos="fade-up" class="mb-3">RT 05 RW 01 RANUKLINDUNGAN</h1>
+                    <h6 data-aos="fade-up" data-aos-delay="400">Visi menciptakan lingkungan yang aman, nyaman, tentram,
+                        bersih,
+                        indah, sehat dan religius.</h6>
+                    <h6 data-aos="fade-up" data-aos-delay="400">Misi memberikan pelayanan prima kepada warga, mempererat
+                        silaturahmi, membina generasi muda, melakukan kebersihan bersama, dan mufakat untuk menciptakan
+                        lingkungan
+                        yang sejahtera.</h6>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <div class="text-center text-lg-start">
+                            <a href="#contact"
+                                class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                                <span>Contact Us</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="description-section">
-        <h2 class="section-title">DESKRIPSI</h2>
-        <div class="title-divider"></div>
-        <div class="content-wrapper">
-            <div class="content-container">
-                <div class="image-column">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a3e6d17b641e34ad30979549fa33547688e932b606f87337b077bf8d50dab153?apiKey=cfbeda57ea98489b824f8f843623dee9&"
-                        alt="Description image" class="description-image" loading="lazy" />
-                </div>
-                <div class="text-column">
-                    <div class="description-text">
-                        <p class="description-paragraph">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Turpis in eu mi bibendum neque egestas
-                            congue quisque egestas. Bibendum ut tristique et egestas quis ipsum suspendisse
-                            ultrices. Magnis dis parturient montes nascetur ridiculus mus. Egestas pretium aenean
-                            pharetra magna ac. Aliquam malesuada bibendum arcu vitae. Purus in mollis nunc sed id.
-                            Vel fringilla est ullamcorper eget nulla facilisi etiam. Mattis vulputate enim nulla
-                            aliquet. Nibh cras pulvinar mattis nunc sed. Vitae et leo duis ut.
-                            <br />
-                            Ipsum dolor sit amet consectetur adipiscing elit. Arcu ac tortor dignissim convallis
-                            aenean et tortor at risus. Eget est lorem ipsum dolor sit amet consectetur adipiscing.
-                            Maecenas pharetra convallis posuere morbi leo urna molestie at. Laoreet suspendisse
-                            interdum consectetur libero id faucibus.
-                        </p>
-                        <div class="facilities-list">
-                            <ul class="facilities-column">
-                                <li class="facility-name">PKK</li>
-                                <li class="facility-name">PKK</li>
-                                <li class="facility-name">PKK</li>
-                            </ul>
-                            <ul class="facilities-column">
-                                <li class="facility-name">PKK</li>
-                                <li class="facility-name">PKK</li>
-                                <li class="facility-name">PKK</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                    <img src="{{ asset('img/landing-page/hero-img-green.png') }}" class="img-fluid" alt="">
                 </div>
             </div>
         </div>
-    </div>
+
+    </section>
 @endsection
 
-<style>
-    /*style description*/
-    .description-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 20px;
-    }
+@section('main')
+    <main id="main">
 
-    .section-title {
-        color: #000;
-        letter-spacing: 4.2px;
-        text-transform: uppercase;
-        font: 900 60px Poppins, sans-serif;
-    }
+        <!-- ======= Counts Data Warga Section ======= -->
+        <section id="counts" class="counts">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Data Warga</p>
+                </header>
+                <div class="row g-1">
 
-    @media (max-width: 991px) {
-        .section-title {
-            font-size: 40px;
-        }
-    }
+                    <div class="col-lg-4 col-md-2">
+                        <div class="count-box warga">
+                            <div class="text-center">
+                                <span data-purecounter-start="0" data-purecounter-end="1423" data-purecounter-duration="2"
+                                    class="purecounter"></span>
+                                <p>Jumlah Warga</p>
+                            </div>
+                        </div>
+                    </div>
 
-    .title-divider {
-        border: 1px solid #000;
-        background-color: #000;
-        margin-top: 23px;
-        width: 800px;
-        max-width: 100%;
-    }
+                    <div class="col-lg-2 col-md-2">
+                        <div class="count-box">
+                            <div class="text-center">
+                                <span data-purecounter-start="0" data-purecounter-end="1268" data-purecounter-duration="2"
+                                    class="purecounter"></span>
+                                <p>Jumlah Keluarga</p>
+                            </div>
+                        </div>
+                    </div>
 
-    .content-wrapper {
-        align-self: stretch;
-        margin-top: 32px;
-        width: 100%;
-    }
+                    <div class="col-lg-2 col-md-2">
+                        <div class="count-box">
+                            <div class="text-center">
+                                <span data-purecounter-start="0" data-purecounter-end="155" data-purecounter-duration="2"
+                                    class="purecounter"></span>
+                                <p>Warga Sementara</p>
+                            </div>
+                        </div>
+                    </div>
 
-    @media (max-width: 991px) {
-        .content-wrapper {
-            max-width: 100%;
-        }
-    }
+                    <div class="col-lg-2 col-md-2">
+                        <div class="count-box">
+                            <div class="text-center">
+                                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2"
+                                    class="purecounter"></span>
+                                <p>Jumlah Lansia</p>
+                            </div>
+                        </div>
+                    </div>
 
-    .content-container {
-        display: flex;
-        gap: 20px;
-    }
+                    <div class="col-lg-2 col-md-2">
+                        <div class="count-box">
+                            <div class="text-center">
+                                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2"
+                                    class="purecounter"></span>
+                                <p>Jumlah Balita</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Counts Data Warga Section -->
 
-    @media (max-width: 991px) {
-        .content-container {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0;
-        }
-    }
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about">
 
-    .image-column {
-        display: flex;
-        flex-direction: column;
-        line-height: normal;
-        width: 44%;
-        margin-left: 0;
-    }
+            <div class="container" data-aos="fade-up">
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Deskripsi</p>
+                </header>
+                <div class="row gx-0">
 
-    @media (max-width: 991px) {
-        .image-column {
-            width: 100%;
-        }
-    }
+                    <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+                        <img src="{{ asset('img/landing-page/wayang.jpg')}}" class="img-fluid" alt="">
+                    </div>
 
-    .description-image {
-        aspect-ratio: 1.01;
-        object-fit: auto;
-        object-position: center;
-        width: 100%;
-        flex-grow: 1;
-    }
+                    <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="content">
+                            <!-- <h2>Expedita voluptas omnis cupiditate totam eveniet nobis sint iste. Dolores est repellat corrupti reprehenderit.</h2> -->
+                            <p>
+                                RT 05 RW 01, yang terletak di Dusun Bandilan, Desa Ranuklindungan, Kecamatan Grati,
+                                Kabupaten Pasuruan,
+                                adalah sebuah lingkungan yang hidup dan harmonis. Di bawah kepemimpinan Bapak Saikhul Anwar
+                                Murwantoro,
+                                RT ini telah menjadi contoh nyata semangat gotong royong dan prestasi gemilang.
+                            </p>
+                            <p>
+                                Salah satu pencapaian membanggakan dari RT 05 adalah keberhasilannya dalam Lomba Asuhan
+                                Mandiri Toga
+                                mewakili Desa Ranuklindungan.
+                                Berkat dedikasi dan kerja keras seluruh warga, RT ini berhasil meraih juara 1 tingkat
+                                kabupaten dan
+                                juara 3 tingkat provinsi. Prestasi ini tidak hanya mengharumkan nama RT 05, tetapi juga
+                                menjadi
+                                inspirasi bagi lingkungan lainnya.
+                            </p>
+                        </div>
+                    </div>
 
-    @media (max-width: 991px) {
-        .description-image {
-            max-width: 100%;
-            margin-top: 40px;
-        }
-    }
+                </div>
+            </div>
 
-    .text-column {
-        display: flex;
-        flex-direction: column;
-        line-height: normal;
-        width: 56%;
-        margin-left: 20px;
-    }
+        </section>
+        <!-- End About Section -->
 
-    @media (max-width: 991px) {
-        .text-column {
-            width: 100%;
-        }
-    }
+        <!-- ======= Galeri Section ======= -->
+        <section id="recent-blog-posts" class="recent-blog-posts">
 
-    .description-text {
-        display: flex;
-        flex-direction: column;
-        align-self: stretch;
-        color: #000;
-        margin: auto 0;
-    }
+            <div class="container" data-aos="fade-up">
 
-    @media (max-width: 991px) {
-        .description-text {
-            max-width: 100%;
-            margin-top: 40px;
-        }
-    }
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Galeri</p>
+                </header>
 
-    .description-paragraph {
-        font: 400 17px Poppins, sans-serif;
-    }
+                <div class="row g-4">
 
-    @media (max-width: 991px) {
-        .description-paragraph {
-            max-width: 100%;
-        }
-    }
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/asman-toga.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Tue, September 15</span>
+                            <h3 class="post-title">Penyerahan Penghargaan Juara 1 Lomba Asuhan Mandiri Toga yang Dihadiri
+                                Langsung
+                                oleh Ibu Bupati Pasuruan</h3>
+                        </div>
+                    </div>
 
-    .facilities-list {
-        display: flex;
-        margin-top: 116px;
-        gap: 20px;
-    }
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/kerja-bakti.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Fri, August 28</span>
+                            <h3 class="post-title">Kerja Bakti Pengecatan Gang dalam Rangka HUT Kemerdekaan RI</h3>
+                        </div>
+                    </div>
 
-    @media (max-width: 991px) {
-        .facilities-list {
-            max-width: 100%;
-            flex-wrap: wrap;
-            padding-right: 20px;
-            margin-top: 40px;
-        }
-    }
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/tasyakuran-kemerdekaan.jpg" class="img-fluid"
+                                    alt="">
+                            </div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Kegiatan Rutinan Malam Tasyakuran dalam Rangka HUT Kemerdekaan RI</h3>
+                        </div>
+                    </div>
 
-    .facilities-column {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-    }
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/santunan.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Kegiatan Santunan untuk Anak Yatim Piatu</h3>
+                        </div>
+                    </div>
 
-    .facility-item {
-        display: flex;
-        gap: 20px;
-        white-space: nowrap;
-    }
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/suroan.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Peringatan Malam 1 Suro atau 1 Muharram</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/pemuda-peduli.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Kegiatan Pemuda Peduli pada Bulan Ramadhan</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/pavingisasi.jpg" class="img-fluid"
+                                    alt=""></div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Kerja Bakti Pavingisasi Desa yang Dilaksanakan di RT 05</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="post-box">
+                            <div class="post-img"><img src="assets/img/blog/asman.jpg" class="img-fluid" alt="">
+                            </div>
+                            <span class="post-date">Mon, July 11</span>
+                            <h3 class="post-title">Peresmian Taman Toga RT 05</h3>
+                        </div>
+                    </div>
 
-    @media (max-width: 991px) {
-        .facility-item {
-            white-space: initial;
-        }
-    }
+                </div>
 
-    .facility-icon {
-        font: 900 20px "Font Awesome 5 Free", -apple-system, Roboto, Helvetica, sans-serif;
-    }
+            </div>
 
-    .facility-name {
-        flex-grow: 1;
-        flex-basis: auto;
-        margin: auto 0;
-        font: 400 17px Poppins, sans-serif;
-    }
+        </section>
+        <!-- End Galeri Section -->
 
-    /*Style main*/
-    .container-main {
-        height: 1000px;
-        background:
-            linear-gradient(251deg,
-                #FAFFE5 10%,
-                rgba(169, 253, 205, 0.55) 38%,
-                rgba(171, 222, 129, 0.20) 72%,
-                rgba(254, 253, 248, 0.60) 100%),
-            linear-gradient(180deg,
-                rgba(255, 255, 255, 0) 60%, white 100%);
+        <!-- ======= F.A.Q Section ======= -->
+        <section id="faq" class="faq">
 
-    }
+            <div class="container" data-aos="fade-up">
 
-    .main-wrapper {
-        padding: 40px;
-        margin: auto;
-        max-width: 1200px;
-        font-family: Poppins, sans-serif;
-    }
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Frequently Asked Questions</p>
+                </header>
 
-    .Hero {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- F.A.Q List 1-->
+                        <div class="accordion accordion-flush" id="faqlist1">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq-content-1">
+                                        Bagaimana cara saya mengajukan perubahan data?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
+                                    <div class="accordion-body">
+                                        Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet
+                                        non curabitur
+                                        gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                                    </div>
+                                </div>
+                            </div>
 
-    .banners {
-        color: black;
-        font-size: 55px;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 3.85px;
-        word-wrap: break-word;
-        width: 65%;
-    }
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq-content-2">
+                                        Bagaimana cara saya mengajukan surat pengantar?
+                                    </button>
+                                </h2>
+                                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
+                                    <div class="accordion-body">
+                                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
+                                        velit laoreet id
+                                        donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
+                                        pellentesque
+                                        elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt
+                                        dui.
+                                    </div>
+                                </div>
+                            </div>
 
-    .visi-misi {
-        color: #6D6E6C;
-        font-size: 17px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1.19px;
-        word-wrap: break-word;
-        width: 60%;
-    }
+                        </div>
+                    </div>
 
-    .Group15 {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-    }
+                    <div class="col-lg-6">
 
-    .contact-us {
-        width: 231.32px;
-        height: 73px;
-        background: #4DC969;
-        border-radius: 9px;
-        text-transform: uppercase;
-        color: white;
-        border: none;
-    }
+                        <!-- F.A.Q List 2-->
+                        <div class="accordion accordion-flush" id="faqlist2">
 
-    .content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-    }
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq2-content-1">
+                                        Bagaimana cara saya mendaftarkan keluarga prasaejahtera?
+                                    </button>
+                                </h2>
+                                <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
+                                    <div class="accordion-body">
+                                        Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in
+                                        est ante in.
+                                        Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing
+                                        bibendum est.
+                                        Purus gravida quis blandit turpis cursus in.
+                                    </div>
+                                </div>
+                            </div>
 
-    /* style population*/
-    .container-population {
-        border-radius: 20px;
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 20px 35px;
-        justify-content: center;
-        align-content: center;
-    }
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq2-content-2">
+                                        Bagaimana cara memberi masukan atau saran untuk website ini?
+                                    </button>
+                                </h2>
+                                <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
+                                    <div class="accordion-body">
+                                        Kami selalu terbuka untuk menerima masukan dan saran dari pengguna SIWarga. Anda
+                                        dapat memberikan
+                                        masukan atau saran melalui email ke di bagian Contact Us di bawah.
+                                    </div>
+                                </div>
+                            </div>
 
-    .stats-wrapper {
-        display: flex;
-        gap: 20px;
-    }
+                        </div>
+                    </div>
 
-    .total-residents {
-        display: flex;
-        flex-direction: column;
-        width: 36%;
-    }
+                </div>
 
-    .total-residents-content {
-        display: flex;
-        flex-direction: column;
-        align-self: stretch;
-        color: #050505;
-        text-align: center;
-        margin: auto 0;
-    }
+            </div>
 
-    .total-residents-number {
-        align-self: center;
-        font: 700 55px Poppins, sans-serif;
-    }
+        </section>
+        <!-- End F.A.Q Section -->
 
-    .total-residents-label {
-        letter-spacing: 2.1px;
-        text-transform: uppercase;
-        font: 900 30px/143% Poppins, sans-serif;
-    }
+        <!-- ======= Team Section ======= -->
+        <section id="testimonials" class="testimonials">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Our Team</p>
+                </header>
 
-    .other-stats {
-        display: flex;
-        flex-direction: column;
-        width: 60%;
-        margin-left: 20px;
-    }
+                <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper">
 
-    .other-stats-wrapper {
-        display: flex;
-        gap: 20px;
-    }
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="profile mt-auto mb-3">
+                                    <img src="{{ asset('img/landing-page/team/elis.jpg') }}" class="testimonial-img"
+                                        alt="">
+                                    <h3>Elis Nurhidayati</h3>
+                                    <h4>Documentator</h4>
+                                </div>
+                                <p>
+                                    Teliti dalam mendokumentasikan setiap langkah proyek, memastikan informasi tersampaikan
+                                    dengan jelas
+                                    dan akurat. Kemampuannya dalam merangkum dan menyusun laporan sangat berharga bagi tim.
+                                </p>
+                                <div class="social-links mt-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="profile mt-auto mb-3">
+                                    <img src="{{ asset('img/landing-page/team/rama.jpg') }}" class="testimonial-img"
+                                        alt="">
+                                    <h3>Rama Pramudhita Bhaskara</h3>
+                                    <h4>Project Lead</h4>
+                                </div>
+                                <p>
+                                    Pemimpin yang menginspirasi, mampu mengarahkan tim dengan visi yang jelas. Keahliannya
+                                    dalam manajemen
+                                    proyek dan komunikasi memastikan proyek berjalan lancar dan mencapai tujuan.
+                                </p>
+                                <div class="social-links mt-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="profile mt-auto mb-3">
+                                    <img src="{{ asset('img/landing-page/team/riziq.jpg') }}" class="testimonial-img"
+                                        alt="">
+                                    <h3>Muhammad Ainur Riziq</h3>
+                                    <h4>Programmer</h4>
+                                </div>
+                                <p>
+                                    Programmer handal dengan pemahaman mendalam tentang bahasa pemrograman. Kreativitas dan
+                                    kemampuan
+                                    problem-solvingnya menghasilkan kode yang efisien dan solusi inovatif.
+                                </p>
+                                <div class="social-links mt-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="profile mt-auto mb-3">
+                                    <img src="{{ asset('img/landing-page/team/alham.jpg') }}" class="testimonial-img"
+                                        alt="">
+                                    <h3>Alhamdana Fariz Alfurqaan</h3>
+                                    <h4>UI/UX Designer</h4>
+                                </div>
+                                <p>
+                                    Desainer berbakat dengan fokus pada pengalaman pengguna. Rancangannya intuitif, menarik,
+                                    dan
+                                    fungsional, meningkatkan interaksi pengguna dengan produk.
+                                </p>
+                                <div class="social-links mt-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <div class="profile mt-auto mb-3">
+                                    <img src="{{ asset('img/landing-page/team/mahi.jpg') }}" class="testimonial-img"
+                                        alt="">
+                                    <h3>Mochammad Nizar Mahi</h3>
+                                    <h4>Tester</h4>
+                                </div>
+                                <p>
+                                    Tester yang cermat dan teliti, memastikan kualitas produk dengan mengidentifikasi dan
+                                    melaporkan bug
+                                    secara efektif. Kontribusinya sangat penting dalam menghadirkan produk yang handal.
+                                </p>
+                                <div class="social-links mt-3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    .total-families {
-        display: flex;
-        flex-direction: column;
-        width: 33%;
-    }
+                    <div class="swiper-pagination"></div>
+                </div>
 
-    .total-families-content {
-        display: flex;
-        flex-direction: column;
-        color: #050505;
-        text-align: center;
-    }
+            </div>
 
-    .total-families-number {
-        align-self: center;
-        font: 700 55px Poppins, sans-serif;
-    }
+        </section>
+        <!-- End Team Section -->
 
-    .total-families-label {
-        letter-spacing: 1.4px;
-        text-transform: uppercase;
-        font: 500 20px/43px Poppins, sans-serif;
-    }
-</style>
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+
+            <div class="container" data-aos="fade-up">
+                <header class="section-header mb-5">
+                    <p class="border-bottom border-2 pb-4 px-5 d-inline">Contact Us</p>
+                </header>
+
+                <div class="row gy-4">
+                    <div class="col-lg-4">
+                        <div class="row gy-4">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d475.34971782036905!2d113.01021872035986!3d-7.720556832232463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7b737529d3865%3A0x90d0ba4b8400509!2sRumah%20tinggal!5e0!3m2!1sid!2sid!4v1717114928364!5m2!1sid!2sid"
+                                width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="row gy-4">
+                            <div class="col-md-12">
+                                <div class="info-box">
+                                    <i class="bi bi-envelope"></i>
+                                    <h3>Email Us</h3>
+                                    <p>samlalala@gmail,com<br>yeah@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="info-box">
+                                    <i class="bi bi-clock"></i>
+                                    <h3>Open Hours</h3>
+                                    <p>Monday - Sunday<br>9:00AM - 22:00PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <form action="forms/contact.php" method="post" class="php-email-form">
+                            <div class="row gy-4">
+
+                                <div class="col-md-6">
+                                    <input type="text" name="name" class="form-control" placeholder="Your Name"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6 ">
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email"
+                                        required>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="subject" placeholder="Subject"
+                                        required>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <div class="loading">Loading</div>
+                                    <div class="error-message"></div>
+                                    <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                                    <button type="submit">Send Message</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+        </section>
+        <!-- End Contact Section -->
+
+    </main>
+@endsection

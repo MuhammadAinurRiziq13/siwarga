@@ -3,38 +3,63 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SiWarga</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Siwarga</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
-    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-    {{-- <link rel="shortcut icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-i3miPd7E09Aq9m9NkRYmT/azYB2JBjIbcfEge30jJz3lmrMX5iyiePmUyZoM1Ut6z8G4tIpeBB4rEwIFXmDLMw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    {{-- <link rel="stylesheet" href="../assets/css/styles.min.css" /> --}}
-    {{-- css --}}
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('vendor/landing-page/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/landing-page/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/landing-page/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/landing-page/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/landing-page/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/landing-page/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('css/style-landing-page.css') }}" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: FlexStart
+    * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+    * Updated: Mar 17 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
 </head>
 
 <body>
-    @include('landing-page.navbar')
+    @include('landing-page.header')
 
-    <div class="container-fluid">
-        @yield('container')
-    </div>
+    @yield('hero')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    {{-- <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script> --}}
+    @yield('main')
 
     @include('landing-page.footer')
+
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('vendor/landing-page/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/aos/aos.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/landing-page/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ asset('js/landing-page.js') }}"></script>
 </body>
 
 </html>
