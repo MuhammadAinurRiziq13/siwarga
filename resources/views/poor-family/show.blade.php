@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h6 class="card-title mb-0">{{ $page->title }}</h6>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @empty($poorFamily)
@@ -14,7 +14,7 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     @foreach ($criteria as $c)
-                        @if (isset($poorFamily->{$c->kode})) 
+                        @if (isset($poorFamily->{$c->kode}))
                             <tr>
                                 <th>{{ $c->nama }}</th>
                                 <td>{{ $poorFamily->{$c->kode} }}</td> <!-- Mengambil nilai berdasarkan kode kriteria -->

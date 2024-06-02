@@ -26,26 +26,14 @@
                         <th>No KK</th>
                         <td>{{ $poorFamily->noKK }}</td>
                     </tr>
-                    <tr>
-                        <th>Jumlah Tanggungan</th>
-                        <td>{{ $poorFamily->jumlah_tanggungan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Pendapatan</th>
-                        <td>{{ $poorFamily->pendapatan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nilai Aset Kendaraan</th>
-                        <td>{{ $poorFamily->aset_kendaraan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Luas Tanah</th>
-                        <td>{{ $poorFamily->luas_tanah }}</td>
-                    </tr>
-                    <tr>
-                        <th>Kondisi Rumah</th>
-                        <td>{{ $poorFamily->kondisi_rumah }}</td>
-                    </tr>
+                    @foreach ($criteria as $c)
+                        @if (isset($poorFamily->{$c->kode}))
+                            <tr>
+                                <th>{{ $c->nama }}</th>
+                                <td>{{ $poorFamily->{$c->kode} }}</td> <!-- Mengambil nilai berdasarkan kode kriteria -->
+                            </tr>
+                        @endif
+                    @endforeach
                 </table>
             @endempty
         </div>

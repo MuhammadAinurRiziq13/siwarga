@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuktiAddModel;
+use App\Models\CriteriaPraSejahteraModel;
 use App\Models\PoorFamilyModel;
 use App\Models\SubmissionAddModel;
 use Illuminate\Http\Request;
@@ -77,6 +78,7 @@ class SubmissionAddController extends Controller
                     ->where('warga.status_keluarga', '=', 'kepala keluarga');
             })
             ->first();
+        $criteria = CriteriaPraSejahteraModel::all();
         $bukti = BuktiAddModel::where('add', $id)->get();
 
         $breadcrumb = (object)[
@@ -92,20 +94,29 @@ class SubmissionAddController extends Controller
             'add' => $add,
             'nama' => $nama,
             'bukti' => $bukti,
+            'criteria' => $criteria,
         ]);
     }
 
     public function update(Request $request, string $id)
     {
         if ($request->status == 'selesai') {
-            PoorFamilyModel::create([
-                'noKK' => $request->noKK,
-                'jumlah_tanggungan' => $request->jumlah_tanggungan,
-                'pendapatan' => $request->pendapatan,
-                'aset_kendaraan' => $request->aset_kendaraan,
-                'luas_tanah' => $request->luas_tanah,
-                'kondisi_rumah' => $request->kondisi_rumah,
-            ]);
+            // Ambil semua kriteria
+            $criteria = CriteriaPraSejahteraModel::all();
+
+            // Buat array kosong untuk data yang akan dibuat
+            $dataToCreate = [];
+
+            // Tambahkan 'noKK' ke dalam array data
+            $dataToCreate['noKK'] = $request->noKK;
+
+            // Loop melalui setiap kriteria dan tambahkan ke array data yang akan dibuat
+            foreach ($criteria as $criterion) {
+                $dataToCreate[$criterion->kode] = $request[$criterion->kode];
+            }
+
+            // Buat entri baru dengan data yang telah dikumpulkan
+            PoorFamilyModel::create($dataToCreate);
         }
 
         SubmissionAddModel::where('id', $id)->update([
@@ -184,6 +195,7 @@ class SubmissionAddController extends Controller
                     ->where('warga.status_keluarga', '=', 'kepala keluarga');
             })
             ->first();
+        $criteria = CriteriaPraSejahteraModel::all();
         $bukti = BuktiAddModel::where('add', $id)->get();
 
         $breadcrumb = (object)[
@@ -199,6 +211,7 @@ class SubmissionAddController extends Controller
             'add' => $add,
             'nama' => $nama,
             'bukti' => $bukti,
+            'criteria' => $criteria,
         ]);
     }
 }

@@ -21,26 +21,14 @@
                         <th>Nama Pemohon</th>
                         <td>{{ $nama->kepala_keluarga }}</td>
                     </tr>
-                    <tr>
-                        <th>Jumlah tanggungan</th>
-                        <td>{{ $add->jumlah_tanggungan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nilai Aset Kendaraan</th>
-                        <td>{{ $add->aset_kendaraan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Kondisi Rumah</th>
-                        <td>{{ $add->kondisi_rumah }}</td>
-                    </tr>
-                    <tr>
-                        <th>Luas Tanah</th>
-                        <td>{{ $add->luas_tanah }} m<sup>2</sup></td>
-                    </tr>
-                    <tr>
-                        <th>Pendapatan</th>
-                        <td>{{ $add->pendapatan }}</td>
-                    </tr>
+                    @foreach ($criteria as $c)
+                        @if (isset($add->{$c->kode}))
+                            <tr>
+                                <th>{{ $c->nama }}</th>
+                                <td>{{ $add->{$c->kode} }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
                     <tr>
                         <th>No HP</th>
                         <td>{{ $add->no_hp }}</td>

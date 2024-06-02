@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuktiAddModel;
+use App\Models\CriteriaPraSejahteraModel;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
 use App\Models\ResidentModel;
@@ -18,6 +19,7 @@ class SubmissionPrasejahteraController extends Controller
     {
         $nokk = ResidentModel::where('NIK', $nik)->pluck('noKK')->first();
         $poorFamily = PoorFamilyModel::where('noKK', $nokk)->first();
+        $criteria = CriteriaPraSejahteraModel::all();
 
         $breadcrumb = (object)[
             'title' => 'Data Keluarga Pra-Sejahtera',
@@ -31,6 +33,7 @@ class SubmissionPrasejahteraController extends Controller
             'page' => $page,
             'poorFamily' => $poorFamily,
             'nokk' => $nokk,
+            'criteria' => $criteria
         ]);
     }
 
@@ -83,6 +86,7 @@ class SubmissionPrasejahteraController extends Controller
     {
         $nokk = ResidentModel::where('NIK', $id)->pluck('noKK')->first();
         $family = FamilyModel::all();
+        $criteria = CriteriaPraSejahteraModel::all();
 
         $breadcrumb = (object)[
             'title' => 'Pengajuan Keluarga Pra Sejahtera',
@@ -98,33 +102,30 @@ class SubmissionPrasejahteraController extends Controller
             'page' => $page,
             'nokk' => $nokk,
             'family' => $family,
+            'criteria' => $criteria
         ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'noKK' => 'required',
-            'jumlah_tanggungan' => 'required',
-            'pendapatan' => 'required',
-            'aset_kendaraan' => 'required',
-            'luas_tanah' => 'required',
-            'kondisi_rumah' => 'required',
-            'no_hp' => 'required',
-            'nama_bukti.*' => 'image',
-        ]);
+        // Ambil semua kriteria
+        $criteria = CriteriaPraSejahteraModel::all();
 
-        // Fungsi eloquent untuk menambah data
-        $submission = SubmissionAddModel::create([
-            'noKK' => $request->noKK,
-            'jumlah_tanggungan' => $request->jumlah_tanggungan,
-            'pendapatan' => $request->pendapatan,
-            'aset_kendaraan' => $request->aset_kendaraan,
-            'luas_tanah' => $request->luas_tanah,
-            'kondisi_rumah' => $request->kondisi_rumah,
-            'no_hp' => $request->no_hp,
-            'status' => 'proses',
-        ]);
+        // Buat array kosong untuk data yang akan dibuat
+        $dataToCreate = [];
+
+        // Tambahkan 'noKK' ke dalam array data
+        $dataToCreate['noKK'] = $request->noKK;
+        $dataToCreate['no_hp'] = $request->no_hp;
+        $dataToCreate['status'] = 'proses';
+
+        // Loop melalui setiap kriteria dan tambahkan ke array data yang akan dibuat
+        foreach ($criteria as $criterion) {
+            $dataToCreate[$criterion->kode] = $request[$criterion->kode];
+        }
+
+        // Buat entri baru dengan data yang telah dikumpulkan
+        $submission = SubmissionAddModel::create($dataToCreate);
 
         if ($request->hasFile('nama_bukti')) {
             foreach ($request->file('nama_bukti') as $image) {
@@ -152,6 +153,7 @@ class SubmissionPrasejahteraController extends Controller
                     ->where('warga.status_keluarga', '=', 'kepala keluarga');
             })
             ->first();
+        $criteria = CriteriaPraSejahteraModel::all();
         $bukti = BuktiAddModel::where('add', $id)->get();
 
         $breadcrumb = (object)[
@@ -167,6 +169,7 @@ class SubmissionPrasejahteraController extends Controller
             'add' => $add,
             'nama' => $nama,
             'bukti' => $bukti,
+            'criteria' => $criteria,
         ]);
     }
 

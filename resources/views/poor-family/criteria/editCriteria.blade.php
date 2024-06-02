@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h class="card-title mb-0">{{ $page->title }}</h>
-            <div class="card-tools"></div>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ url('poor-family/storeCriteria/' . $criteria->id) }}" class="form-horizontal">
@@ -23,17 +22,27 @@
                     <label class="col-2 control-label col-form-label">Code Criteria</label>
                     <div class="col-10">
                         <input type="text" class="form-control" id="kode" value="{{ old('kode', $criteria->kode) }}"
-                            name="kode" required>
+                            name="kode" disabled>
                         @error('kode')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Bobot Criteria</label>
                     <div class="col-10">
                         <input type="number" class="form-control" id="bobot" name="bobot"
                             value="{{ old('bobot', $criteria->bobot) }}" required>
+                        @error('bobot')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div> --}}
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Bobot Criteria</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="bobot" name="bobot"
+                            value="{{ old('bobot', $criteria->bobot) }}" required step="any">
                         @error('bobot')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
