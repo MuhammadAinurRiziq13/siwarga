@@ -32,7 +32,7 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">Tanggal Lahir</label>
                     <div class="col-10">
-                        <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
+                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
                             required>
                         @error('tanggal_lahir')
                             <small class="form-text text-danger">{{ $message }}</small>
