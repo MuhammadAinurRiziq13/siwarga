@@ -46,7 +46,7 @@
                         <th>No KK</th>
                         <th>Jml Anggota</th>
                         <th>Alamat</th>
-                        <th style="width: 12%">Aksi</th>
+                        <th style="width: 14%">Aksi</th>
                     </tr>
                 </thead>
             </table>

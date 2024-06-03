@@ -35,7 +35,7 @@
                                     <option value="4">Layak</option>
                                     <option value="3">Cukup Layak</option>
                                     <option value="2">Kurang Layak</option>
-                                    <option value="1">Buruk Layak</option>
+                                    <option value="1">Tidak Layak</option>
                                 </select>
                             @else
                                 <input type="number" class="form-control" id="{{ $c->kode }}"

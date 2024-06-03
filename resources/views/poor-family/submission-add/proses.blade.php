@@ -15,6 +15,7 @@
                 <form method="POST" action="{{ url('/submission-add/' . $add->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
+                    <input type="hidden" name="id" value="{{ $add->id }}">
                     <input type="hidden" name="noKK" value="{{ $add->noKK }}">
                     @foreach ($criteria as $c)
                         @if (isset($add->{$c->kode}))

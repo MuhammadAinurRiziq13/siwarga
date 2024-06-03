@@ -35,7 +35,7 @@
                         <th>Judul</th>
                         <th>Tanggal Kegiatan</th>
                         <th>Keterangan</th>
-                        <th style="width: 13%">Aksi</th>
+                        <th style="width: 14%">Aksi</th>
                     </tr>
                 </thead>
             </table>

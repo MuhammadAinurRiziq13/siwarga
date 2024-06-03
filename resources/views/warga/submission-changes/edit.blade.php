@@ -216,10 +216,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        {{-- <label class="col-6 control-label col-form-label"></label> --}}
-                        <div class="col-2 mx-auto">
-                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
-                            <a class="btn btn-sm btn-secondary ml-1"
+                        <div class="col-10 m-3">
+                            <button type="submit" class="btn btn-primary btn-sm float-left">Simpan</button>
+                            <a class="btn btn-sm btn-secondary ml-2 float-left"
                                 href="{{ url('resident-edit/' . Auth::user()->username) }}">Kembali</a>
                         </div>
                     </div>

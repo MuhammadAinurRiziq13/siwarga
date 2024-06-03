@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BuktiAddModel;
+use App\Models\BuktiPrasejahtera;
 use App\Models\CriteriaPraSejahteraModel;
 use App\Models\PoorFamilyModel;
 use App\Models\SubmissionAddModel;
@@ -116,7 +117,21 @@ class SubmissionAddController extends Controller
             }
 
             // Buat entri baru dengan data yang telah dikumpulkan
-            PoorFamilyModel::create($dataToCreate);
+            $prasejahtera = PoorFamilyModel::create($dataToCreate);
+
+            $bukti = BuktiAddModel::where('add', $request->id)->get();
+
+            if ($bukti->isNotEmpty()) {
+                foreach ($bukti as $buktiItem) {
+                    $imageName = $buktiItem->nama_bukti; // Menggunakan nama file gambar yang sudah ada dari entri BuktiPrasejahtera
+
+                    // Menyimpan nama file gambar sebagai bukti edit
+                    BuktiPrasejahtera::create([
+                        'bukti' => $prasejahtera->id,
+                        'nama_bukti' => $imageName,
+                    ]);
+                }
+            }
         }
 
         SubmissionAddModel::where('id', $id)->update([
