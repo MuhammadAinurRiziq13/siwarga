@@ -4,21 +4,27 @@
 <div class="card">
     <div class="card-header bg-transparent">
         <div class="card-tools float-left">
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/calculate') }}">Hitung</a>
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/calculate') }}">Hitung</a>
             {{-- @if (Auth::user()->level == 'admin') --}}
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/criteria') }}">Criteria</a>
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/criteria') }}">Criteria</a>
         </div>
         <div class="card-tools float-right">
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('submission-add') }}">Daftar Pengajuan</a>
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('submission-add') }}">Daftar Pengajuan</a>
             @if (Auth::user()->level == 'admin')
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/create') }}">
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/create') }}">
                 <i class="fas fa-fw fa-plus"></i> Tambah
             </a>
             @endif
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/import') }}">
-                <i class="fas fa-regular fa-file-excel"></i> Import
-            </a>
-            <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/export') }}">
+            <!-- Form Import -->
+            <form action="{{ url('poor-family/import') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+                @csrf
+                <input type="file" name="file" class="d-none" id="importFile" onchange="this.form.submit()">
+                <label class="btn btn-sm bg-dark-blue text-white" for="importFile" >
+                    <i class="fas fa-regular fa-file-excel"></i> Import
+                </label>
+                
+            </form>
+            <a class="btn btn-sm bg-dark-blue text-white " href="{{ url('poor-family/export') }}">
                 <i class="fas fa-regular fa-file-excel"></i> Export
             </a>
         </div>

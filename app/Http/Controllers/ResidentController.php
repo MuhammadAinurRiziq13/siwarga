@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ResidentImport;
+use App\Exports\ResidentExport;
 
 class ResidentController extends Controller
 {
@@ -313,5 +316,21 @@ class ResidentController extends Controller
             //jika terjadi eror ketika menghapus data, redirect kembali ke halaman dengan membawa pesan eror
             return redirect('/resident')->with('error', 'Data warga gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new ResidentImport, $request->file('file'));
+
+        return back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ResidentExport, 'residents.xlsx');
     }
 }

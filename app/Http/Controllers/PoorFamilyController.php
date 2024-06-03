@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CriteriaPraSejahteraModel;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
+use App\Imports\PoorFamiliesImport;
+use App\Exports\PoorFamiliesExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,6 +14,8 @@ use App\Services\Topsis;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PoorFamilyController extends Controller
 {
@@ -613,5 +617,21 @@ class PoorFamilyController extends Controller
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/poor-family/criteria')->with('error', 'Data Kriteria gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new PoorFamiliesImport, $request->file('file'));
+
+        return back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PoorFamiliesExport, 'poor_families.xlsx');
     }
 }
