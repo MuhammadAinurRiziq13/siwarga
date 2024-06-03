@@ -36,10 +36,13 @@ class ProfileController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'username' => 'image|file|max:1024',
-            'password' => 'required|string',
             'nama' => 'required|string',
         ]);
+
+        // Jika password diubah
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($request->password);
+        }
 
         if ($request->file('foto')) {
             if ($request->oldImage) {
@@ -48,10 +51,8 @@ class ProfileController extends Controller
             $validatedData['foto'] = $request->file('foto')->store('gallery');
         }
 
-        // Update data warga
-        $validatedData['password'] = Hash::make($validatedData['password']);
+        // Update data user
         User::find($id)->update($validatedData);
-
 
         //jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect('/profile/' . $id)->with('success', 'Data Galeri Berhasil Diubah');

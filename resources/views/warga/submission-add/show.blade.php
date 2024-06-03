@@ -78,6 +78,11 @@
                                         <td>Sangat Layak</td>
                                     @endif
                                 </tr>
+                            @else
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }}</td>
+                                </tr>
                             @endif
                         @endif
                     @endforeach

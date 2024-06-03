@@ -56,8 +56,8 @@
                     <div class="col-6">
                         <label class="control-label col-form-label">Jenis Kelamin</label>
                         <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required>
-                            <option value="L">Laki-Laki</option>
-                            <option value="P">Perempuan</option>
+                            <option value="Laki-laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
                         </select>
                         @error('jenis_kelamin')
                             <small class="form-text text-danger">{{ $message }}</small>
