@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('pengajuansuratpengantar', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('tempat_lahir');$table->date('tanggal_lahir');
             $table->string('NIK');
             $table->string('pekerjaan');
             $table->string('pendidikan');
             $table->string('no_hp');
+            $table->string('agama');
             $table->string('keperluan');
             $table->string('status');
             $table->timestamp('created_at')->useCurrent();

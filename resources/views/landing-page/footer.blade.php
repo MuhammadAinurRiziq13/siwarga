@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-5 col-md-12 footer-info">
-                    <a href="index.html" class="logo d-flex align-items-center">
+                    <a href="/" class="logo d-flex align-items-center">
                         <img src="{{ asset('img/landing-page/logo.png') }}" height="100px" width="400px" alt="">
                     </a>
                     <p>RT 05 RW 01 Dusun Bandilan 1, Desa Ranuklindungan, Kecamatan Grati, Kabupaten Pasuruan, Jawa

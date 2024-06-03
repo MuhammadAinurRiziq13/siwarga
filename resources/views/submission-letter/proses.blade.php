@@ -15,14 +15,30 @@
                 <form method="POST" action="{{ url('/submission-letter/' . $letter->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
+                    <input type="hidden" name="nama" value="{{ $letter->nama }}">
+                    <input type="hidden" name="tempat_lahir" value="{{ $letter->tempat_lahir }}">
+                    <input type="hidden" name="tanggal_lahir" value="{{ $letter->tanggal_lahir }}">
                     <input type="hidden" name="NIK" value="{{ $letter->NIK }}">
                     <input type="hidden" name="pekerjaan" value="{{ $letter->pekerjaan }}">
                     <input type="hidden" name="pendidikan" value="{{ $letter->pendidikan }}">
+                    <input type="hidden" name="agama" value="{{ $letter->agama }}">
                     <input type="hidden" name="keperluan" value="{{ $letter->keperluan }}">
-                    <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}">
+                    {{-- <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}"> --}}
                     <input type="hidden" name="status" value="selesai">
 
                     <table class="table table-bordered table-striped table-hover table-sm">
+                        <tr>
+                            <th style="width: 30%">Nama</th>
+                            <td>{{ $letter->nama }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Tempat/Tgl. Lahir</th>
+                            <td>{{ $letter->tempat_lahir }}, {{$letter->tanggal_lahir}}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Alamat</th>
+                            <td>RT. 05/RW. 1 Dusun Bandilan 1 Desa RandukLindungan, Kecamatan Grati</td>
+                        </tr>
                         <tr>
                             <th style="width: 30%">NIK</th>
                             <td>{{ $letter->NIK }}</td>
@@ -34,6 +50,10 @@
                         <tr>
                             <th style="width: 30%">Pendidikan</th>
                             <td>{{ $letter->pendidikan }}</td>
+                        </tr>
+                        <tr>
+                            <th style="width: 30%">Agama</th>
+                            <td>{{ $letter->agama }}</td>
                         </tr>
                         <tr>
                             <th style="width: 30%">Keperluan</th>

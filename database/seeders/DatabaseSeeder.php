@@ -172,15 +172,20 @@ class DatabaseSeeder extends Seeder
             // Generate pengajuan edit data warga with 10% chance
             if (rand(0, 4) === 0) {
                 $pengajuanSuratPengantar[] = [
+                    'nama' => $warga['nama'],
                     'NIK' => $warga['NIK'],
+                    'tempat_lahir' => $faker->city,
+                    'tanggal_lahir' => $faker->date('Y-m-d', '2000-01-01'),
                     'pekerjaan' => $faker->jobTitle,
                     'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
                     'no_hp' => $faker->phoneNumber,
+                    'agama' => $faker->randomElement(['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha']),
                     'keperluan' => $keperluan, // Use truncated keterangan
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']), // Use truncated keterangan
                 ];
             }
         }
+
         DB::table('pengajuansuratpengantar')->insert($pengajuanSuratPengantar);
 
         $keluargaKurangMampuData = [];
