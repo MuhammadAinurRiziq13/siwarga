@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
 
                 // Jika kepala keluarga belum ditambahkan dan ini adalah warga pertama dalam keluarga, tandai sebagai kepala keluarga
                 if (!$kepalaKelurahanAdded && $j === 0) {
-                    $warga['status_keluarga'] = 'Kepala keluarga';
+                    $warga['status_keluarga'] = 'Kepala Keluarga';
                     $warga['status_kerja'] = 'Kerja';
                     $kepalaKelurahanAdded = true;
                 }
