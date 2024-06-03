@@ -174,9 +174,12 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 4) === 0) {
                 $pengajuanSuratPengantar[] = [
                     'nama' => $warga['nama'],
+                    'tempat_lahir' => $warga['tempat_lahir'],
+                    'tanggal_lahir' => $warga['tanggal_lahir'],
                     'NIK' => $warga['NIK'],
                     'pekerjaan' => 'Karyawan BUMN',
                     'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
+                    'agama' => $warga['agama'],
                     'no_hp' => '6285156530441',
                     'keperluan' => $keperluan, // Use truncated keterangan
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']), // Use truncated keterangan
