@@ -5,7 +5,7 @@
         <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
                 @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('family/create') }}">
+                    <a class="btn btn-sm text-white bg-primary" href="{{ url('family/create') }}">
                         <i class="fas fa-fw fa-plus"></i> Tambah
                     </a>
                 @endif
@@ -13,11 +13,11 @@
                 <form action="{{ url('family/import') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
                     @csrf
                     <input type="file" name="file" class="d-none" id="importFile" onchange="this.form.submit()">
-                    <label class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" for="importFile" style="margin-top: 0.5rem;">
+                    <label class="btn btn-sm text-white bg-primary" for="importFile" style="margin-top: 0.5rem;">
                         <i class="fas fa-regular fa-file-excel"></i> Import
                     </label>
                 </form>
-                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('family/export') }}">
+                <a class="btn btn-sm text-white bg-primary" href="{{ url('family/export') }}">
                     <i class="fas fa-regular fa-file-excel"></i> Export
                 </a>
             </div>

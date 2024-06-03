@@ -5,7 +5,7 @@
         <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
                 @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('gallery/create') }}"><i
+                    <a class="btn btn-sm text-white bg-primary" href="{{ url('gallery/create') }}"><i
                             class="fas fa-fw fa-plus"></i> Tambah Data</a>
                 @endif
             </div>
