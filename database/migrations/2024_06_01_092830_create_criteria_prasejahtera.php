@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
-            $table->integer('bobot');
+            $table->double('bobot');
             $table->enum('jenis', ['cost', 'benefit']);
             $table->timestamps();
         });

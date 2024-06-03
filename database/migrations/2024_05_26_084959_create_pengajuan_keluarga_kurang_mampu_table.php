@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('pengajuanprasejahtera', function (Blueprint $table) {
             $table->id();
             $table->string('noKK');
-            $table->string('jumlah_tanggungan');
-            $table->string('kondisi_rumah');
-            $table->string('luas_tanah');
-            $table->string('aset_kendaraan');
-            $table->string('pendapatan');
+            $table->integer('C1');
+            $table->integer('C2');
+            $table->integer('C3');
+            $table->integer('C4');
+            $table->integer('C5');
             $table->string('status');
             $table->string('no_hp');
             $table->timestamp('created_at')->useCurrent();

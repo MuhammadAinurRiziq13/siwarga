@@ -21,26 +21,66 @@
                         <th>Nama Pemohon</th>
                         <td>{{ $nama->kepala_keluarga }}</td>
                     </tr>
-                    <tr>
-                        <th>Jumlah tanggungan</th>
-                        <td>{{ $add->jumlah_tanggungan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nilai Aset Kendaraan</th>
-                        <td>{{ $add->aset_kendaraan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Kondisi Rumah</th>
-                        <td>{{ $add->kondisi_rumah }}</td>
-                    </tr>
-                    <tr>
-                        <th>Luas Tanah</th>
-                        <td>{{ $add->luas_tanah }} m<sup>2</sup></td>
-                    </tr>
-                    <tr>
-                        <th>Pendapatan</th>
-                        <td>{{ $add->pendapatan }}</td>
-                    </tr>
+                    {{-- @foreach ($criteria as $c)
+                        @if (isset($add->{$c->kode}))
+                            @if ($c->nama == 'Jumlah Tanggungan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }} Orang</td>
+                                </tr>
+                            @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>Rp{{ $add->{$c->kode} }}</td>
+                                </tr>
+                            @elseif ($c->nama == 'Luas tanah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }} m<sup>2</sup></td>
+                                </tr>
+                            @elseif ($c->nama == 'Kondisi Rumah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }}</td>
+                                </tr>
+                            @endif
+                        @endif
+                    @endforeach --}}
+                    @foreach ($criteria as $c)
+                        @if (isset($add->{$c->kode}))
+                            @if ($c->nama == 'Jumlah Tanggungan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }} orang</td>
+                                </tr>
+                            @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>Rp {{ $add->{$c->kode} }}</td>
+                                </tr>
+                            @elseif ($c->nama == 'Luas tanah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $add->{$c->kode} }} m<sup>2</sup></td>
+                                </tr>
+                            @elseif ($c->nama == 'Kondisi Rumah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    @if ($add->{$c->kode} == 1)
+                                        <td>Tidak Layak</td>
+                                    @elseif ($add->{$c->kode} == 2)
+                                        <td>Kurang Layak</td>
+                                    @elseif ($add->{$c->kode} == 3)
+                                        <td>Cukup Layak</td>
+                                    @elseif ($add->{$c->kode} == 4)
+                                        <td>Layak</td>
+                                    @elseif ($add->{$c->kode} == 5)
+                                        <td>Sangat Layak</td>
+                                    @endif
+                                </tr>
+                            @endif
+                        @endif
+                    @endforeach
                     <tr>
                         <th>No HP</th>
                         <td>{{ $add->no_hp }}</td>

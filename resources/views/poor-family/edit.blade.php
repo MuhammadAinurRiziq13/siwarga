@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h5 class="card-title mb-0">{{ $page->title }}</h5>
-            <div class="card-tools"></div>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @empty($poorFamily)
@@ -21,7 +20,6 @@
                         <label class="col-2 control-label col-form-label">No KK</label>
                         <div class="col-10">
                             <select class="form-control select2" id="noKK" name="noKK" required>
-                                {{-- <option value="">No KK </option> --}}
                                 @foreach ($family as $item)
                                     <option value="{{ $item->noKK }}" @if ($item->noKK == $poorFamily->noKK) selected @endif>
                                         {{ $item->noKK }}</option>
@@ -93,12 +91,15 @@
                             <div class="col-10">
                                 @if ($c->nama == 'Kondisi Rumah')
                                     <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
-                                        <option value="5" @if ($poorFamily->C5 == 5) selected @endif>Sangat Baik
+                                        <option value="5" @if ($poorFamily->C5 == 5) selected @endif>Sangat Layak
                                         </option>
-                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Baik</option>
-                                        <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Cukup</option>
-                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Kurang</option>
-                                        <option value="1" @if ($poorFamily->C5 == 1) selected @endif>Buruk</option>
+                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Layak</option>
+                                        <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Cukup Layak
+                                        </option>
+                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Kurang Layak
+                                        </option>
+                                        <option value="1" @if ($poorFamily->C5 == 1) selected @endif>Tidak Layak
+                                        </option>
                                     </select>
                                 @else
                                     <input type="number" class="form-control" id="{{ $c->kode }}"
@@ -147,6 +148,20 @@
                     },
                     cache: true
                 }
+            });
+
+            $(document).ready(function() {
+                var noKK = $('#noKK').val();
+                $.ajax({
+                    url: '/get-status-kerja',
+                    method: 'GET',
+                    data: {
+                        noKK: noKK
+                    },
+                    success: function(response) {
+                        $('#C1').val(response.count);
+                    }
+                });
             });
         });
     </script>

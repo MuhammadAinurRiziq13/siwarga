@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('C3');
             $table->integer('C4');
             $table->integer('C5');
+            $table->double('score')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

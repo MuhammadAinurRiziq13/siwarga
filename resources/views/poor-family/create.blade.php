@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h class="card-title mb-0">{{ $page->title }}</h>
-            <div class="card-tools"></div>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ url('poor-family') }}" class="form-horizontal">
@@ -19,72 +18,17 @@
                         @enderror
                     </div>
                 </div>
-                {{-- <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Jumlah Tanggungan</label>
-                    <div class="col-10">
-                        <input type="number" class="form-control" id="jumlah_tanggungan" name="jumlah_tanggungan"
-                            value="{{ old('jumlah_tanggungan') }}" required>
-                        @error('jumlah_tanggungan')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Pendapatan</label>
-                    <div class="col-10">
-                        <input type="number" class="form-control" id="pendapatan" name="pendapatan"
-                            value="{{ old('pendapatan') }}" required>
-                        @error('pendapatan')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Nilai Aset Kendaraan</label>
-                    <div class="col-10">
-                        <input type="number" class="form-control" id="aset_kendaraan" name="aset_kendaraan"
-                            value="{{ old('aset_kendaraan') }}" required>
-                        @error('aset_kendaraan')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Luas Tanah</label>
-                    <div class="col-10">
-                        <input type="number" class="form-control" id="luas_tanah" name="luas_tanah"
-                            value="{{ old('luas_tanah') }}" required>
-                        @error('luas_tanah')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-2 control-label col-form-label">Kondisi Rumah</label>
-                    <div class="col-10">
-                        <select class="form-control" id="kondisi_rumah" name="kondisi_rumah" required>
-                            <option value="5">Sangat Baik</option>
-                            <option value="4">Baik</option>
-                            <option value="3">Cukup</option>
-                            <option value="2">Kurang</option>
-                            <option value="1">Buruk</option>
-                        </select>
-                        @error('kondisi_rumah')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div> --}}
                 @foreach ($criteria as $c)
                     <div class="form-group row">
                         <label class="col-2 control-label col-form-label">{{ $c->nama }}</label>
                         <div class="col-10">
                             @if ($c->nama == 'Kondisi Rumah')
                                 <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
-                                    <option value="5">Sangat Baik</option>
-                                    <option value="4">Baik</option>
-                                    <option value="3">Cukup</option>
-                                    <option value="2">Kurang</option>
-                                    <option value="1">Buruk</option>
+                                    <option value="5">Sangat Layak</option>
+                                    <option value="4">Layak</option>
+                                    <option value="3">Cukup Layak</option>
+                                    <option value="2">Kurang Layak</option>
+                                    <option value="1">Buruk Layak</option>
                                 </select>
                             @else
                                 <input type="number" class="form-control" id="{{ $c->kode }}"
@@ -117,7 +61,7 @@
             $('.select2').select2({
                 placeholder: 'No KK',
                 ajax: {
-                    url: '/noKK',
+                    url: '/noKK1',
                     dataType: 'json',
                     delay: 250,
                     processResults: function(data) {
@@ -132,6 +76,20 @@
                     },
                     cache: true
                 }
+            });
+
+            $('#noKK').on('change', function() {
+                var noKK = $(this).val();
+                $.ajax({
+                    url: '/get-status-kerja',
+                    method: 'GET',
+                    data: {
+                        noKK: noKK
+                    },
+                    success: function(response) {
+                        $('#C1').val(response.count);
+                    }
+                });
             });
         });
     </script>

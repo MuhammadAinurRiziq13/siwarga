@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CriteriaPraSejahteraModel;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
+use App\Models\ResidentModel;
+use App\Exports\PoorFamiliesExport;
+use App\Imports\PoorFamiliesImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,6 +15,8 @@ use App\Services\Topsis;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PoorFamilyController extends Controller
 {
@@ -34,49 +39,45 @@ class PoorFamilyController extends Controller
     public function calculate()
     {
         // Fetch the data
-        $families = PoorFamilyModel::select(
-            // 'keluargakurangmampu.noKK',
-            // 'warga.nama',
-            // 'keluargakurangmampu.jumlah_tanggungan',
-            // 'keluargakurangmampu.pendapatan',
-            // 'keluargakurangmampu.aset_kendaraan',
-            // 'keluargakurangmampu.luas_tanah',
-            // 'keluargakurangmampu.kondisi_rumah'
+        $anggota = PoorFamilyModel::select(
+            'keluargakurangmampu.noKK',
+            'warga.nama',
+            DB::raw('COUNT(warga2.noKK) as jumlah_anggota')
         )
+            ->join('warga', function ($join) {
+                $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
+                    ->where('warga.status_keluarga', '=', 'kepala keluarga');
+            })
+            ->leftJoin('warga as warga2', 'keluargakurangmampu.noKK', '=', 'warga2.noKK')
+            ->groupBy('keluargakurangmampu.noKK', 'warga.nama')
+            ->get();
+
+        $families = PoorFamilyModel::select()
             ->join('warga', function ($join) {
                 $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
                     ->where('warga.status_keluarga', 'kepala keluarga');
             })
+            ->orderBy('keluargakurangmampu.noKK') // Menambahkan pengurutan berdasarkan noKK
             ->get();
+
 
         $criteriaData = CriteriaPraSejahteraModel::all();
         // Ambil nama kriteria, bobot, dan jenis kriteria dari data yang diambil
         $criteria = $criteriaData->pluck('nama')->toArray();
         $weights = $criteriaData->pluck('bobot')->toArray();
         $criteriaType = $criteriaData->pluck('jenis')->toArray();
-        // $criteria = ['Jumlah Tanggungan', 'Pendapatan', 'Aset Kendaraan', 'Luas Tanah', 'Kondisi Rumah'];
-        // $criteriaType = ['benefit', 'cost', 'cost', 'cost', 'cost'];
-        // $weights = [0.3, 0.25, 0.15, 0.1, 0.2];
-        // $weights = [4, 2, 4, 3, 2];
 
         // Prepare data for TOPSIS
         $alternatives = $families->pluck('noKK')->toArray();
-        $decisionMatrix = $families->map(function ($family) {
-            return [
-                $this->convertTanggunganToScore($family->C1),
-                $this->convertPendapatanToScore($family->C2),
-                $this->convertAsetKendaraanToScore($family->C3),
-                $this->convertLuasTanahToScore($family->C4),
-                $family->C5
-            ];
+
+        $kode = $criteriaData->pluck('kode')->toArray();
+        $decisionMatrix = $families->map(function ($family) use ($kode) {
+            $values = [];
+            foreach ($kode as $k) {
+                $values[] = $family->$k;
+            }
+            return $values;
         })->toArray();
-        // $decisionMatrix = $families->map(function ($family) use ($criteria) {
-        //     $row = [];
-        //     foreach ($criteria as $criterion) {
-        //         $row[] = $family->$criterion; // Misalnya, ambil nilai langsung dari kolom dengan nama kriteria
-        //     }
-        //     return $row;
-        // })->toArray();
 
 
         // Langkah Normalisasi bobot
@@ -89,21 +90,37 @@ class PoorFamilyController extends Controller
         $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
-        // $noKKtabel = $families->firstWhere('noKK');
 
-        $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
+        $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families, $anggota) {
             $family = $families->firstWhere('noKK', $ranking['alternative']);
+            $jumlah_anggota = $anggota->where('noKK', $ranking['alternative'])->first()->jumlah_anggota;
             return [
                 'noKK' => $family->noKK,
                 'nama' => $family->nama,
-                'jumlah_anggota' => $family->C1,
+                'jumlah_anggota' => $jumlah_anggota,
+                'score' => $ranking['score'],
+                'jumlah_tanggungan' => $family->C1,
                 'pendapatan' => $family->C2,
                 'aset_kendaraan' => $family->C3,
                 'luas_tanah' => $family->C4,
                 'kondisi_rumah' => $family->C5,
-                'score' => $ranking['score']
             ];
         });
+
+        // $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families) {
+        //     $family = $families->firstWhere('noKK', $ranking['alternative']);
+        //     return [
+        //         'noKK' => $family->noKK,
+        //         'nama' => $family->nama,
+        //         'jumlah_anggota' => $family->jumlah_anggota,
+        //         'score' => $ranking['score'],
+        //         'jumlah_tanggungan' => $family->C1,
+        //         'pendapatan' => $family->C2,
+        //         'aset_kendaraan' => $family->C3,
+        //         'luas_tanah' => $family->C4,
+        //         'kondisi_rumah' => $family->C5,
+        //     ];
+        // });
 
         $breadcrumb = (object)[
             'title' => 'Data Keluarga Pra-Sejahtera',
@@ -175,64 +192,64 @@ class PoorFamilyController extends Controller
     // }
 
 
-    private function convertTanggunganToScore($jumlahTanggungan)
-    {
-        if ($jumlahTanggungan > 7) {
-            return 5;
-        } elseif ($jumlahTanggungan >= 6) {
-            return 4;
-        } elseif ($jumlahTanggungan >= 4) {
-            return 3;
-        } elseif ($jumlahTanggungan >= 2) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
+    // private function convertTanggunganToScore($jumlahTanggungan)
+    // {
+    //     if ($jumlahTanggungan > 7) {
+    //         return 5;
+    //     } elseif ($jumlahTanggungan >= 6) {
+    //         return 4;
+    //     } elseif ($jumlahTanggungan >= 4) {
+    //         return 3;
+    //     } elseif ($jumlahTanggungan >= 2) {
+    //         return 2;
+    //     } else {
+    //         return 1;
+    //     }
+    // }
 
-    private function convertPendapatanToScore($pendapatan)
-    {
-        if ($pendapatan > 2000000) {
-            return 5;
-        } elseif ($pendapatan > 1500000 && $pendapatan <= 2000000) {
-            return 4;
-        } elseif ($pendapatan > 1000000 && $pendapatan <= 1500000) {
-            return 3;
-        } elseif ($pendapatan > 750000 && $pendapatan <= 1000000) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-    private function convertAsetKendaraanToScore($aset)
-    {
-        if ($aset < 750000) {
-            return 5;
-        } elseif ($aset >= 750000 && $aset < 1000000) {
-            return 4;
-        } elseif ($aset >= 1000000 && $aset < 1500000) {
-            return 3;
-        } elseif ($aset >= 1500000 && $aset < 2000000) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
+    // private function convertPendapatanToScore($pendapatan)
+    // {
+    //     if ($pendapatan > 2000000) {
+    //         return 5;
+    //     } elseif ($pendapatan > 1500000 && $pendapatan <= 2000000) {
+    //         return 4;
+    //     } elseif ($pendapatan > 1000000 && $pendapatan <= 1500000) {
+    //         return 3;
+    //     } elseif ($pendapatan > 750000 && $pendapatan <= 1000000) {
+    //         return 2;
+    //     } else {
+    //         return 1;
+    //     }
+    // }
+    // private function convertAsetKendaraanToScore($aset)
+    // {
+    //     if ($aset < 750000) {
+    //         return 5;
+    //     } elseif ($aset >= 750000 && $aset < 1000000) {
+    //         return 4;
+    //     } elseif ($aset >= 1000000 && $aset < 1500000) {
+    //         return 3;
+    //     } elseif ($aset >= 1500000 && $aset < 2000000) {
+    //         return 2;
+    //     } else {
+    //         return 1;
+    //     }
+    // }
 
-    private function convertLuasTanahToScore($luas)
-    {
-        if ($luas > 50) {
-            return 5;
-        } elseif ($luas > 40 && $luas <= 50) {
-            return 4;
-        } elseif ($luas > 30 && $luas <= 40) {
-            return 3;
-        } elseif ($luas > 20 && $luas <= 30) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
+    // private function convertLuasTanahToScore($luas)
+    // {
+    //     if ($luas > 50) {
+    //         return 5;
+    //     } elseif ($luas > 40 && $luas <= 50) {
+    //         return 4;
+    //     } elseif ($luas > 30 && $luas <= 40) {
+    //         return 3;
+    //     } elseif ($luas > 20 && $luas <= 30) {
+    //         return 2;
+    //     } else {
+    //         return 1;
+    //     }
+    // }
 
     public function list()
     {
@@ -287,12 +304,12 @@ class PoorFamilyController extends Controller
         $family = FamilyModel::all();
         $criteria = CriteriaPraSejahteraModel::all();
         $breadcrumb = (object)[
-            'title' => 'Tambah Keluarga Pra-Sejahtera',
+            'title' => '',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Keluarga Pra-Sejahtera Baru'
+            'title' => 'Form Tambah Keluarga Pra-Sejahtera'
         ];
 
         return view('poor-family.create', [
@@ -307,12 +324,12 @@ class PoorFamilyController extends Controller
     public function createCriteria()
     {
         $breadcrumb = (object)[
-            'title' => 'Tambah Criteria',
+            'title' => '',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Tambah Criteria'
+            'title' => 'Form Tambah Criteria'
         ];
 
         return view('poor-family.criteria.createCriteria', [
@@ -387,6 +404,10 @@ class PoorFamilyController extends Controller
             $table->string($request->kode)->nullable();
         });
 
+        Schema::table('pengajuanprasejahtera', function (Blueprint $table) use ($request) {
+            $table->string($request->kode)->nullable();
+        });
+
         // Tambahkan data ke CriteriaPraSejahteraModel
         CriteriaPraSejahteraModel::create([
             'kode' => $request->kode,
@@ -451,11 +472,11 @@ class PoorFamilyController extends Controller
         $family = FamilyModel::all();
         $criteria = CriteriaPraSejahteraModel::all();
         $breadcrumb = (object)[
-            'title' => 'Edit Keluarga Pra-Sejahtera',
+            'title' => '',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Edit Keluarga Pra-Sejahtera'
+            'title' => 'Form Edit Keluarga Pra-Sejahtera'
         ];
         return view('poor-family.edit', [
             'breadcrumb' => $breadcrumb,
@@ -485,15 +506,15 @@ class PoorFamilyController extends Controller
 
     public function updateCriteria(Request $request, string $id)
     {
-        $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
+        // $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
 
         // Ubah nama kolom pada tabel 'keluargakurangmampu' dari $criteria->kode menjadi $request->kode
-        Schema::table('keluargakurangmampu', function (Blueprint $table) use ($criteria, $request) {
-            $table->renameColumn($criteria->kode, $request->kode);
-        });
+        // Schema::table('keluargakurangmampu', function (Blueprint $table) use ($criteria, $request) {
+        //     $table->renameColumn($criteria->kode, $request->kode);
+        // });
 
         CriteriaPraSejahteraModel::find($id)->update([
-            'kode' => $request->kode,
+            // 'kode' => $request->kode,
             'nama' => $request->nama,
             'bobot' => $request->bobot,
             'jenis' => $request->jenis,
@@ -605,6 +626,10 @@ class PoorFamilyController extends Controller
             Schema::table('keluargakurangmampu', function (Blueprint $table) use ($check) {
                 $table->dropColumn($check->kode);
             });
+            // Hapus kolom dari tabel 'pengajuan' dengan nama yang diambil dari $check->kode
+            Schema::table('pengajuanprasejahtera', function (Blueprint $table) use ($check) {
+                $table->dropColumn($check->kode);
+            });
             // Hapus data dari tabel anak (keluargaKurangMampu)
             CriteriaPraSejahteraModel::where('id', $id)->delete();
 
@@ -613,5 +638,51 @@ class PoorFamilyController extends Controller
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
             return redirect('/poor-family/criteria')->with('error', 'Data Kriteria gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
+    }
+
+    public function getFamilyData(Request $request)
+    {
+        $families = FamilyModel::leftJoin('keluargakurangmampu', 'keluarga.noKK', '=', 'keluargakurangmampu.noKK')
+            ->select('keluarga.noKK')
+            ->where('keluarga.noKK', 'LIKE', '%' . $request->input('q') . '%')
+            ->whereNull('keluargakurangmampu.noKK')
+            ->paginate(10);
+
+        $data = [];
+        // Looping untuk menyiapkan data yang akan dikirimkan ke Select2
+        foreach ($families as $family) {
+            // Konversi nilai noKK menjadi string jika perlu
+            $noKK = (string)$family->noKK;
+            $data[] = [
+                'id' => $noKK,
+                'text' => $noKK
+            ];
+        }
+
+        // Kirim data dalam format JSON
+        return response()->json($data);
+    }
+
+    public function getStatusKerja(Request $request)
+    {
+        $noKK = $request->input('noKK');
+        $count = ResidentModel::where('noKK', $noKK)->where('status_kerja', 'Tidak Kerja')->count();
+        return response()->json(['count' => $count]);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new PoorFamiliesImport, $request->file('file'));
+
+        return back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PoorFamiliesExport, 'poor_families.xlsx');
     }
 }

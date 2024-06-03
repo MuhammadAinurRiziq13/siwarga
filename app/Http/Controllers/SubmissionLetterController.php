@@ -13,13 +13,17 @@ class SubmissionLetterController extends Controller
     public function index()
     {
         $breadcrumb = (object)[
-            'title' => 'Data Pengajuan Surat Pengantar',
+            'title' => '',
             'list' => ['Home', 'Pengajuan Surat Pengantar']
+        ];
+        $page = (object)[
+            'title' => 'Daftar Pengajuan Surat Pengantar'
         ];
         return view(
             'submission-letter.index',
             [
-                'breadcrumb' => $breadcrumb
+                'breadcrumb' => $breadcrumb,
+                'page' => $page,
             ]
         );
     }

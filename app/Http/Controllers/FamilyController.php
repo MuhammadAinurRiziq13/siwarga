@@ -10,6 +10,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\FamiliesImport;
+use App\Exports\FamiliesExport;
 
 class FamilyController extends Controller
 {
@@ -282,5 +285,21 @@ class FamilyController extends Controller
             //jika terjadi eror ketika menghapus data, redirect kembali ke halaman dengan membawa pesan eror
             return redirect('/family')->with('error', 'Data Keluarga gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new FamiliesImport, $request->file('file'));
+
+        return back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new FamiliesExport, 'families.xlsx');
     }
 }

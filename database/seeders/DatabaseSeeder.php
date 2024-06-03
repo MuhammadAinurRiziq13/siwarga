@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // Generate dummy keluarga data
         $keluargaData = [];
         $keluargaKurangMampuData = [];
-        $keluargaPraSejahteraData = [];
+        $jumlahKeluargaKurangMampu = 10;
+        // $keluargaPraSejahteraData = [];
         for ($i = 0; $i < 50; $i++) {
             $noKK = rand(1, 9) . $faker->unique()->numerify('################');
             $keluargaData[] = [
@@ -32,13 +33,13 @@ class DatabaseSeeder extends Seeder
             ];
 
             // Insert keluarga kurang mampu
-            if (rand(0, 8) === 0) {
+            if (count($keluargaKurangMampuData) < $jumlahKeluargaKurangMampu) {
                 $keluargaKurangMampuData[] = [
                     'noKK' => $noKK,
                     'c1' => $faker->numberBetween(1, 5),
-                    'c2' => $faker->randomFloat(2, 10000, 20000),
-                    'c3' => $faker->randomFloat(2, 10000, 20000),
-                    'c4' => $faker->numberBetween(100, 500),
+                    'c2' => $faker->randomFloat(2, 400000, 3000000),
+                    'c3' => $faker->randomFloat(2, 400000, 3000000),
+                    'c4' => $faker->numberBetween(10, 100),
                     'c5' => $faker->numberBetween(1, 5),
                 ];
             }
@@ -193,11 +194,11 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 8) === 0) {
                 $keluargaKurangMampuData[] = [
                     'noKK' => $keluarga['noKK'],
-                    'jumlah_tanggungan' => $faker->numberBetween(1, 5),
-                    'pendapatan' => $faker->randomFloat(2, 10000, 20000),
-                    'aset_kendaraan' => $faker->randomFloat(2, 10000, 20000),
-                    'luas_tanah' => $faker->numberBetween(100, 500),
-                    'kondisi_rumah' => $faker->numberBetween(1, 5),
+                    'c1' => $faker->numberBetween(1, 5),
+                    'c2' => $faker->randomFloat(2, 400000, 3000000),
+                    'c3' => $faker->randomFloat(2, 400000, 3000000),
+                    'c4' => $faker->numberBetween(10, 100),
+                    'c5' => $faker->numberBetween(1, 5),
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']),
                     'no_hp' => $faker->phoneNumber,
                 ];

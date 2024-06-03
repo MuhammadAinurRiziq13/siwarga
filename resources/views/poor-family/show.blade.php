@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h6 class="card-title mb-0">{{ $page->title }}</h6>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @empty($poorFamily)
@@ -14,38 +14,40 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     @foreach ($criteria as $c)
-                        @if (isset($poorFamily->{$c->kode})) 
-                            <tr>
-                                <th>{{ $c->nama }}</th>
-                                <td>{{ $poorFamily->{$c->kode} }}</td> <!-- Mengambil nilai berdasarkan kode kriteria -->
-                            </tr>
+                        @if (isset($poorFamily->{$c->kode}))
+                            @if ($c->nama == 'Jumlah Tanggungan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }} orang</td>
+                                </tr>
+                            @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>Rp {{ $poorFamily->{$c->kode} }}</td>
+                                </tr>
+                            @elseif ($c->nama == 'Luas tanah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }} m<sup>2</sup></td>
+                                </tr>
+                            @elseif ($c->nama == 'Kondisi Rumah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    @if ($poorFamily->{$c->kode} == 1)
+                                        <td>Tidak Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 2)
+                                        <td>Kurang Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 3)
+                                        <td>Cukup Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 4)
+                                        <td>Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 5)
+                                        <td>Sangat Layak</td>
+                                    @endif
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
-                    {{-- @endforeach --}}
-                    {{-- <tr>
-                        <th>No KK</th>
-                        <td>{{ $poorFamily->noKK }}</td>
-                    </tr>
-                    <tr>
-                        <th>Jumlah Tanggungan</th>
-                        <td>{{ $poorFamily->jumlah_tanggungan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Pendapatan</th>
-                        <td>{{ $poorFamily->pendapatan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nilai Aset Kendaraan</th>
-                        <td>{{ $poorFamily->aset_kendaraan }}</td>
-                    </tr>
-                    <tr>
-                        <th>Luas Tanah</th>
-                        <td>{{ $poorFamily->luas_tanah }}</td>
-                    </tr>
-                    <tr>
-                        <th>Kondisi Rumah</th>
-                        <td>{{ $poorFamily->kondisi_rumah }}</td>
-                    </tr> --}}
                 </table>
             @endempty
             <a href="{{ url('poor-family') }}" class="btn btn-sm btn-secondary mt-2 float-right">Kembali</a>
