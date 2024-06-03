@@ -47,56 +47,56 @@
                     <th>Jumlah Kendaraan</th>
                     <th>Luas Tanah</th>
                     <th>Kondisi Rumah</th> --}}
-                    {{-- <th>Score</th> --}}
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($rankedFamilies as $index => $family)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $family['noKK'] }}</td>
-                    <td>{{ $family['nama'] }}</td>
-                    <td>{{ $family['jumlah_anggota'] }}</td>
-                    {{-- <td>{{ $family['pendapatan'] }}</td>
+                        {{-- <th>Score</th> --}}
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($rankedFamilies as $index => $family)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $family['noKK'] }}</td>
+                            <td>{{ $family['nama'] }}</td>
+                            <td>{{ $family['jumlah_anggota'] }}</td>
+                            {{-- <td>{{ $family['pendapatan'] }}</td>
                     <td>{{ $family['jumlah_kendaraan'] }}</td>
                     <td>{{ $family['luas_tanah'] }}</td>
                     <td>{{ $family['kondisi_rumah'] }}</td> --}}
-                    {{-- <td>{{ round($family['score'],4) }}</td> --}}
-                    <td class="text-center">
-                        <a href="{{ url('/poor-family/' . $family['noKK']) }}" class="btn btn-info btn-sm"><i
-                                class="fas fa-eye"></i></a>
-                        @if (Auth::user()->level == 'admin')
-                        <a href="{{ url('/poor-family/' . $family['noKK'] . '/edit') }}"
-                            class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                        <form class="d-inline-block" method="POST"
-                            action="{{ url('/poor-family/' . $family['noKK']) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Apakah Anda yakin menghapus data ini?');">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                            {{-- <td>{{ round($family['score'],4) }}</td> --}}
+                            <td class="text-center">
+                                <a href="{{ url('/poor-family/' . $family['noKK']) }}" class="btn btn-info btn-sm"><i
+                                        class="fas fa-eye"></i></a>
+                                @if (Auth::user()->level == 'admin')
+                                    <a href="{{ url('/poor-family/' . $family['noKK'] . '/edit') }}"
+                                        class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <form class="d-inline-block" method="POST"
+                                        action="{{ url('/poor-family/' . $family['noKK']) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Apakah Anda yakin menghapus data ini?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 @endsection
 
 @push('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 @endpush
 @push('js')
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#poorFamilyTable').DataTable();
-    });
-</script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#poorFamilyTable').DataTable();
+        });
+    </script>
 @endpush

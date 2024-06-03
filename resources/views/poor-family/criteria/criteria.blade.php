@@ -2,23 +2,33 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header bg-transparent">
+        <div class="card-header bg-dark-blue">
             <div class="card-tools float-left">
                 {{-- <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/createCriteria') }}">Criteria</a> --}}
             </div>
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white mt-1" href="{{ url('poor-family/createCriteria') }}">
+                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/createCriteria') }}">
                     <i class="fas fa-fw fa-plus"></i> Tambah
                 </a>
-                <a class="btn btn-sm btn-secondary mt-1" href="{{ url('poor-family') }}">Kembali</a>
+                <a class="btn btn-sm btn-secondary" href="{{ url('poor-family') }}">Kembali</a>
             </div>
         </div>
         <div class="card-body">
             @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
             @if (session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
             <table id="poorFamilyTable" class="table table-bordered table-striped table-hover table-sm">
                 <thead>

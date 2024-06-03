@@ -3,8 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header bg-dark-blue">
-            <div class="card-tools float-right">
-            </div>
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             @if (session('success'))

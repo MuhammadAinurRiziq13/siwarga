@@ -2,9 +2,8 @@
 
 @section('content')
     <div class="card card-outline card-primary shadow">
-        <div class="card-header">
-            <h class="card-title mb-0">{{ $page->title }}</h>
-            <div class="card-tools"></div>
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">{{ $page->title }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ url('poor-family') }}" class="form-horizontal">
@@ -117,7 +116,7 @@
             $('.select2').select2({
                 placeholder: 'No KK',
                 ajax: {
-                    url: '/noKK',
+                    url: '/noKK1',
                     dataType: 'json',
                     delay: 250,
                     processResults: function(data) {
@@ -132,6 +131,20 @@
                     },
                     cache: true
                 }
+            });
+
+            $('#noKK').on('change', function() {
+                var noKK = $(this).val();
+                $.ajax({
+                    url: '/get-status-kerja',
+                    method: 'GET',
+                    data: {
+                        noKK: noKK
+                    },
+                    success: function(response) {
+                        $('#C1').val(response.count);
+                    }
+                });
             });
         });
     </script>

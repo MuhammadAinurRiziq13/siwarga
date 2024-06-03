@@ -98,7 +98,7 @@ class ResidentController extends Controller
     public function getFamilyData(Request $request)
     {
         // Ambil data dari database dengan memfilter berdasarkan noKK
-        $families = FamilyModel::where('noKK', 'LIKE', '%' . $request->input('q') . '%')->paginate(10);
+        $families = FamilyModel::where('noKK', 'LIKE', '%' . $request->input('q') . '%')->paginate(100);
 
         $data = [];
         // Looping untuk menyiapkan data yang akan dikirimkan ke Select2

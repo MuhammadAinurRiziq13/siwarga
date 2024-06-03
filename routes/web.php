@@ -30,8 +30,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/noKK', [ResidentController::class, 'getFamilyData']);
+Route::get('/noKK1', [PoorFamilyController::class, 'getFamilyData']);
 Route::get('/keluarga/{id}', [DashboardController::class, 'getFamilyData']);
 Route::get('/warga/{id}', [SubmissionPengantarController::class, 'getFamilyData']);
+Route::get('/get-status-kerja', [PoorFamilyController::class, 'getStatusKerja']);
 
 
 Route::get('/', function () {
