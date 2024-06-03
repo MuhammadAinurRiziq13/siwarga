@@ -36,11 +36,11 @@ class SubmissionPengantarController extends Controller
             ->join('warga', 'pengajuansuratpengantar.NIK', '=', 'warga.NIK')
             ->where('warga.noKK', $nokk) // Menambahkan kondisi untuk nomor KK tertentu
             ->orderByRaw(
-                "CASE 
-            WHEN pengajuansuratpengantar.status = 'proses' THEN 1 
-            WHEN pengajuansuratpengantar.status = 'selesai' THEN 2 
-            WHEN pengajuansuratpengantar.status = 'ditolak' THEN 3 
-            ELSE 4 
+                "CASE
+            WHEN pengajuansuratpengantar.status = 'proses' THEN 1
+            WHEN pengajuansuratpengantar.status = 'selesai' THEN 2
+            WHEN pengajuansuratpengantar.status = 'ditolak' THEN 3
+            ELSE 4
         END"
             )
             ->get();
@@ -119,23 +119,31 @@ class SubmissionPengantarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nama' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
             'NIK' => 'required|string|min:16',
             'pekerjaan' => 'required|string',
             'pendidikan' => 'required|string',
+            'agama' => 'required|string',
             'keperluan' => 'required|string',
             'no_hp' => 'required|string',
         ]);
 
         SubmissionLetterModel::create([
+            'nama' => $request->nama,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
             'NIK' => $request->NIK,
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
+            'agama' => $request->agama,
             'keperluan' => $request->keperluan,
             'no_hp' => $request->no_hp,
             'status' => 'proses',
         ]);
 
-        return redirect('/submission-pengantar/' . Auth::user()->username)->with('success', 'Pengajuan Surat Pengantar Berhasil Disimpan');
+        return  redirect('/submission-pengantar/' . Auth::user()->username)->with('success', 'Pengajuan Surat Pengantar Berhasil Disimpan');
     }
 
     public function show(string $id)
