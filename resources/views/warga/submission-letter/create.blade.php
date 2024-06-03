@@ -42,7 +42,7 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">NIK</label>
                     <div class="col-10">
-                        <select class="form-control select2" id="NIK" name="NIK" required>
+                        <select class="form-control select2" id="NIK" name="NIK" onchange="fetchUserData(this.value)" required>
                         </select>
                         @error('NIK')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -142,5 +142,7 @@
                 }
             });
         });
+
+        
     </script>
 @endpush
