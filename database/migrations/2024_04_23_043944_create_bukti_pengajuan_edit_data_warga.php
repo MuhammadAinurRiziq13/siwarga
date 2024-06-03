@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('bukti_pengajuan_edit_data_warga', function (Blueprint $table) {
             $table->bigInteger("edit")->unsigned();
-            $table->string("nama_bukti",20);
+            $table->string("nama_bukti", 100);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

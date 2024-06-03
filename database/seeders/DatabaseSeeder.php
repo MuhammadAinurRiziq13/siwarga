@@ -220,7 +220,7 @@ class DatabaseSeeder extends Seeder
 
         $userAccount = [];
         foreach ($wargaData as $warga) {
-            if ($warga['status_keluarga'] == 'kepala keluarga') {
+            if (strtolower($warga['status_keluarga']) == 'kepala keluarga') {
                 $userAccount[] = [
                     'level' => 'warga',
                     'nama' => $warga['nama'],
