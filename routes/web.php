@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MigrantController;
 use App\Http\Controllers\PoorFamilyController;
@@ -33,12 +34,13 @@ Route::get('/noKK', [ResidentController::class, 'getFamilyData']);
 Route::get('/keluarga/{id}', [DashboardController::class, 'getFamilyData']);
 Route::get('/warga/{id}', [SubmissionPengantarController::class, 'getFamilyData']);
 
+Route::get('/', [LandingPageController::class, 'index']);
 
-Route::get('/', function () {
-    return view('landing-page.home', [
-        "title" => "Home"
-    ]);
-});
+// Route::get('/', function () {
+//     return view('landing-page.home', [
+//         "title" => "Home"
+//     ]);
+// });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::Post('/login', [LoginController::class, 'authenticate']);

@@ -14,6 +14,14 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
+                        <th style="width: 30%">Nama</th>
+                        <td>{{ $letter->nama }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Tempat/Tgl. Lahir</th>
+                        <td>{{ $letter->tempat_lahir }}, {{$letter->tanggal_lahir}}</td>
+                    </tr>
+                    <tr>
                         <th style="width: 30%">NIK</th>
                         <td>{{ $letter->NIK }}</td>
                     </tr>
@@ -24,6 +32,10 @@
                     <tr>
                         <th style="width: 30%">Pendidikan</th>
                         <td>{{ $letter->pendidikan }}</td>
+                    </tr>
+                    <tr>
+                        <th style="width: 30%">Agama</th>
+                        <td>{{ $letter->agama }}</td>
                     </tr>
                     <tr>
                         <th style="width: 30%">Keperluan</th>

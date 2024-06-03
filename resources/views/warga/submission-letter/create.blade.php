@@ -10,6 +10,36 @@
             <form method="POST" action="{{ url('submission-pengantar') }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Nama</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}"
+                            required>
+                        @error('nama')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Tempat Lahir</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}"
+                            required>
+                        @error('tempat_lahir')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Tanggal Lahir</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
+                            required>
+                        @error('tanggal_lahir')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-2 control-label col-form-label">NIK</label>
                     <div class="col-10">
                         <select class="form-control select2" id="NIK" name="NIK" required>
@@ -35,6 +65,16 @@
                         <input type="text" class="form-control" id="pendidikan" name="pendidikan"
                             value="{{ old('pendidikan') }}" required>
                         @error('pendidikan')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 control-label col-form-label">Agama</label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="agama" name="agama" value="{{ old('agama') }}"
+                            required>
+                        @error('agama')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
