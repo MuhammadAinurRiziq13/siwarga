@@ -412,55 +412,6 @@ class PoorFamilyController extends Controller
         return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera Berhasil Diubah');
     }
 
-    // public function update(Request $request, string $noKK)
-    // {
-
-    //     // Validasi input
-    //     $request->validate([
-    //         'noKK' => 'required',
-    //         // Tambahkan validasi lainnya sesuai kebutuhan
-    //     ]);
-
-    //     try {
-    //         // Mulai transaksi database
-    //         DB::beginTransaction();
-
-    //         // Temukan data keluarga berdasarkan ID
-    //         $poorFamily = PoorFamilyModel::findOrFail($noKK);
-
-    //         // Perbarui nilai kolom dari model dengan data dari request
-    //         $poorFamily->noKK = $request->noKK;
-
-    //         // Loop melalui request untuk menemukan data kriteria
-    //         foreach ($request->except('_token', '_method', 'noKK') as $key => $value) {
-    //             // Cari kriteria berdasarkan kode
-    //             $criterion = CriteriaPraSejahteraModel::where('kode', $key)->first();
-
-    //             // Jika kriteria ditemukan, perbarui nilai kolom yang sesuai
-    //             if ($criterion) {
-    //                 $columnName = 'c' . $criterion->kode;
-    //                 $poorFamily->$columnName = $value;
-    //             }
-    //         }
-
-    //         // Simpan perubahan pada model
-    //         $poorFamily->save();
-
-    //         // Commit transaksi database
-    //         DB::commit();
-
-    //         // Redirect dengan pesan sukses
-    //         return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil diperbarui');
-    //     } catch (\Exception $e) {
-    //         // Rollback transaksi database jika terjadi kesalahan
-    //         DB::rollBack();
-
-    //         // Redirect dengan pesan error
-    //         return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan. Data Keluarga Pra-Sejahtera gagal diperbarui.');
-    //     }
-    // }
-
-
     public function destroy(string $noKK)
     {
         $check = PoorFamilyModel::where('noKK', $noKK)->first();
