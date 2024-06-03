@@ -173,6 +173,7 @@ class DatabaseSeeder extends Seeder
             // Generate pengajuan edit data warga with 10% chance
             if (rand(0, 4) === 0) {
                 $pengajuanSuratPengantar[] = [
+                    'nama' => $warga['nama'],
                     'NIK' => $warga['NIK'],
                     'pekerjaan' => 'Karyawan BUMN',
                     'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
@@ -182,6 +183,7 @@ class DatabaseSeeder extends Seeder
                 ];
             }
         }
+
         DB::table('pengajuansuratpengantar')->insert($pengajuanSuratPengantar);
 
         $keluargaKurangMampuData = [];

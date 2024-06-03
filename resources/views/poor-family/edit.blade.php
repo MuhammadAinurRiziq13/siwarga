@@ -91,12 +91,15 @@
                             <div class="col-10">
                                 @if ($c->nama == 'Kondisi Rumah')
                                     <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
-                                        <option value="5" @if ($poorFamily->C5 == 5) selected @endif>Sangat Baik
+                                        <option value="5" @if ($poorFamily->C5 == 5) selected @endif>Sangat Layak
                                         </option>
-                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Baik</option>
-                                        <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Cukup</option>
-                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Kurang</option>
-                                        <option value="1" @if ($poorFamily->C5 == 1) selected @endif>Buruk</option>
+                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Layak</option>
+                                        <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Cukup Layak
+                                        </option>
+                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Kurang Layak
+                                        </option>
+                                        <option value="1" @if ($poorFamily->C5 == 1) selected @endif>Tidak Layak
+                                        </option>
                                     </select>
                                 @else
                                     <input type="number" class="form-control" id="{{ $c->kode }}"

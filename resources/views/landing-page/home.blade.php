@@ -47,8 +47,8 @@
                     <div class="col-lg-4 col-md-2">
                         <div class="count-box warga">
                             <div class="text-center">
-                                <span data-purecounter-start="0" data-purecounter-end="1423" data-purecounter-duration="2"
-                                    class="purecounter"></span>
+                                <span data-purecounter-start="0" data-purecounter-end="{{ $landingPage->resident }}"
+                                    data-purecounter-duration="2" class="purecounter"></span>
                                 <p>Jumlah Warga</p>
                             </div>
                         </div>
@@ -57,8 +57,8 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="count-box">
                             <div class="text-center">
-                                <span data-purecounter-start="0" data-purecounter-end="1268" data-purecounter-duration="2"
-                                    class="purecounter"></span>
+                                <span data-purecounter-start="0" data-purecounter-end="{{ $landingPage->family }}"
+                                    data-purecounter-duration="2" class="purecounter"></span>
                                 <p>Jumlah Keluarga</p>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="count-box">
                             <div class="text-center">
-                                <span data-purecounter-start="0" data-purecounter-end="155" data-purecounter-duration="2"
-                                    class="purecounter"></span>
+                                <span data-purecounter-start="0" data-purecounter-end="{{ $landingPage->temporary }}"
+                                    data-purecounter-duration="2" class="purecounter"></span>
                                 <p>Warga Sementara</p>
                             </div>
                         </div>
@@ -77,8 +77,8 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="count-box">
                             <div class="text-center">
-                                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2"
-                                    class="purecounter"></span>
+                                <span data-purecounter-start="0" data-purecounter-end="{{ $landingPage->elder }}"
+                                    data-purecounter-duration="2" class="purecounter"></span>
                                 <p>Jumlah Lansia</p>
                             </div>
                         </div>
@@ -87,8 +87,8 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="count-box">
                             <div class="text-center">
-                                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2"
-                                    class="purecounter"></span>
+                                <span data-purecounter-start="0" data-purecounter-end="{{ $landingPage->toddlers }}"
+                                    data-purecounter-duration="2" class="purecounter"></span>
                                 <p>Jumlah Balita</p>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                 <div class="row gx-0">
 
                     <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-                        <img src="{{ asset('img/landing-page/wayang.jpg')}}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/landing-page/wayang.jpg') }}" class="img-fluid" alt="">
                     </div>
 
                     <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
@@ -149,9 +149,23 @@
                     <p class="border-bottom border-2 pb-4 px-5 d-inline">Galeri</p>
                 </header>
 
-                <div class="row g-4">
+                <div class="row g-4 d-flex justify-content-center">
+                    @if ($landingPage->gallery->isEmpty())
+                        <p>No Gallery items found.</p>
+                    @else
+                        @foreach ($landingPage->gallery as $item)
+                            <div class="col-lg-3">
+                                <div class="post-box">
+                                    <div class="post-img"><img src="{{ asset('storage/' . $item->nama_foto) }}" class="img-fluid"
+                                            alt=""></div>
+                                    <span class="post-date">{{ $item->tanggal_kegiatan }}</span>
+                                    <h3 class="post-title">{{ $item->judul }}</h3>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="post-box">
                             <div class="post-img"><img src="assets/img/blog/asman-toga.jpg" class="img-fluid"
                                     alt=""></div>
@@ -221,7 +235,7 @@
                             <span class="post-date">Mon, July 11</span>
                             <h3 class="post-title">Peresmian Taman Toga RT 05</h3>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 

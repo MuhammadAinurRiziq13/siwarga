@@ -31,11 +31,11 @@
                         <div class="col-10">
                             @if ($c->nama == 'Kondisi Rumah')
                                 <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
-                                    <option value="5">Sangat Baik</option>
-                                    <option value="4">Baik</option>
-                                    <option value="3">Cukup</option>
-                                    <option value="2">Kurang</option>
-                                    <option value="1">Buruk</option>
+                                    <option value="5">Sangat Layak</option>
+                                    <option value="4">Layak</option>
+                                    <option value="3">Cukup Layak</option>
+                                    <option value="2">Kurang Layak</option>
+                                    <option value="1">Buruk Layak</option>
                                 </select>
                             @else
                                 <input type="number" class="form-control" id="{{ $c->kode }}"
