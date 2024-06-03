@@ -4,17 +4,24 @@
     <div class="card shadow">
         <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
-                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary"
+                <a class="btn btn-sm text-white bg-primary"
                     href="{{ url('submission-changes') }}">Daftar
                     Pengajuan</a>
                 @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
+                    <a class="btn btn-sm text-white bg-primary" href="{{ url('resident/create') }}"><i
                             class="fas fa-fw fa-plus"></i> Tambah</a>
                 @endif
-                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Import</a>
-                <a class="btn btn-sm bg-dark-blue text-white bg-gradient-primary" href="{{ url('resident/create') }}"><i
-                        class="fas fa-regular fa-file-excel"></i> Export</a>
+                <!-- Form Import -->
+                <form action="{{ url('resident/import') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+                    @csrf
+                    <input type="file" name="file" class="d-none" id="importFile" onchange="this.form.submit()">
+                    <label class="btn btn-sm text-white bg-primary" for="importFile" style="margin-top: 0.5rem;">
+                        <i class="fas fa-regular fa-file-excel"></i> Import
+                    </label>
+                </form>
+                <a class="btn btn-sm text-white bg-primary" href="{{ url('resident/export') }}">
+                    <i class="fas fa-regular fa-file-excel"></i> Export
+                </a>
             </div>
         </div>
         <div class="card-body">

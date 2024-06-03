@@ -65,6 +65,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 Route::prefix('family')->middleware('auth')->group(function () {
     Route::get('/', [FamilyController::class, 'index']);
     Route::post('/list', [FamilyController::class, 'list']);
+    Route::post('/import', [FamilyController::class, 'import'])->name('family.import');
+    Route::get('/export', [FamilyController::class, 'export'])->name('family.export');
+
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/create', [FamilyController::class, 'create']);
@@ -81,6 +84,8 @@ Route::prefix('family')->middleware('auth')->group(function () {
 Route::prefix('resident')->middleware('auth')->group(function () {
     Route::get('/', [ResidentController::class, 'index']);
     Route::post('/list', [ResidentController::class, 'list']);
+    Route::post('/import', [ResidentController::class, 'import'])->name('resident.import');
+    Route::get('/export', [ResidentController::class, 'export'])->name('resident.export');
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/create', [ResidentController::class, 'create']);
@@ -101,6 +106,8 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::post('/storeCriteria', [PoorFamilyController::class, 'storeCriteria']);
     Route::get('/{id}/edit-criteria', [PoorFamilyController::class, 'EditCriteria']);
     Route::post('/storeCriteria/{id}', [PoorFamilyController::class, 'updateCriteria']);
+    Route::post('/import', [PoorFamilyController::class, 'import'])->name('poor-family.import');
+    Route::get('/export', [PoorFamilyController::class, 'export'])->name('poor-family.export');
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/create', [PoorFamilyController::class, 'create']);

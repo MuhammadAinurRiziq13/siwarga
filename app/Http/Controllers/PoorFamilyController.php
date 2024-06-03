@@ -6,6 +6,8 @@ use App\Models\CriteriaPraSejahteraModel;
 use App\Models\FamilyModel;
 use App\Models\PoorFamilyModel;
 use App\Models\ResidentModel;
+use App\Exports\PoorFamiliesExport;
+use App\Imports\PoorFamiliesImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -13,6 +15,8 @@ use App\Services\Topsis;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PoorFamilyController extends Controller
 {
@@ -664,5 +668,21 @@ class PoorFamilyController extends Controller
         $noKK = $request->input('noKK');
         $count = ResidentModel::where('noKK', $noKK)->where('status_kerja', 'Tidak Kerja')->count();
         return response()->json(['count' => $count]);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+
+        Excel::import(new PoorFamiliesImport, $request->file('file'));
+
+        return back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PoorFamiliesExport, 'poor_families.xlsx');
     }
 }

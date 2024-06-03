@@ -1,54 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-dark-blue">
-            <div class="card-tools float-left">
-                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/calculate') }}">Hitung</a>
-                {{-- @if (Auth::user()->level == 'admin') --}}
-                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/criteria') }}">Criteria</a>
-            </div>
-            <div class="card-tools float-right">
-                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('submission-add') }}">Daftar
-                    Pengajuan</a>
-                @if (Auth::user()->level == 'admin')
-                    <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/create') }}">
-                        <i class="fas fa-fw fa-plus"></i> Tambah
-                    </a>
-                @endif
-                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/import') }}">
-                    <i class="fas fa-regular fa-file-excel"></i> Import
-                </a>
-                <a class="btn btn-sm bg-gradient-primary text-white" href="{{ url('poor-family/export') }}">
-                    <i class="fas fa-regular fa-file-excel"></i> Export
-                </a>
-            </div>
+<div class="card">
+    <div class="card-header bg-transparent">
+        <div class="card-tools float-left">
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/calculate') }}">Hitung</a>
+            {{-- @if (Auth::user()->level == 'admin') --}}
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/criteria') }}">Criteria</a>
         </div>
-        <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+        <div class="card-tools float-right">
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('submission-add') }}">Daftar Pengajuan</a>
+            @if (Auth::user()->level == 'admin')
+            <a class="btn btn-sm bg-dark-blue text-white" href="{{ url('poor-family/create') }}">
+                <i class="fas fa-fw fa-plus"></i> Tambah
+            </a>
             @endif
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            <table id="poorFamilyTable" class="table table-bordered table-striped table-hover table-sm">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>No KK</th>
-                        <th>Nama Kepala Keluarga</th>
-                        <th>Jumlah Anggota</th>
-                        {{-- <th>Pendapatan</th>
+            <!-- Form Import -->
+            <form action="{{ url('poor-family/import') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+                @csrf
+                <input type="file" name="file" class="d-none" id="importFile" onchange="this.form.submit()">
+                <label class="btn btn-sm bg-dark-blue text-white" for="importFile" >
+                    <i class="fas fa-regular fa-file-excel"></i> Import
+                </label>
+                
+            </form>
+            <a class="btn btn-sm bg-dark-blue text-white " href="{{ url('poor-family/export') }}">
+                <i class="fas fa-regular fa-file-excel"></i> Export
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        <table id="poorFamilyTable" class="table table-bordered table-striped table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>No KK</th>
+                    <th>Nama Kepala Keluarga</th>
+                    <th>Jumlah Anggota</th>
+                    {{-- <th>Pendapatan</th>
                     <th>Jumlah Kendaraan</th>
                     <th>Luas Tanah</th>
                     <th>Kondisi Rumah</th> --}}
