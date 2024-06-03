@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubmissionAddModel;
 use App\Models\SubmissionLetterModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubmissionLetterController extends Controller
@@ -52,7 +52,7 @@ class SubmissionLetterController extends Controller
             })
             ->addColumn('status', function ($submission) {
                 if ($submission->status == 'proses' && Auth::user()->level == 'admin') {
-                    return '<a href="' . url('/submission-letter/' . $submission->id . '/proses') . '" class="btn btn-primary btn-sm">Proses</a> ';
+                    return '<a href="' . url('/submission-letter/' . $submission->id . '/proses') . '" class="btn btn-primary btn-sm">Proses</a>';
                 } else if ($submission->status == 'proses' && Auth::user()->level == 'superadmin') {
                     return '<p class="text-primary">Proses</p>';
                 } else if ($submission->status == 'selesai') {
@@ -61,7 +61,13 @@ class SubmissionLetterController extends Controller
                     return '<p class="text-danger">Ditolak</p>';
                 }
             })
-            ->rawColumns(['aksi', 'status'])
+            ->addColumn('download', function ($submission) {
+                if ($submission->status == 'selesai') {
+                    return '<a href="' . url('/submission-letter/' . 'download-word/'. $submission->id) . '" class="btn btn-success btn-sm">Download</a>';
+                }
+                return '';
+            })
+            ->rawColumns(['aksi', 'status', 'download'])
             ->make(true);
     }
 
@@ -114,49 +120,7 @@ class SubmissionLetterController extends Controller
         }
 
         return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
-
-        // Jika data berhasil diupdate, akan kembali ke halaman utama
-        // if ($submission) {
-        //     // Kirim pesan ke WhatsApp menggunakan API dari Fonte
-        //     $curl = curl_init();
-
-        //     curl_setopt_array($curl, array(
-        //         CURLOPT_URL => 'https://api.fonnte.com/send',
-        //         CURLOPT_RETURNTRANSFER => true,
-        //         CURLOPT_ENCODING => '',
-        //         CURLOPT_MAXREDIRS => 10,
-        //         CURLOPT_TIMEOUT => 0,
-        //         CURLOPT_FOLLOWLOCATION => true,
-        //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //         CURLOPT_CUSTOMREQUEST => 'POST',
-        //         CURLOPT_POSTFIELDS => array(
-        //             'target' => '+62 851-5653-0441',
-        //             // 'target' => $submission->no_hp,
-        //             'message' => $message,
-        //             'countryCode' => '62', // Ubah sesuai kode negara Anda
-        //         ),
-        //         CURLOPT_HTTPHEADER => array(
-        //             'Authorization: u6hZ_-54X2!u14_41aN9', // Ganti YOUR_API_TOKEN dengan token API Anda
-        //         ),
-        //     ));
-
-        //     $response = curl_exec($curl);
-        //     if (curl_errno($curl)) {
-        //         $error_msg = curl_error($curl);
-        //     }
-        //     curl_close($curl);
-
-        //     if (isset($error_msg)) {
-        //         return redirect('/submission-letter')->with('error', 'Gagal mengirim pesan WhatsApp: ' . $error_msg);
-        //     } else {
-        //         return redirect('/submission-letter')->with('success', 'Data Surat Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
-        //     }
-        // } else {
-        //     return redirect('/submission-letter')->with('error', 'Gagal memperbarui data surat');
-        // }
     }
-
-
 
     public function show(string $id)
     {
@@ -175,6 +139,28 @@ class SubmissionLetterController extends Controller
             'letter' => $letter,
         ]);
     }
-}
 
+    public function downloadWord($id)
+    {
+        $pengajuan = SubmissionLetterModel::findOrFail($id);
+
+        $templateProcessor = new TemplateProcessor(storage_path('app/Templates/test.docx'));
+
+        // Set data dari database ke dalam template
+        $templateProcessor->setValue('nama', $pengajuan->nama);
+        $templateProcessor->setValue('tempat_lahir', $pengajuan->tempat_lahir);
+        $templateProcessor->setValue('tanggal_lahir', $pengajuan->tanggal_lahir);
+        $templateProcessor->setValue('alamat', $pengajuan->alamat);
+        $templateProcessor->setValue('NIK', $pengajuan->NIK);
+        $templateProcessor->setValue('pekerjaan', $pengajuan->pekerjaan);
+        $templateProcessor->setValue('pendidikan', $pengajuan->pendidikan);
+        $templateProcessor->setValue('agama', $pengajuan->agama);
+        $templateProcessor->setValue('keperluan', $pengajuan->keperluan);
+
+        $fileName = 'surat_pengantar_' . $pengajuan->nama . '.docx';
+        $templateProcessor->saveAs($fileName);
+
+        return response()->download($fileName)->deleteFileAfterSend(true);
+    }
+}
 // GRSNEK6ZNVNJRKQGRN2WNN7Y

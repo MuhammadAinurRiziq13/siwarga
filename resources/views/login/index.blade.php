@@ -36,6 +36,10 @@
                             <div class="input-field">
                                 <input type="submit" class="submit" value="Log In">
                             </div>
+                            <br>
+                            <div class="input-field">
+                                <input type="button" class="back" value="Kembali" onclick="window.location.href='{{ url('/') }}'">
+                            </div>
                         </form>
                     </div>
                 </div>

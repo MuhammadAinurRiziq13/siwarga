@@ -31,6 +31,7 @@
                         <th>Waktu Pengajuan</th>
                         <th>Aksi</th>
                         <th>Status</th>
+                        <th>Download</th> <!-- Tambahkan kolom Download -->
                     </tr>
                 </thead>
             </table>
@@ -82,6 +83,12 @@
                     },
                     {
                         data: "status",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "download",
                         className: "text-center",
                         orderable: false,
                         searchable: false

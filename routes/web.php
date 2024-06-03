@@ -154,6 +154,7 @@ Route::prefix('submission-letter')->middleware('auth')->group(function () {
         Route::get('/{id}/proses', [SubmissionLetterController::class, 'proses']);
         Route::put('/{id}', [SubmissionLetterController::class, 'update']);
         Route::delete('/{id}', [SubmissionLetterController::class, 'destroy']);
+        Route::get('/download-word/{id}', [SubmissionLetterController::class, 'downloadWord'])->name('download-word');        
     });
     Route::get('/{id}', [SubmissionLetterController::class, 'show']);
 });
