@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuanEditDataWarga', function (Blueprint $table) {
-            $table->id();
-            $table->string('NIK');
+            $table->id('id',3);
+            $table->string('NIK',16);
             $table->string('nama', 30);
             $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('family_member', 30)->nullable();
             $table->string('keterangan', 50);
             $table->string('status', 15);
-            $table->string('no_hp');
+            $table->string('no_hp',15);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

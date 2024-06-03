@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuanprasejahtera', function (Blueprint $table) {
-            $table->id();
-            $table->string('noKK');
+            $table->id('id',3);
+            $table->string('noKK',16);
             $table->integer('C1');
             $table->integer('C2');
             $table->integer('C3');
             $table->integer('C4');
             $table->integer('C5');
-            $table->string('status');
-            $table->string('no_hp');
+            $table->string('status',10);
+            $table->string('no_hp',15);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

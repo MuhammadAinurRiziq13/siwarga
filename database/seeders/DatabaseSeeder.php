@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $jumlahKeluargaKurangMampu = 10;
         // $keluargaPraSejahteraData = [];
         for ($i = 0; $i < 50; $i++) {
-            $noKK = rand(1, 9) . $faker->unique()->numerify('################');
+            $noKK = rand(1, 9) . $faker->unique()->numerify('###############');
             $keluargaData[] = [
                 'noKK' => $noKK,
                 'alamat' => $faker->address,
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 $endDate = '-0 years'; // Rentang umur mulai dari 80 tahun yang lalu hingga sekarang
 
                 $warga = [
-                    'NIK' => rand(1, 9) . $faker->unique()->numerify('################'),
+                    'NIK' => rand(1, 9) . $faker->unique()->numerify('###############'),
                     'noKK' => $keluarga['noKK'],
                     'nama' => $nama, // Use truncated nama
                     'tempat_lahir' => $faker->city,
@@ -140,7 +140,7 @@ class DatabaseSeeder extends Seeder
                     'status_kerja' => $warga['status_kerja'],
                     'keterangan' => $keterangan, // Use truncated keterangan
                     'status' => $faker->randomElement(['selesai', 'proses', 'ditolak']),
-                    'no_hp' => $faker->phoneNumber,
+                    'no_hp' => 6285156530441,
                 ];
             }
         }
@@ -174,9 +174,9 @@ class DatabaseSeeder extends Seeder
             if (rand(0, 4) === 0) {
                 $pengajuanSuratPengantar[] = [
                     'NIK' => $warga['NIK'],
-                    'pekerjaan' => $faker->jobTitle,
+                    'pekerjaan' => 'Karyawan BUMN',
                     'pendidikan' => $faker->randomElement(['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']),
-                    'no_hp' => $faker->phoneNumber,
+                    'no_hp' => '6285156530441',
                     'keperluan' => $keperluan, // Use truncated keterangan
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']), // Use truncated keterangan
                 ];
@@ -195,7 +195,7 @@ class DatabaseSeeder extends Seeder
                     'c4' => $faker->numberBetween(10, 100),
                     'c5' => $faker->numberBetween(1, 5),
                     'status' =>  $faker->randomElement(['proses', 'selesai', 'ditolak']),
-                    'no_hp' => $faker->phoneNumber,
+                    'no_hp' => 6285156530441,
                 ];
             }
         }
@@ -205,7 +205,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $galeriData[] = [
                 'nama_foto' => $faker->word . '.jpg', // contoh nama file foto, Anda bisa menyesuaikan sesuai kebutuhan
-                'judul' => $faker->sentence,
+                'judul' => 'Kegiatan Buka Bersama RT 5 bulan Ramadhan 1445 Hijriah',
                 'tanggal_kegiatan' => $faker->date('Y-m-d'),
                 'keterangan' => $faker->sentence,
             ];

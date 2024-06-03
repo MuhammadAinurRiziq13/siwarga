@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuansuratpengantar', function (Blueprint $table) {
-            $table->id();
-            $table->string('NIK');
-            $table->string('pekerjaan');
-            $table->string('pendidikan');
-            $table->string('no_hp');
-            $table->string('keperluan');
-            $table->string('status');
+            $table->id('id',3);
+            $table->string('NIK',16);
+            $table->string('pekerjaan',30);
+            $table->string('pendidikan',15);
+            $table->string('no_hp',15);
+            $table->string('keperluan',50);
+            $table->string('status',8);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

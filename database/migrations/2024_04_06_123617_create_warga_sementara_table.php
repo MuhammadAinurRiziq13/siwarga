@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wargaSementara', function (Blueprint $table) {
-            $table->string('NIK_warga_sementara', 25);
+            $table->string('NIK_warga_sementara', 16);
             $table->string('alamat_asal', 30);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

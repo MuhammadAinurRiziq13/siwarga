@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('warga', function (Blueprint $table) {
-            $table->string('NIK')->primary();
+            $table->string('NIK',16)->primary();
             $table->string('noKK', 20);
-            $table->string('nama', 40);
+            $table->string('nama', 30);
             $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
             $table->char('jenis_kelamin', 10);
