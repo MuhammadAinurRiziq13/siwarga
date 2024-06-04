@@ -101,6 +101,9 @@ class SubmissionAddController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'noKK' => 'required|string|min:16|unique:keluargakurangmampu,noKK,' . $id . ',noKK',
+        ]);
         if ($request->status == 'selesai') {
             // Ambil semua kriteria
             $criteria = CriteriaPraSejahteraModel::all();

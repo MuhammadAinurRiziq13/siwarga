@@ -96,16 +96,24 @@ class PoorFamilyController extends Controller
         $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families, $anggota) {
             $family = $families->firstWhere('noKK', $ranking['alternative']);
             $jumlah_anggota = $anggota->where('noKK', $ranking['alternative'])->first()->jumlah_anggota;
+
+            // Find or create the PoorFamilyModel instance
+            $poorFamily = PoorFamilyModel::firstOrNew(['noKK' => $family->noKK]);
+            // Update the score
+            $poorFamily->score = $ranking['score'];
+            // Save the changes
+            $poorFamily->save();
+
             return [
                 'noKK' => $family->noKK,
                 'nama' => $family->nama,
                 'jumlah_anggota' => $jumlah_anggota,
                 'score' => $ranking['score'],
-                'jumlah_tanggungan' => $family->C1,
-                'pendapatan' => $family->C2,
-                'aset_kendaraan' => $family->C3,
-                'luas_tanah' => $family->C4,
-                'kondisi_rumah' => $family->C5,
+                // 'jumlah_tanggungan' => $family->C1,
+                // 'pendapatan' => $family->C2,
+                // 'aset_kendaraan' => $family->C3,
+                // 'luas_tanah' => $family->C4,
+                // 'kondisi_rumah' => $family->C5,
             ];
         });
 
@@ -130,7 +138,8 @@ class PoorFamilyController extends Controller
         $families = PoorFamilyModel::select(
             'keluargakurangmampu.noKK',
             'warga.nama',
-            DB::raw('COUNT(warga2.noKK) as jumlah_anggota')
+            DB::raw('COUNT(warga2.noKK) as jumlah_anggota'),
+            DB::raw('MAX(keluargakurangmampu.score) as max_score')
         )
             ->join('warga', function ($join) {
                 $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
@@ -138,7 +147,9 @@ class PoorFamilyController extends Controller
             })
             ->leftJoin('warga as warga2', 'keluargakurangmampu.noKK', '=', 'warga2.noKK')
             ->groupBy('keluargakurangmampu.noKK', 'warga.nama')
+            ->orderBy('max_score', 'DESC')
             ->get();
+
 
         $breadcrumb = (object)[
             'title' => 'Data Keluarga Pra-Sejahtera',
