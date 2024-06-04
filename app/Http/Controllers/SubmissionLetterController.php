@@ -153,7 +153,7 @@ class SubmissionLetterController extends Controller
     {
         $pengajuan = SubmissionLetterModel::findOrFail($id);
 
-        $templateProcessor = new TemplateProcessor(storage_path('app/Templates/Pengantar.docx'));
+        $templateProcessor = new TemplateProcessor(base_path('app/Templates/Pengantar.docx'));
 
         // Set data dari database ke dalam template
         $templateProcessor->setValue('nama', $pengajuan->nama);
