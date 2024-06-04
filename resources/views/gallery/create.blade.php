@@ -34,7 +34,7 @@
                         <img class="img-preview img-fluid col-sm-5 m-0 p-0 mb-2" style="display:none;">
                         <input class="form-control
                             @error('nama_foto') is-invalid @enderror"
-                            type="file" id="image" name="nama_foto" onchange="previewImage()">
+                            type="file" id="image" name="nama_foto" accept="image/*" onchange="previewImage()">
                         @error('nama_foto')
                             <div class="invalid-feedback">
                                 {{ $message }}

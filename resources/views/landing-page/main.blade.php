@@ -31,6 +31,9 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style-landing-page.css') }}" rel="stylesheet">
 
+    <!-- Template Js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- =======================================================
     * Template Name: FlexStart
     * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
@@ -48,6 +51,8 @@
     @yield('main')
 
     @include('landing-page.footer')
+
+    @stack('js')
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/landing-page/purecounter/purecounter_vanilla.js') }}"></script>
