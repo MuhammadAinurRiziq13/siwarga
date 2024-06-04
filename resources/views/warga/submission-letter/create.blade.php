@@ -42,7 +42,7 @@
                 <div class="form-group row">
                     <label class="col-2 control-label col-form-label">NIK</label>
                     <div class="col-10">
-                        <select class="form-control select2" id="NIK" name="NIK" onchange="fetchUserData(this.value)" required>
+                        <select class="form-control select2" id="NIK" name="NIK" required>
                         </select>
                         @error('NIK')
                             <small class="form-text text-danger">{{ $message }}</small>
@@ -141,8 +141,25 @@
                     cache: true
                 }
             });
+
+            $('#NIK').on('change', function() {
+                var NIK = $(this).val();
+                $.ajax({
+                    url: '/getData',
+                    method: 'GET',
+                    data: {
+                        NIK: NIK,
+                    },
+                    success: function(response) {
+                        $('#nama').val(response.nama);
+                        $('#tempat_lahir').val(response.tempat_lahir);
+                        $('#tanggal_lahir').val(response.tanggal_lahir);
+                        $('#agama').val(response.agama);
+                    }
+                });
+            });
         });
 
-        
+
     </script>
 @endpush
