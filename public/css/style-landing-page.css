@@ -980,6 +980,16 @@
     background: #5fd37a;
   }
 
+  .error-message, .sent-message {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .fade-out {
+    opacity: 0;
+  }
+
+
   @keyframes animate-loading {
     0% {
       transform: rotate(0deg);

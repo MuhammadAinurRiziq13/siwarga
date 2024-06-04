@@ -156,8 +156,8 @@
                         @foreach ($landingPage->gallery as $item)
                             <div class="col-lg-3">
                                 <div class="post-box">
-                                    <div class="post-img"><img src="{{ asset('storage/' . $item->nama_foto) }}" class="img-fluid"
-                                            alt=""></div>
+                                    <div class="post-img"><img src="{{ asset('storage/' . $item->nama_foto) }}"
+                                            class="img-fluid" alt=""></div>
                                     <span class="post-date">{{ $item->tanggal_kegiatan }}</span>
                                     <h3 class="post-title">{{ $item->judul }}</h3>
                                 </div>
@@ -489,7 +489,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <form action="forms/contact.php" method="post" class="php-email-form">
+                        <form action="{{ asset('forms/send-mail.php') }}" method="post" class="php-email-form">
                             <div class="row gy-4">
 
                                 <div class="col-md-6">
@@ -513,10 +513,10 @@
 
                                 <div class="col-md-12 text-center">
                                     <div class="loading">Loading</div>
-                                    <div class="error-message"></div>
-                                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                                    <div class="error-message d-none"></div>
+                                    <div class="sent-message"></div>
 
-                                    <button type="submit">Send Message</button>
+                                    <button type="submit" class="submit d-block">Send Message</button>
                                 </div>
 
                             </div>
@@ -529,3 +529,52 @@
 
     </main>
 @endsection
+
+@push('js')
+    <script>
+        document.querySelector('.php-email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var form = e.target;
+            var formData = new FormData(form);
+            var submitButton = document.querySelector('.submit d-block');
+            var errorMessage = document.querySelector('.error-message');
+            var sentMessage = document.querySelector('.sent-message');
+
+            // Hide submit button
+            submitButton.style.display = 'none';
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    var response = JSON.parse(xhr.responseText);
+
+                    if (response.status === 'success') {
+                        sentMessage.style.display = 'block';
+                        sentMessage.textContent = response.message;
+                        // errorMessage.style.display = 'none';
+                        // errorMessage.classList.remove('d-block');
+
+                        // Hide messages after 5 seconds
+                        setTimeout(function() {
+                            $(sentMessage).fadeOut();
+                            submitButton.style.display = 'block';
+                        }, 5000);
+                    } else {
+                        errorMessage.style.display = 'block';
+                        errorMessage.textContent = response.message;
+                        sentMessage.style.display = 'none';
+
+                        // Hide messages after 5 seconds
+                        setTimeout(function() {
+                            $(errorMessage).fadeOut();
+                            submitButton.style.display = 'block';
+                        }, 5000);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+@endpush
