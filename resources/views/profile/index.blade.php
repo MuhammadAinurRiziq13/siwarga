@@ -19,7 +19,7 @@
                             <form method="POST" enctype="multipart/form-data" action="{{ url('/profile/' . $user->id) }}">
                                 @csrf
                                 @method('PUT')
-                                <input type="file" name="foto" id="photo" class="d-none" onchange="previewFile()">
+                                <input type="file" name="foto" id="photo" class="d-none" accept="image/*" onchange="previewFile()">
                                 <label for="photo" class="btn btn-primary mt-3">Pilih Foto</label>
 
                         </div>
