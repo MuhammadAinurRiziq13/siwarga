@@ -47,7 +47,7 @@
                             <!-- Placeholder for image previews -->
                         </div>
                         <input class="form-control @error('nama_bukti') is-invalid @enderror" type="file" id="image"
-                            name="nama_bukti[]" multiple onchange="previewImages()" accept="image/*">
+                            name="nama_bukti[]" accept="image/*" multiple onchange="previewImages()" accept="image/*">
                         @error('nama_bukti')
                             <div class="invalid-feedback">
                                 {{ $message }}

@@ -164,6 +164,28 @@ class SubmissionPengantarController extends Controller
         ]);
     }
 
+    public function getUserData(Request $request)
+    {
+        $nik = $request->input('NIK');
+        // Ganti dengan logika Anda untuk mendapatkan data pengguna berdasarkan NIK
+        $user = ResidentModel::where('NIK', $nik)->first();
+
+        if ($user) {
+            return response()->json([
+                'nama' => $user->nama,
+                'tempat_lahir' => $user->tempat_lahir,
+                'tanggal_lahir' => $user->tanggal_lahir,
+                'pekerjaan' => $user->pekerjaan,
+                'pendidikan' => $user->pendidikan,
+                'agama' => $user->agama,
+                'no_hp' => $user->no_hp,
+                'keperluan' => $user->keperluan,
+            ]);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
     public function destroy(string $id)
     {
         $check = SubmissionLetterModel::find($id);

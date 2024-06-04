@@ -154,7 +154,7 @@ Route::prefix('submission-letter')->middleware('auth')->group(function () {
         Route::get('/{id}/proses', [SubmissionLetterController::class, 'proses']);
         Route::put('/{id}', [SubmissionLetterController::class, 'update']);
         Route::delete('/{id}', [SubmissionLetterController::class, 'destroy']);
-        Route::get('/download-word/{id}', [SubmissionLetterController::class, 'downloadWord'])->name('download-word');        
+        Route::get('/download-word/{id}', [SubmissionLetterController::class, 'downloadWord'])->name('download-word');
     });
     Route::get('/{id}', [SubmissionLetterController::class, 'show']);
 });
@@ -209,6 +209,8 @@ Route::prefix('submission-pengantar')->middleware('auth')->group(function () {
     Route::get('/{id}/show', [SubmissionPengantarController::class, 'show']);
     Route::delete('/{id}', [SubmissionPengantarController::class, 'destroy']);
 });
+
+Route::get('/getData', [SubmissionPengantarController::class, 'getUserData']);
 
 Route::prefix('profile')->middleware('auth')->group(function () {
     Route::get('/{id}', [ProfileController::class, 'index']);
