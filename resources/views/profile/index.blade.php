@@ -56,8 +56,7 @@
                     <div class="form-group row d-flex justify-content-center">
                         <label for="password" class="col-md-2 col-form-label text-md-left">Password :</label>
                         <div class="col-md-8">
-                            <input id="password" type="password" class="form-control" name="password"
-                                value="{{ $user->password }}" required>
+                            <input id="password" type="password" class="form-control" name="password">
                         </div>
                     </div>
 
@@ -81,7 +80,7 @@
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
-                    timer: 4000,
+                    timer: 2000,
                     timerProgressBar: true,
                     didOpen: (toast) => {
                         toast.onmouseenter = Swal.stopTimer;

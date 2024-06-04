@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Login</title>
 </head>
 
@@ -38,7 +39,8 @@
                             </div>
                             <br>
                             <div class="input-field">
-                                <input type="button" class="back" value="Kembali" onclick="window.location.href='{{ url('/') }}'">
+                                <input type="button" class="back" value="Kembali"
+                                    onclick="window.location.href='{{ url('/') }}'">
                             </div>
                         </form>
                     </div>
@@ -47,5 +49,16 @@
         </div>
     </div>
 </body>
+@if ($message = Session::get('LoginError'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Login Gagal",
+            });
+        });
+    </script>
+@endif
 
 </html>

@@ -4,15 +4,15 @@
     <div class="card shadow">
         <div class="card-header bg-dark-blue">
             <div class="card-tools float-right">
-                <a class="btn btn-sm text-white bg-primary"
-                    href="{{ url('submission-changes') }}">Daftar
+                <a class="btn btn-sm text-white bg-primary" href="{{ url('submission-changes') }}">Daftar
                     Pengajuan</a>
                 @if (Auth::user()->level == 'admin')
                     <a class="btn btn-sm text-white bg-primary" href="{{ url('resident/create') }}"><i
                             class="fas fa-fw fa-plus"></i> Tambah</a>
                 @endif
                 <!-- Form Import -->
-                <form action="{{ url('resident/import') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+                <form action="{{ url('resident/import') }}" method="POST" enctype="multipart/form-data"
+                    style="display: inline;">
                     @csrf
                     <input type="file" name="file" class="d-none" id="importFile" onchange="this.form.submit()">
                     <label class="btn btn-sm text-white bg-primary" for="importFile" style="margin-top: 0.5rem;">
@@ -73,7 +73,7 @@
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
-                        <th style="width: 12%">Aksi</th>
+                        <th style="width: 14%">Aksi</th>
                     </tr>
                 </thead>
             </table>

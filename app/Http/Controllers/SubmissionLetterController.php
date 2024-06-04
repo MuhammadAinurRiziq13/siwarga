@@ -33,11 +33,11 @@ class SubmissionLetterController extends Controller
         $Submissions = SubmissionLetterModel::select('pengajuansuratpengantar.id', 'pengajuansuratpengantar.NIK', 'warga.nama', 'pengajuansuratpengantar.created_at', 'pengajuansuratpengantar.status')
             ->join('warga', 'pengajuansuratpengantar.NIK', '=', 'warga.NIK')
             ->orderByRaw(
-                "CASE 
-                WHEN pengajuansuratpengantar.status = 'proses' THEN 1 
-                WHEN pengajuansuratpengantar.status = 'selesai' THEN 2 
-                WHEN pengajuansuratpengantar.status = 'ditolak' THEN 3 
-                ELSE 4 
+                "CASE
+                WHEN pengajuansuratpengantar.status = 'proses' THEN 1
+                WHEN pengajuansuratpengantar.status = 'selesai' THEN 2
+                WHEN pengajuansuratpengantar.status = 'ditolak' THEN 3
+                ELSE 4
             END"
             )
             ->get();
@@ -92,17 +92,26 @@ class SubmissionLetterController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
+            'nama' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
             'NIK' => 'required|string|min:16',
             'pekerjaan' => 'required|string',
             'pendidikan' => 'required|string',
+            'agama' => 'required|string',
             'keperluan' => 'required|string',
             'no_hp' => 'required|string',
             'status' => 'required|string',
         ]);
 
         SubmissionLetterModel::where('id', $id)->update([
+            'nama' => $request->nama,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'NIK' => $request->NIK,
             'pekerjaan' => $request->pekerjaan,
             'pendidikan' => $request->pendidikan,
+            'agama' => $request->agama,
             'keperluan' => $request->keperluan,
             'no_hp' => $request->no_hp,
             'status' => $request->status,

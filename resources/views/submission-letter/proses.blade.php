@@ -23,7 +23,7 @@
                     <input type="hidden" name="pendidikan" value="{{ $letter->pendidikan }}">
                     <input type="hidden" name="agama" value="{{ $letter->agama }}">
                     <input type="hidden" name="keperluan" value="{{ $letter->keperluan }}">
-                    {{-- <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}"> --}}
+                    <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}">
                     <input type="hidden" name="status" value="selesai">
 
                     <table class="table table-bordered table-striped table-hover table-sm">
@@ -105,9 +105,13 @@
                 <form method="POST" action="{{ url('/submission-letter/' . $letter->id) }}">
                     @csrf
                     {!! method_field('PUT') !!}
+                    <input type="hidden" name="nama" value="{{ $letter->nama }}">
+                    <input type="hidden" name="tempat_lahir" value="{{ $letter->tempat_lahir }}">
+                    <input type="hidden" name="tanggal_lahir" value="{{ $letter->tanggal_lahir }}">
                     <input type="hidden" name="NIK" value="{{ $letter->NIK }}">
                     <input type="hidden" name="pekerjaan" value="{{ $letter->pekerjaan }}">
                     <input type="hidden" name="pendidikan" value="{{ $letter->pendidikan }}">
+                    <input type="hidden" name="agama" value="{{ $letter->agama }}">
                     <input type="hidden" name="keperluan" value="{{ $letter->keperluan }}">
                     <input type="hidden" name="no_hp" value="{{ $letter->no_hp }}">
                     <input type="hidden" name="status" value="ditolak">

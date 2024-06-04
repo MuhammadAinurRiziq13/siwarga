@@ -45,9 +45,23 @@
                                         <td>Sangat Layak</td>
                                     @endif
                                 </tr>
+                            @else
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }}</td>
+                                </tr>
                             @endif
                         @endif
                     @endforeach
+                    <tr>
+                        <th style="width: 30%">Bukti Foto</th>
+                        <td>
+                            @foreach ($bukti as $foto)
+                                <img src="{{ asset('storage/' . $foto->nama_bukti) }}" style="max-width:400px; max-height:400px"
+                                    class="rounded mb-2">
+                            @endforeach
+                        </td>
+                    </tr>
                 </table>
             @endempty
             <a href="{{ url('poor-family') }}" class="btn btn-sm btn-secondary mt-2 float-right">Kembali</a>

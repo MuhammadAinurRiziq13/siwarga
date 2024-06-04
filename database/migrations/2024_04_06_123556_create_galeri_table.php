@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('galeri', function (Blueprint $table) {
-            $table->id('id_galeri',3);
-            $table->string('nama_foto',20);
-            $table->string('judul',70);
+            $table->id('id_galeri', 3);
+            $table->string('nama_foto', 100);
+            $table->string('judul', 70);
             $table->date('tanggal_kegiatan');
-            $table->string('keterangan');
+            $table->string('keterangan', 150);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
