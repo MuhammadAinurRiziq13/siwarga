@@ -1,12 +1,16 @@
 <ul class="navbar-nav bg-dark-blue sidebar sidebar-dark accordion " id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-user-cog"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">SiWarga</div>
-    </a>
+    
+    {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#"> --}}
+    {{-- <div class="sidebar-brand-icon rotate-n-15"> --}}
+        {{-- <i class="fas fa-user-cog"></i> --}}
+            <a href="#" class="sidebar-brand d-flex align-items-center justify-content-center">
+                <img height="50" src="{{ asset('img/logo siwarga.png') }}" alt="">
+                <div class="sidebar-brand-text mx-2 ">PORT-05</div>
+            </a>
+        {{-- </div> --}}
+    {{-- </a> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">

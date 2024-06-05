@@ -22,7 +22,12 @@
     color: #329c32;
     text-decoration: none;
   }
-
+  .bg-ijo{
+    background-color:#5fd37a ;
+  }
+  .text-footer{
+    font-size: 45px;
+  }
   a:hover {
     color: #717ff5;
     text-decoration: none;

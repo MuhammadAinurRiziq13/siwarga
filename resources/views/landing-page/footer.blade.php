@@ -4,7 +4,13 @@
             <div class="row gy-4">
                 <div class="col-lg-5 col-md-12 footer-info">
                     <a href="/" class="logo d-flex align-items-center">
-                        <img src="{{ asset('img/landing-page/logo.png') }}" height="100px" width="400px" alt="">
+                        <img src="{{ asset('img/landing-page/logo.png') }}" height="100px"  alt="">
+                        {{-- <a href="#" class="logo d-flex align-items-center"> --}}
+                            {{-- <img src="{{ asset('img/landing-page/logo.png') }}" alt=""> --}}
+                            <div class="sidebar-brand-text mx-0 text-dark text-footer fw-bolder text-bg">PORT</div>
+                            <div class="sidebar-brand-text mx-0 text-dark text-footer fw-bolder text-bg ms-2">-</div>
+                            <div class="sidebar-brand-text text-light fw-bolder bg-ijo text-footer pt-4 pb-4 ps-2 pe-2 rounded-1 ms-2">05</div>
+                        {{-- </a> --}}
                     </a>
                     <p>RT 05 RW 01 Dusun Bandilan 1, Desa Ranuklindungan, Kecamatan Grati, Kabupaten Pasuruan, Jawa
                         Timur,

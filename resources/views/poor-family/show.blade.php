@@ -34,15 +34,15 @@
                                 <tr>
                                     <th>{{ $c->nama }}</th>
                                     @if ($poorFamily->{$c->kode} == 1)
-                                        <td>Tidak Layak</td>
+                                        <td>Rumah Kontrak</td>
                                     @elseif ($poorFamily->{$c->kode} == 2)
-                                        <td>Kurang Layak</td>
+                                        <td>Tidak Layak</td>
                                     @elseif ($poorFamily->{$c->kode} == 3)
-                                        <td>Cukup Layak</td>
+                                        <td>Kurang layak</td>
                                     @elseif ($poorFamily->{$c->kode} == 4)
-                                        <td>Layak</td>
+                                        <td>Cukup Layak</td>
                                     @elseif ($poorFamily->{$c->kode} == 5)
-                                        <td>Sangat Layak</td>
+                                        <td>Layak</td>
                                     @endif
                                 </tr>
                             @else
