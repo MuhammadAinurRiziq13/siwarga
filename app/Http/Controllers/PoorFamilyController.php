@@ -40,7 +40,7 @@ class PoorFamilyController extends Controller
 
     public function calculate()
     {
-        // Fetch the data
+        // Ambil data keluarga miskin dari model PoorFamilyModel
         $anggota = PoorFamilyModel::select(
             'keluargakurangmampu.noKK',
             'warga.nama',
@@ -54,6 +54,7 @@ class PoorFamilyController extends Controller
             ->groupBy('keluargakurangmampu.noKK', 'warga.nama')
             ->get();
 
+        // Ambil data keluarga miskin untuk peringkat
         $families = PoorFamilyModel::select()
             ->join('warga', function ($join) {
                 $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
@@ -62,14 +63,14 @@ class PoorFamilyController extends Controller
             ->orderBy('keluargakurangmampu.noKK') // Menambahkan pengurutan berdasarkan noKK
             ->get();
 
-
+        // Ambil data kriteria dari model CriteriaPraSejahteraModel
         $criteriaData = CriteriaPraSejahteraModel::all();
         // Ambil nama kriteria, bobot, dan jenis kriteria dari data yang diambil
         $criteria = $criteriaData->pluck('nama')->toArray();
         $weights = $criteriaData->pluck('bobot')->toArray();
         $criteriaType = $criteriaData->pluck('jenis')->toArray();
 
-        // Prepare data for TOPSIS
+        // Siapkan data untuk analisis TOPSIS
         $alternatives = $families->pluck('noKK')->toArray();
 
         $kode = $criteriaData->pluck('kode')->toArray();
@@ -81,27 +82,29 @@ class PoorFamilyController extends Controller
             return $values;
         })->toArray();
 
-
-        // Langkah Normalisasi bobot
+        // Langkah 1: Normalisasi bobot
         $totalWeight = array_sum($weights);
         $normalizedWeights = [];
         foreach ($weights as $weight) {
             $normalizedWeight = $weight / $totalWeight;
             $normalizedWeights[] = $normalizedWeight;
         }
+
+        // Buat objek TOPSIS dan jalankan metode run()
         $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
 
+        // Atur peringkat keluarga miskin berdasarkan skor yang dihasilkan
         $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families, $anggota) {
             $family = $families->firstWhere('noKK', $ranking['alternative']);
             $jumlah_anggota = $anggota->where('noKK', $ranking['alternative'])->first()->jumlah_anggota;
 
-            // Find or create the PoorFamilyModel instance
+            // Temukan atau buat instansi PoorFamilyModel
             $poorFamily = PoorFamilyModel::firstOrNew(['noKK' => $family->noKK]);
-            // Update the score
+            // Perbarui skor
             $poorFamily->score = $ranking['score'];
-            // Save the changes
+            // Simpan perubahan
             $poorFamily->save();
 
             return [
@@ -109,20 +112,16 @@ class PoorFamilyController extends Controller
                 'nama' => $family->nama,
                 'jumlah_anggota' => $jumlah_anggota,
                 'score' => $ranking['score'],
-                // 'jumlah_tanggungan' => $family->C1,
-                // 'pendapatan' => $family->C2,
-                // 'aset_kendaraan' => $family->C3,
-                // 'luas_tanah' => $family->C4,
-                // 'kondisi_rumah' => $family->C5,
             ];
         });
 
+        // Atur breadcrumb untuk navigasi
         $breadcrumb = (object)[
             'title' => 'Data Keluarga Pra-Sejahtera',
             'list' => ['Home', 'Keluarga Pra-Sejahtera']
         ];
 
-        // Pass the data to the view
+        // Kirim data ke view untuk ditampilkan kepada pengguna
         return view('poor-family.calculate', [
             'breadcrumb' => $breadcrumb,
             'rankedFamilies' => $rankedFamilies,
@@ -132,6 +131,7 @@ class PoorFamilyController extends Controller
             'weight' => $normalizedWeights
         ]);
     }
+
 
     public function list()
     {

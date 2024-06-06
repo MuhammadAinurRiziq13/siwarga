@@ -4,40 +4,44 @@ namespace App\Services;
 
 class Topsis
 {
-    private $alternatives;
-    private $criteria;
-    private $weights;
-    private $decisionMatrix;
-    private $normalizedMatrix;
-    private $weightedNormalizedMatrix;
-    private $idealBest;
-    private $idealWorst;
-    private $distances;
-    private $scores;
-    private $criteriaType;
-    private $steps;
+    // Deklarasi properti
+    private $alternatives; // Daftar alternatif
+    private $criteria; // Daftar kriteria
+    private $weights; // Bobot dari setiap kriteria
+    private $decisionMatrix; // Matriks keputusan (alternatif x kriteria)
+    private $normalizedMatrix; // Matriks keputusan yang sudah dinormalisasi
+    private $weightedNormalizedMatrix; // Matriks keputusan yang sudah dinormalisasi dan dibobotkan
+    private $idealBest; // Nilai ideal terbaik untuk setiap kriteria
+    private $idealWorst; // Nilai ideal terburuk untuk setiap kriteria
+    private $distances; // Jarak dari alternatif ke solusi ideal
+    private $scores; // Skor dari alternatif
+    private $criteriaType; // Tipe kriteria: 'benefit' atau 'cost'
+    private $steps; // Langkah-langkah dalam algoritma TOPSIS
 
+    // Konstruktor
     public function __construct($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType)
     {
         $this->alternatives = $alternatives;
         $this->criteria = $criteria;
         $this->weights = $weights;
         $this->decisionMatrix = $decisionMatrix;
-        $this->criteriaType = $criteriaType; // 'benefit' or 'cost'
-        $this->steps = [];
+        $this->criteriaType = $criteriaType; // 'benefit' atau 'cost'
+        $this->steps = []; // Inisialisasi array langkah-langkah
     }
 
+    // Dapatkan langkah-langkah
     public function getSteps()
     {
         return $this->steps;
     }
 
+    // Tambahkan langkah ke array langkah-langkah
     private function addStep($stepName, $stepData)
     {
         $this->steps[$stepName] = $stepData;
     }
 
-    // Modifikasi fungsi normalizeMatrix()
+    // Langkah 1: Normalisasi matriks keputusan
     public function normalizeMatrix()
     {
         $this->normalizedMatrix = [];
@@ -51,11 +55,11 @@ class Topsis
                 $this->normalizedMatrix[$i][$j] = $values[$j] / $sqrtSum;
             }
         }
-        $this->addStep('normalizedMatrix', $this->normalizedMatrix);
-        $this->addStep('decisionMatrix', $this->decisionMatrix);
+        $this->addStep('normalizedMatrix', $this->normalizedMatrix); // Simpan matriks yang dinormalisasi dalam langkah-langkah
+        $this->addStep('decisionMatrix', $this->decisionMatrix); // Simpan matriks keputusan asli dalam langkah-langkah
     }
 
-    // Modifikasi fungsi weightNormalizedMatrix()
+    // Langkah 2: Beri bobot pada matriks yang sudah dinormalisasi
     public function weightNormalizedMatrix()
     {
         $this->weightedNormalizedMatrix = [];
@@ -64,10 +68,10 @@ class Topsis
                 $this->weightedNormalizedMatrix[$i][$j] = $value * $this->weights[$j];
             }
         }
-        $this->addStep('weightedNormalizedMatrix', $this->weightedNormalizedMatrix);
+        $this->addStep('weightedNormalizedMatrix', $this->weightedNormalizedMatrix); // Simpan matriks yang sudah dinormalisasi dan dibobotkan dalam langkah-langkah
     }
 
-    // Modifikasi fungsi determineIdealSolutions()
+    // Langkah 3: Tentukan solusi ideal
     public function determineIdealSolutions()
     {
         $this->idealBest = [];
@@ -82,10 +86,10 @@ class Topsis
                 $this->idealWorst[$j] = max($column);
             }
         }
-        $this->addStep('idealSolutions', ['best' => $this->idealBest, 'worst' => $this->idealWorst]);
+        $this->addStep('idealSolutions', ['best' => $this->idealBest, 'worst' => $this->idealWorst]); // Simpan solusi ideal dalam langkah-langkah
     }
 
-    // Modifikasi fungsi calculateDistances()
+    // Langkah 4: Hitung jarak
     public function calculateDistances()
     {
         $this->distances = ['best' => [], 'worst' => []];
@@ -99,23 +103,23 @@ class Topsis
             $this->distances['best'][$i] = sqrt($sumBest);
             $this->distances['worst'][$i] = sqrt($sumWorst);
         }
-        $this->addStep('distances', $this->distances);
+        $this->addStep('distances', $this->distances); // Simpan jarak dalam langkah-langkah
     }
 
-    // Modifikasi fungsi calculateScores()
+    // Langkah 5: Hitung skor
     public function calculateScores()
     {
         $this->scores = [];
         foreach ($this->distances['best'] as $i => $distanceBest) {
             $this->scores[$i] = $this->distances['worst'][$i] / ($distanceBest + $this->distances['worst'][$i]);
         }
-        $this->addStep('scores', $this->scores);
+        $this->addStep('scores', $this->scores); // Simpan skor dalam langkah-langkah
     }
 
-    // Fungsi getRankings() tidak perlu dimodifikasi karena tidak ada langkah tambahan
+    // Dapatkan peringkat
     public function getRankings()
     {
-        arsort($this->scores);
+        arsort($this->scores); // Urutkan skor secara menurun
         $rankings = [];
         foreach ($this->scores as $i => $score) {
             $rankings[] = [
@@ -123,27 +127,17 @@ class Topsis
                 'score' => $score
             ];
         }
-        return $rankings;
+        return $rankings; // Kembalikan alternatif yang sudah diperingkat
     }
-    // Modifikasi fungsi run()
+
+    // Jalankan metode TOPSIS
     public function run()
     {
-        $this->normalizeMatrix();
-        $this->weightNormalizedMatrix();
-        $this->determineIdealSolutions();
-        $this->calculateDistances();
-        $this->calculateScores();
-        return $this->getRankings();
+        $this->normalizeMatrix(); // Langkah 1: Normalisasi matriks
+        $this->weightNormalizedMatrix(); // Langkah 2: Beri bobot pada matriks yang sudah dinormalisasi
+        $this->determineIdealSolutions(); // Langkah 3: Tentukan solusi ideal
+        $this->calculateDistances(); // Langkah 4: Hitung jarak
+        $this->calculateScores(); // Langkah 5: Hitung skor
+        return $this->getRankings(); // Dapatkan peringkat alternatif
     }
 }
-
-
-// public function run() {
-//     $this->normalizeMatrix();
-//     $this->weightNormalizedMatrix();
-//     $this->determineIdealSolutions();
-//     $this->calculateDistances();
-//     $this->calculateScores();
-//     return $this->getRankings();
-// }
-// }

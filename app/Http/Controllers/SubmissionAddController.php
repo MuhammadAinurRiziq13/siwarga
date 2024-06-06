@@ -159,47 +159,47 @@ class SubmissionAddController extends Controller
             $message = 'Pengajuan keluarga prasejahtera atas nama ' . $submission->kepala_keluarga . ' ditolak.';
         }
 
-        return redirect('/submission-add')->with('success', 'Data Pengajuan Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
+        // return redirect('/submission-add')->with('success', 'Data Pengajuan Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
-        // if ($submission) {
-        //     // Kirim pesan ke WhatsApp menggunakan API dari Fonte
-        //     $curl = curl_init();
+        if ($submission) {
+            // Kirim pesan ke WhatsApp menggunakan API dari Fonte
+            $curl = curl_init();
 
-        //     curl_setopt_array($curl, array(
-        //         CURLOPT_URL => 'https://api.fonnte.com/send',
-        //         CURLOPT_RETURNTRANSFER => true,
-        //         CURLOPT_ENCODING => '',
-        //         CURLOPT_MAXREDIRS => 10,
-        //         CURLOPT_TIMEOUT => 0,
-        //         CURLOPT_FOLLOWLOCATION => true,
-        //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //         CURLOPT_CUSTOMREQUEST => 'POST',
-        //         CURLOPT_POSTFIELDS => array(
-        //             // 'target' => '+62 812-3360-5196',
-        //             'target' => $submission->no_hp,
-        //             'message' => $message,
-        //             'countryCode' => '62', // Ubah sesuai kode negara Anda
-        //         ),
-        //         CURLOPT_HTTPHEADER => array(
-        //             'Authorization: u6hZ_-54X2!u14_41aN9', // Ganti YOUR_API_TOKEN dengan token API Anda
-        //         ),
-        //     ));
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    // 'target' => '+62 812-3360-5196',
+                    'target' => $submission->no_hp,
+                    'message' => $message,
+                    'countryCode' => '62', // Ubah sesuai kode negara Anda
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: u6hZ_-54X2!u14_41aN9', // Ganti YOUR_API_TOKEN dengan token API Anda
+                ),
+            ));
 
-        //     $response = curl_exec($curl);
-        //     if (curl_errno($curl)) {
-        //         $error_msg = curl_error($curl);
-        //     }
-        //     curl_close($curl);
+            $response = curl_exec($curl);
+            if (curl_errno($curl)) {
+                $error_msg = curl_error($curl);
+            }
+            curl_close($curl);
 
-        //     if (isset($error_msg)) {
-        //         return redirect('/submission-add')->with('error', 'Gagal mengirim pesan WhatsApp: ' . $error_msg);
-        //     } else {
-        //         return redirect('/submission-add')->with('success', 'Data Pengajuan Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
-        //     }
-        // } else {
-        //     return redirect('/submission-add')->with('error', 'Gagal memperbarui data Pengajuan');
-        // }
+            if (isset($error_msg)) {
+                return redirect('/submission-add')->with('error', 'Gagal mengirim pesan WhatsApp: ' . $error_msg);
+            } else {
+                return redirect('/submission-add')->with('success', 'Data Pengajuan Berhasil Diubah dan Pesan WhatsApp berhasil dikirim');
+            }
+        } else {
+            return redirect('/submission-add')->with('error', 'Gagal memperbarui data Pengajuan');
+        }
     }
 
     public function show(string $id)
