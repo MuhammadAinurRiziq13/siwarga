@@ -299,6 +299,9 @@ class PoorFamilyController extends Controller
 
     public function storeCriteria(Request $request)
     {
+        $request->validate([
+            'kode' => 'required|string|unique:criteriaprasejahtera,kode',
+        ]);
         // Tambahkan kolom baru dengan nama yang diambil dari $request->kode
         Schema::table('keluargakurangmampu', function (Blueprint $table) use ($request) {
             $table->string($request->kode)->nullable();
