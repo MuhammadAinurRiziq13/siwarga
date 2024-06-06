@@ -135,8 +135,8 @@ class Topsis
     {
         $this->normalizeMatrix(); // Langkah 1: Normalisasi matriks
         $this->weightNormalizedMatrix(); // Langkah 2: Beri bobot pada matriks yang sudah dinormalisasi
-        $this->determineIdealSolutions(); // Langkah 3: Tentukan solusi ideal
-        $this->calculateDistances(); // Langkah 4: Hitung jarak
+        $this->determineIdealSolutions(); // Langkah 3: Tentukan nilai ideal
+        $this->calculateDistances(); // Langkah 4: Hitung jarak thd
         $this->calculateScores(); // Langkah 5: Hitung skor
         return $this->getRankings(); // Dapatkan peringkat alternatif
     }
