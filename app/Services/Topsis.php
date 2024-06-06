@@ -11,8 +11,8 @@ class Topsis
     private $decisionMatrix; // Matriks keputusan (alternatif x kriteria)
     private $normalizedMatrix; // Matriks keputusan yang sudah dinormalisasi
     private $weightedNormalizedMatrix; // Matriks keputusan yang sudah dinormalisasi dan dibobotkan
-    private $idealPositive; // Nilai ideal terbaik untuk setiap kriteria
-    private $idealNegative; // Nilai ideal terburuk untuk setiap kriteria
+    private $idealPositive; // Nilai ideal positif untuk setiap kriteria
+    private $idealNegative; // Nilai ideal negatif untuk setiap kriteria
     private $distances; // Jarak dari alternatif ke solusi ideal
     private $scores; // Skor dari alternatif
     private $criteriaType; // Tipe kriteria: 'benefit' atau 'cost'
