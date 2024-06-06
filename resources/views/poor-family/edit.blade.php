@@ -39,7 +39,7 @@
                                     <select class="form-control" id="{{ $c->kode }}" name="{{ $c->kode }}" required>
                                         <option value="5" @if ($poorFamily->C5 == 5) selected @endif>Layak
                                         </option>
-                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Cukuo Layak</option>
+                                        <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Cukup Layak</option>
                                         <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Kurang Layak
                                         </option>
                                         <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Tidak Layak
