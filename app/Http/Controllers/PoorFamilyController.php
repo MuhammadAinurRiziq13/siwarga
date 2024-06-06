@@ -103,7 +103,7 @@ class PoorFamilyController extends Controller
             // Temukan atau buat instansi PoorFamilyModel
             $poorFamily = PoorFamilyModel::firstOrNew(['noKK' => $family->noKK]);
             // Perbarui skor
-            $poorFamily->score = $ranking['score'];
+            $poorFamily->score = round($ranking['score'],4);
             // Simpan perubahan
             $poorFamily->save();
 
