@@ -40,7 +40,7 @@ class PoorFamilyController extends Controller
 
     public function calculate()
     {
-        // Ambil data keluarga miskin dari model PoorFamilyModel
+        // Ambil jml anggota
         $anggota = PoorFamilyModel::select(
             'keluargakurangmampu.noKK',
             'warga.nama',
@@ -82,6 +82,8 @@ class PoorFamilyController extends Controller
             return $values;
         })->toArray();
 
+        // dd($decisionMatrix);
+
         // Langkah 1: Normalisasi bobot
         $totalWeight = array_sum($weights);
         $normalizedWeights = [];
@@ -94,6 +96,8 @@ class PoorFamilyController extends Controller
         $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
+
+        // dd($steps);
 
         // Atur peringkat keluarga miskin berdasarkan skor yang dihasilkan
         $rankedFamilies = collect($rankings)->map(function ($ranking) use ($families, $anggota) {
