@@ -149,7 +149,7 @@
                     <p class="border-bottom border-2 pb-4 px-5 d-inline">Galeri</p>
                 </header>
 
-                <div class="row g-4 d-flex justify-content-center">
+                {{-- <div class="row g-4 d-flex justify-content-center">
                     @if ($landingPage->gallery->isEmpty())
                         <p>No Gallery items found.</p>
                     @else
@@ -165,78 +165,42 @@
                         @endforeach
                     @endif
 
-                    {{-- <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/asman-toga.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Tue, September 15</span>
-                            <h3 class="post-title">Penyerahan Penghargaan Juara 1 Lomba Asuhan Mandiri Toga yang Dihadiri
-                                Langsung
-                                oleh Ibu Bupati Pasuruan</h3>
-                        </div>
-                    </div>
+                </div> --}}
 
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/kerja-bakti.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Fri, August 28</span>
-                            <h3 class="post-title">Kerja Bakti Pengecatan Gang dalam Rangka HUT Kemerdekaan RI</h3>
-                        </div>
+                <div id="gallery-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        @if ($landingPage->gallery->isEmpty())
+                            <p-No Gallery items found.</p>
+                            @else
+                                @foreach ($landingPage->gallery->chunk(8) as $chunk)
+                                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                        <div class="row g-4 d-flex justify-content-center">
+                                            @foreach ($chunk as $item)
+                                                <div class="col-lg-3">
+                                                    <div class="post-box">
+                                                        <div class="post-img"><img
+                                                                src="{{ asset('storage/' . $item->nama_foto) }}"
+                                                                class="img-fluid" alt=""></div>
+                                                        <span class="post-date">{{ $item->tanggal_kegiatan }}</span>
+                                                        <h3 class="post-title">{{ $item->judul }}</h3>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                        @endif
                     </div>
-
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/tasyakuran-kemerdekaan.jpg" class="img-fluid"
-                                    alt="">
-                            </div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Kegiatan Rutinan Malam Tasyakuran dalam Rangka HUT Kemerdekaan RI</h3>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/santunan.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Kegiatan Santunan untuk Anak Yatim Piatu</h3>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/suroan.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Peringatan Malam 1 Suro atau 1 Muharram</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/pemuda-peduli.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Kegiatan Pemuda Peduli pada Bulan Ramadhan</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/pavingisasi.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Kerja Bakti Pavingisasi Desa yang Dilaksanakan di RT 05</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="post-box">
-                            <div class="post-img"><img src="assets/img/blog/asman.jpg" class="img-fluid" alt="">
-                            </div>
-                            <span class="post-date">Mon, July 11</span>
-                            <h3 class="post-title">Peresmian Taman Toga RT 05</h3>
-                        </div>
-                    </div> --}}
-
+                    <a class="carousel-control-prev bg-dark text-white" href="#gallery-carousel" role="button"
+                        data-bs-target="#gallery-carousel" data-bs-slide="prev">
+                        <span aria-hidden="true">&lsaquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next bg-dark text-white" href="#gallery-carousel" role="button"
+                        data-bs-target="#gallery-carousel" data-bs-slide="next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
 
             </div>
@@ -475,7 +439,7 @@
                                 <div class="info-box">
                                     <i class="bi bi-envelope"></i>
                                     <h3>Email Us</h3>
-                                    <p>samlalala@gmail,com<br>yeah@gmail.com</p>
+                                    <p>051.port.2024@gmail.com
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -513,10 +477,10 @@
 
                                 <div class="col-md-12 text-center">
                                     <div class="loading">Loading</div>
-                                    <div class="error-message d-none"></div>
+                                    <div class="error-message"></div>
                                     <div class="sent-message"></div>
 
-                                    <button type="submit" class="submit d-block">Send Message</button>
+                                    <button type="submit" class="submit">Send Message</button>
                                 </div>
 
                             </div>
@@ -537,7 +501,7 @@
 
             var form = e.target;
             var formData = new FormData(form);
-            var submitButton = document.querySelector('.submit d-block');
+            var submitButton = form.querySelector('button[type="submit"]');
             var errorMessage = document.querySelector('.error-message');
             var sentMessage = document.querySelector('.sent-message');
 
@@ -553,23 +517,24 @@
                     if (response.status === 'success') {
                         sentMessage.style.display = 'block';
                         sentMessage.textContent = response.message;
-                        // errorMessage.style.display = 'none';
-                        // errorMessage.classList.remove('d-block');
+                        errorMessage.style.display = 'none';
+                        errorMessage.classList.remove('d-block');
 
                         // Hide messages after 5 seconds
                         setTimeout(function() {
                             $(sentMessage).fadeOut();
-                            submitButton.style.display = 'block';
+                            errorMessage.classList.remove('d-block');
+                            submitButton.style.display = 'inline-block';
                         }, 5000);
                     } else {
                         errorMessage.style.display = 'block';
                         errorMessage.textContent = response.message;
-                        sentMessage.style.display = 'none';
+                        sentMessage.classList.remove('d-block');
 
                         // Hide messages after 5 seconds
                         setTimeout(function() {
                             $(errorMessage).fadeOut();
-                            submitButton.style.display = 'block';
+                            submitButton.style.display = 'inline-block';
                         }, 5000);
                     }
                 }

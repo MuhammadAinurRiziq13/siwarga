@@ -874,6 +874,29 @@
     object-fit: cover;
   }
 
+  .carousel-control-prev,
+  .carousel-control-next {
+      background-color: #333;
+      /* change the background color to a darker shade */
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      opacity: 10%;
+      text-align: center;
+      color: #fff;
+      top: 48%;
+      /* change the text color to white */
+  }
+
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+      background-color: #555;
+      /* change the hover background color to a darker shade */
+  }
+
+
   /*--------------------------------------------------------------
   # Contact
   --------------------------------------------------------------*/
