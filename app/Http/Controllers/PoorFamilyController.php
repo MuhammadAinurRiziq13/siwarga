@@ -43,15 +43,14 @@ class PoorFamilyController extends Controller
         // Ambil data keluarga miskin dari model PoorFamilyModel
         $anggota = PoorFamilyModel::select(
             'keluargakurangmampu.noKK',
-            'warga.nama',
-            DB::raw('COUNT(warga2.noKK) as jumlah_anggota')
+            'kepala.nama as nama_kepala_keluarga',
+            DB::raw('(SELECT COUNT(*) FROM warga WHERE warga.noKK = keluargakurangmampu.noKK) as jumlah_anggota')
         )
-            ->join('warga', function ($join) {
-                $join->on('keluargakurangmampu.noKK', '=', 'warga.noKK')
-                    ->where('warga.status_keluarga', '=', 'kepala keluarga');
+            ->join('warga as kepala', function ($join) {
+                $join->on('keluargakurangmampu.noKK', '=', 'kepala.noKK')
+                    ->where('kepala.status_keluarga', '=', 'kepala keluarga');
             })
-            ->leftJoin('warga as warga2', 'keluargakurangmampu.noKK', '=', 'warga2.noKK')
-            ->groupBy('keluargakurangmampu.noKK', 'warga.nama')
+            ->groupBy('keluargakurangmampu.noKK', 'kepala.nama')
             ->get();
 
         // Ambil data keluarga miskin untuk peringkat
@@ -103,7 +102,7 @@ class PoorFamilyController extends Controller
             // Temukan atau buat instansi PoorFamilyModel
             $poorFamily = PoorFamilyModel::firstOrNew(['noKK' => $family->noKK]);
             // Perbarui skor
-            $poorFamily->score = round($ranking['score'],4);
+            $poorFamily->score = round($ranking['score'], 4);
             // Simpan perubahan
             $poorFamily->save();
 

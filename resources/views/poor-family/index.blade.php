@@ -5,7 +5,6 @@
         <div class="card-header bg-dark-blue">
             <div class="card-tools float-left">
                 <a class="btn btn-sm bg-primary text-white mt-2" href="{{ url('poor-family/calculate') }}">Hitung</a>
-                {{-- @if (Auth::user()->level == 'admin') --}}
                 <a class="btn btn-sm bg-primary text-white mt-2" href="{{ url('poor-family/criteria') }}">Criteria</a>
             </div>
             <div class="card-tools float-right">
@@ -54,11 +53,6 @@
                             <td>{{ $family['noKK'] }}</td>
                             <td>{{ $family['nama'] }}</td>
                             <td>{{ $family['jumlah_anggota'] }}</td>
-                            {{-- <td>{{ $family['pendapatan'] }}</td>
-                    <td>{{ $family['jumlah_kendaraan'] }}</td>
-                    <td>{{ $family['luas_tanah'] }}</td>
-                    <td>{{ $family['kondisi_rumah'] }}</td> --}}
-                            {{-- <td>{{ round($family['score'],4) }}</td> --}}
                             <td class="text-center">
                                 <a href="{{ url('/poor-family/' . $family['noKK']) }}" class="btn btn-info btn-sm"><i
                                         class="fas fa-eye"></i></a>
