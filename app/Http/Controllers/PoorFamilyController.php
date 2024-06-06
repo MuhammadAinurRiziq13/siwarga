@@ -90,7 +90,7 @@ class PoorFamilyController extends Controller
         }
 
         // Buat objek TOPSIS dan jalankan metode run()
-        $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
+        $topsis = new Topsis($alternatives, $criteria, $normalizedWeights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
 
