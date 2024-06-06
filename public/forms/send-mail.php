@@ -4,15 +4,15 @@ use PHPMailer\PHPMailer\Exception;
 
 require __DIR__ . '/../../vendor/autoload.php'; // Sesuaikan dengan struktur direktori Anda
 
-function sendEmail($name, $email, $subject, $message, $to = 'siwargaa5@gmail.com') {
+function sendEmail($name, $email, $subject, $message, $to = '051.port.2024@gmail.com') {
     $mail = new PHPMailer(true);
     try {
         // Pengaturan server SMTP
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'siwargaa5@gmail.com'; // Ganti dengan alamat email Anda
-        $mail->Password   = 'undnbasxzrfurvsp';    // Ganti dengan App Password Anda
+        $mail->Username   = '051.port.2024@gmail.com'; // Ganti dengan alamat email Anda
+        $mail->Password   = 'xzljdwzyiwmykwkf';    // Ganti dengan App Password Anda
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 

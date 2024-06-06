@@ -38,7 +38,8 @@
                     <h4>Contact Us</h4>
                     <p>
                         <i class="fas fa-phone"></i> +62 851 5653 0441<br>
-                        <i class="fas fa-envelope"></i> ramapb7b@gmail.com<br>
+                        {{-- <i class="fas fa-envelope"></i> ramapb7b@gmail.com<br> --}}
+                        <i class="fas fa-envelope"></i> 051.port.2024@gmail.com<br>
                     </p>
                 </div>
 
