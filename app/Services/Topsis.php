@@ -11,8 +11,8 @@ class Topsis
     private $decisionMatrix; // Matriks keputusan (alternatif x kriteria)
     private $normalizedMatrix; // Matriks keputusan yang sudah dinormalisasi
     private $weightedNormalizedMatrix; // Matriks keputusan yang sudah dinormalisasi dan dibobotkan
-    private $idealBest; // Nilai ideal terbaik untuk setiap kriteria
-    private $idealWorst; // Nilai ideal terburuk untuk setiap kriteria
+    private $idealPositive; // Nilai ideal terbaik untuk setiap kriteria
+    private $idealNegative; // Nilai ideal terburuk untuk setiap kriteria
     private $distances; // Jarak dari alternatif ke solusi ideal
     private $scores; // Skor dari alternatif
     private $criteriaType; // Tipe kriteria: 'benefit' atau 'cost'
@@ -74,34 +74,34 @@ class Topsis
     // Langkah 3: Tentukan solusi ideal
     public function determineIdealSolutions()
     {
-        $this->idealBest = [];
-        $this->idealWorst = [];
+        $this->idealPositive = [];
+        $this->idealNegative = [];
         foreach ($this->criteria as $j => $criterion) {
             $column = array_column($this->weightedNormalizedMatrix, $j);
             if ($this->criteriaType[$j] == 'benefit') {
-                $this->idealBest[$j] = max($column);
-                $this->idealWorst[$j] = min($column);
+                $this->idealPositive[$j] = max($column);
+                $this->idealNegative[$j] = min($column);
             } else {
-                $this->idealBest[$j] = min($column);
-                $this->idealWorst[$j] = max($column);
+                $this->idealPositive[$j] = min($column);
+                $this->idealNegative[$j] = max($column);
             }
         }
-        $this->addStep('idealSolutions', ['best' => $this->idealBest, 'worst' => $this->idealWorst]); // Simpan solusi ideal dalam langkah-langkah
+        $this->addStep('idealSolutions', ['positive' => $this->idealPositive, 'negative' => $this->idealNegative]); // Simpan solusi ideal dalam langkah-langkah
     }
 
     // Langkah 4: Hitung jarak
     public function calculateDistances()
     {
-        $this->distances = ['best' => [], 'worst' => []];
+        $this->distances = ['positive' => [], 'negative' => []];
         foreach ($this->weightedNormalizedMatrix as $i => $values) {
-            $sumBest = 0;
-            $sumWorst = 0;
+            $sumPositive = 0;
+            $sumNegative = 0;
             foreach ($values as $j => $value) {
-                $sumBest += pow($value - $this->idealBest[$j], 2);
-                $sumWorst += pow($value - $this->idealWorst[$j], 2);
+                $sumPositive += pow($value - $this->idealPositive[$j], 2);
+                $sumNegative += pow($value - $this->idealNegative[$j], 2);
             }
-            $this->distances['best'][$i] = sqrt($sumBest);
-            $this->distances['worst'][$i] = sqrt($sumWorst);
+            $this->distances['positive'][$i] = sqrt($sumPositive);
+            $this->distances['negative'][$i] = sqrt($sumNegative);
         }
         $this->addStep('distances', $this->distances); // Simpan jarak dalam langkah-langkah
     }
@@ -110,8 +110,8 @@ class Topsis
     public function calculateScores()
     {
         $this->scores = [];
-        foreach ($this->distances['best'] as $i => $distanceBest) {
-            $this->scores[$i] = $this->distances['worst'][$i] / ($distanceBest + $this->distances['worst'][$i]);
+        foreach ($this->distances['positive'] as $i => $distancePositive) {
+            $this->scores[$i] = $this->distances['negative'][$i] / ($distancePositive + $this->distances['negative'][$i]);
         }
         $this->addStep('scores', $this->scores); // Simpan skor dalam langkah-langkah
     }

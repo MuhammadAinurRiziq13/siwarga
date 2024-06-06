@@ -212,8 +212,8 @@
                     @foreach ($alternatives as $index => $alternative)
                         <tr>
                             <td style="width: 150px;">{{ $alternative }}</td>
-                            <td style="width: 100px;">{{ round($steps['distances']['best'][$index], 4) }}</td>
-                            <td style="width: 100px;">{{ round($steps['distances']['worst'][$index], 4) }}</td>
+                            <td style="width: 100px;">{{ round($steps['distances']['positive'][$index], 4) }}</td>
+                            <td style="width: 100px;">{{ round($steps['distances']['negative'][$index], 4) }}</td>
                         </tr>
                         </tr>
                     @endforeach
