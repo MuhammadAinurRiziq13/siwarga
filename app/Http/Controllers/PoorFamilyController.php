@@ -82,15 +82,15 @@ class PoorFamilyController extends Controller
         })->toArray();
 
         // Langkah 1: Normalisasi bobot
-        $totalWeight = array_sum($weights);
-        $normalizedWeights = [];
-        foreach ($weights as $weight) {
-            $normalizedWeight = $weight / $totalWeight;
-            $normalizedWeights[] = $normalizedWeight;
-        }
+        // $totalWeight = array_sum($weights);
+        // $normalizedWeights = [];
+        // foreach ($weights as $weight) {
+        //     $normalizedWeight = $weight / $totalWeight;
+        //     $normalizedWeights[] = $normalizedWeight;
+        // }
 
         // Buat objek TOPSIS dan jalankan metode run()
-        $topsis = new Topsis($alternatives, $criteria, $normalizedWeights, $decisionMatrix, $criteriaType);
+        $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
 
@@ -127,7 +127,7 @@ class PoorFamilyController extends Controller
             'steps' => $steps,
             'criteria' => $criteria,
             'alternatives' => $alternatives,
-            'weight' => $normalizedWeights
+            'weight' => $weights
         ]);
     }
 
@@ -227,6 +227,16 @@ class PoorFamilyController extends Controller
     public function criteria()
     {
         $criteria = CriteriaPraSejahteraModel::all();
+        $weights = $criteria->pluck('bobot')->toArray();
+        $name = $criteria->pluck('nama')->toArray();
+        if (array_sum($weights) > 1) {
+            $status = "Total Bobot lebih dari 1, harap lakukan perbaikan pada bobot masing-masing kriteria";
+        } else if (array_sum($weights) < 1) {
+            $status = "Total Bobot kurang dari 1, harap lakukan perbaikan pada bobot masing-masing kriteria";
+        } else {
+            $status = "Total bobot adalah 1, pembobotan telah benar";
+        }
+
         $breadcrumb = (object)[
             'title' => 'Jenis Criteria',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Criteria']
@@ -240,6 +250,9 @@ class PoorFamilyController extends Controller
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'criteria' => $criteria,
+            'weight' => $weights,
+            'nama' => $name,
+            'status' => $status
         ]);
     }
     public function showCriteria(string $id)

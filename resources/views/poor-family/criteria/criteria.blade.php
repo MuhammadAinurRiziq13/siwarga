@@ -70,6 +70,36 @@
                     </tr>
                 </tbody>
             </table>
+            <br><br>
+            <div class="card card-outline card-primary shadow">
+                <div class="card-header bg-dark-blue">
+                    <h6 class="card-title mb-0 text-white">Bobot Criteria</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                {{-- <th>Alternatif</th> --}}
+                                @foreach ($nama as $criterion)
+                                    <th>{{ $criterion }}</th>
+                                @endforeach
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{-- @foreach ($steps['decisionMatrix'] as $index => $row) --}}
+                            <tr>
+                                {{-- <td>{{ $alternatives[$index] }}</td> <!-- Nama alternatif dari variabel $alternatives --> --}}
+                                @foreach ($weight as $value)
+                                    <td>{{ $value }}</td>
+                                @endforeach
+                                <td>{{ $status }}</td>
+                                </tr>
+                            {{-- @endforeach --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
