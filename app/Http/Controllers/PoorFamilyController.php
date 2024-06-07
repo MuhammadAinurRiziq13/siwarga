@@ -227,16 +227,6 @@ class PoorFamilyController extends Controller
     public function criteria()
     {
         $criteria = CriteriaPraSejahteraModel::all();
-        $weights = $criteria->pluck('bobot')->toArray();
-        $name = $criteria->pluck('nama')->toArray();
-        if (array_sum($weights) > 1) {
-            $status = "Total Bobot lebih dari 1, harap lakukan perbaikan pada bobot masing-masing kriteria";
-        } else if (array_sum($weights) < 1) {
-            $status = "Total Bobot kurang dari 1, harap lakukan perbaikan pada bobot masing-masing kriteria";
-        } else {
-            $status = "Total bobot adalah 1, pembobotan telah benar";
-        }
-
         $breadcrumb = (object)[
             'title' => 'Jenis Criteria',
             'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Criteria']
@@ -249,10 +239,7 @@ class PoorFamilyController extends Controller
         return view('poor-family.criteria.criteria', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
-            'criteria' => $criteria,
-            'weight' => $weights,
-            'nama' => $name,
-            'status' => $status
+            'criteria' => $criteria
         ]);
     }
     public function showCriteria(string $id)
