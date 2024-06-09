@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                         <th>Tanggal</th>
-                        <td>{{ $gallery->tanggal_kegiatan }}</td>
+                        <td>{{ date('d-m-Y', strtotime($gallery->tanggal_kegiatan)) }}</td>
                     </tr>
                     <tr>
                         <th>Keterangan</th>

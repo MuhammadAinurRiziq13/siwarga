@@ -31,7 +31,7 @@
                     </tr>
                     <tr>
                         <th>Tanggal Lahir</th>
-                        <td>{{ $resident->tanggal_lahir }}</td>
+                        <td>{{ date('d-m-Y', strtotime($resident->tanggal_lahir)) }}</td>
                     </tr>
                     <tr>
                         <th>Jenis Kelamin</th>
