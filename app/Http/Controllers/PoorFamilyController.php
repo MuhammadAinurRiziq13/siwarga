@@ -300,6 +300,21 @@ class PoorFamilyController extends Controller
     {
         $request->validate([
             'kode' => 'required|string|unique:criteriaprasejahtera,kode',
+            'bobot' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request) {
+                    // Mengambil semua data dengan kolom bobot yang relevan
+                    $totalBobot = CriteriaPraSejahteraModel::sum('bobot');
+
+                    // Menjumlahkan total bobot dengan bobot yang diterima dari request
+                    $totalBobot += $value;
+
+                    // Memeriksa apakah total bobot melebihi 1
+                    if ($totalBobot > 1) {
+                        $fail("Total bobot tidak boleh melebihi 1. Saat ini total bobot adalah {$totalBobot}");
+                    }
+                },
+            ],
         ]);
         // Tambahkan kolom baru dengan nama yang diambil dari $request->kode
         Schema::table('keluargakurangmampu', function (Blueprint $table) use ($request) {
@@ -369,6 +384,23 @@ class PoorFamilyController extends Controller
         // Schema::table('keluargakurangmampu', function (Blueprint $table) use ($criteria, $request) {
         //     $table->renameColumn($criteria->kode, $request->kode);
         // });
+        $request->validate([
+            'bobot' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request) {
+                    // Mengambil semua data dengan kolom bobot yang relevan
+                    $totalBobot = CriteriaPraSejahteraModel::sum('bobot');
+
+                    // Menjumlahkan total bobot dengan bobot yang diterima dari request
+                    $totalBobot += $value;
+
+                    // Memeriksa apakah total bobot melebihi 1
+                    if ($totalBobot > 1) {
+                        $fail("Total bobot tidak boleh melebihi 1. Saat ini total bobot adalah {$totalBobot}");
+                    }
+                },
+            ],
+        ]);
 
         CriteriaPraSejahteraModel::find($id)->update([
             // 'kode' => $request->kode,
