@@ -50,7 +50,7 @@
                         <div class="col-6">
                             <label class="control-label col-form-label">Tempat Lahir</label>
                             <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
-                                value="{{ old('tempat_lahir', $resident->tempat_lahir) }}" required>
+                                value="{{ old('tempat_lahir', date('d-m-Y', strtotime($resident->tempat_lahir))) }}" required>
                             @error('tempat_lahir')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror

@@ -9,10 +9,17 @@
 @section('content')
     <div class="card">
         <div class="card-header bg-dark-blue">
+            <h6 class="card-title my-2 text-white float-left">Rekomendasi Keluarga Pra-Sejahtera Penerima Bantuan</h6>
+                <a class="btn btn-sm my-1 btn-secondary float-right"
+                    href="{{ url('poor-family') }}">
+                        Kembali</a>
+        </div>
+        {{-- <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">Rekomendasi Keluarga Pra-Sejahtera Penerima Bantuan</h6>
             <div class="card-tools float-right">
                 <a href="{{ url('poor-family') }}" class="btn btn-sm btn-secondary float-right">Kembali</a>
             </div>
-        </div>
+        </div> --}}
         <div class="card-body">
             <table class="table table-bordered table-striped table-hover table-sm" id="poorFamilyTable">
                 <thead>
@@ -21,7 +28,7 @@
                         <th>No KK</th>
                         <th>Nama Kepala Keluarga</th>
                         <th>Jumlah Anggota</th>
-                        <th>Score</th>
+                        <th>Nilai</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +80,7 @@
     <br>
     <div class="card card-outline card-primary shadow">
         <div class="card-header bg-dark-blue">
-            <h6 class="card-title mb-0 text-white">Decision Matrix</h6>
+            <h6 class="card-title mb-0 text-white">Matriks Keputusan</h6>
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -101,7 +108,7 @@
     <br>
     <div class="card card-outline card-primary shadow">
         <div class="card-header bg-dark-blue">
-            <h6 class="card-title mb-0 text-white">Normalized Matrix</h6>
+            <h6 class="card-title mb-0 text-white">Matriks Normalisasi</h6>
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -129,7 +136,7 @@
     <br>
     <div class="card card-outline card-primary shadow">
         <div class="card-header bg-dark-blue">
-            <h6 class="card-title mb-0 text-white">Weighted Normalized Matrix</h6>
+            <h6 class="card-title mb-0 text-white">Matriks Normalisasi Terbobot</h6>
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -214,6 +221,31 @@
                             <td style="width: 150px;">{{ $alternative }}</td>
                             <td style="width: 100px;">{{ round($steps['distances']['positive'][$index], 4) }}</td>
                             <td style="width: 100px;">{{ round($steps['distances']['negative'][$index], 4) }}</td>
+                        </tr>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="card card-outline card-primary shadow">
+        <div class="card-header bg-dark-blue">
+            <h6 class="card-title mb-0 text-white">Nilai Preferensi</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">Alternatif</th>
+                        <th style="width: 100px;">Nilai Preferensi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($alternatives as $index => $alternative)
+                        <tr>
+                            <td>{{ $alternative }}</td>
+                            <td>{{ round($steps['scores'][$index], 4) }}</td>
                         </tr>
                         </tr>
                     @endforeach

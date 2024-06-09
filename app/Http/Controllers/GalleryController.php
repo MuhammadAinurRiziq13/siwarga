@@ -74,7 +74,7 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama_foto' => 'image|file|max:1024',
+            'nama_foto' => 'image|file|max:5120',
             'judul' => 'required|string',
             'tanggal_kegiatan' => 'required',
             'keterangan' => 'required|string',
@@ -136,7 +136,7 @@ class GalleryController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'nama_foto' => 'image|file|max:1024',
+            'nama_foto' => 'image|file|max:5120',
             'judul' => 'required|string',
             'tanggal_kegiatan' => 'required',
             'keterangan' => 'required|string',

@@ -125,7 +125,11 @@
                         data: 'tanggal_lahir',
                         className: '',
                         orderable: true,
-                        searchable: false
+                        searchable: false,
+                        render: data => {
+                            const date = new Date(data);
+                            return `${("0" + date.getDate()).slice(-2)}-${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
+                        } 
                     },
                     {
                         data: 'jenis_kelamin',

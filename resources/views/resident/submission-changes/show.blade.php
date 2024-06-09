@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                         <th style="width: 30%">Tanggal Lahir</th>
-                        <td>{{ $changes->tanggal_lahir }}</td>
+                        <td>{{ date('d-m-Y', strtotime($changes->tanggal_lahir)) }}</td>
                     </tr>
                     <tr>
                         <th style="width: 30%">Jenis Kelamin</th>

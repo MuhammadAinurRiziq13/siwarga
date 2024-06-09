@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <th style="width: 30%">Tempat/Tgl. Lahir</th>
-                            <td>{{ $letter->tempat_lahir }}, {{$letter->tanggal_lahir}}</td>
+                            <td>{{ $letter->tempat_lahir }}, {{date('d-m-Y', strtotime($letter->tanggal_lahir))}}</td>
                         </tr>
                         <tr>
                             <th style="width: 30%">Alamat</th>

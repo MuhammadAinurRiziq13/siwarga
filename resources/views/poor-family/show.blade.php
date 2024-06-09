@@ -25,7 +25,7 @@
                                     <th>{{ $c->nama }}</th>
                                     <td>Rp {{ $poorFamily->{$c->kode} }}</td>
                                 </tr>
-                            @elseif ($c->nama == 'Luas tanah')
+                            @elseif ($c->nama == 'Luas Tanah')
                                 <tr>
                                     <th>{{ $c->nama }}</th>
                                     <td>{{ $poorFamily->{$c->kode} }} m<sup>2</sup></td>
