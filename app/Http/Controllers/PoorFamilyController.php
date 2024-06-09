@@ -83,15 +83,15 @@ class PoorFamilyController extends Controller
         })->toArray();
 
         // Langkah 1: Normalisasi bobot
-        $totalWeight = array_sum($weights);
-        $normalizedWeights = [];
-        foreach ($weights as $weight) {
-            $normalizedWeight = $weight / $totalWeight;
-            $normalizedWeights[] = $normalizedWeight;
-        }
+        // $totalWeight = array_sum($weights);
+        // $normalizedWeights = [];
+        // foreach ($weights as $weight) {
+        //     $normalizedWeight = $weight / $totalWeight;
+        //     $normalizedWeights[] = $normalizedWeight;
+        // }
 
         // Buat objek TOPSIS dan jalankan metode run()
-        $topsis = new Topsis($alternatives, $criteria, $normalizedWeights, $decisionMatrix, $criteriaType);
+        $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
 
@@ -128,7 +128,7 @@ class PoorFamilyController extends Controller
             'steps' => $steps,
             'criteria' => $criteria,
             'alternatives' => $alternatives,
-            'weight' => $normalizedWeights
+            'weight' => $weights
         ]);
     }
 
