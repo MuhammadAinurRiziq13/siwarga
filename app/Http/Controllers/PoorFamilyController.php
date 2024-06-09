@@ -91,7 +91,7 @@ class PoorFamilyController extends Controller
         }
 
         // Buat objek TOPSIS dan jalankan metode run()
-        $topsis = new Topsis($alternatives, $criteria, $weights, $decisionMatrix, $criteriaType);
+        $topsis = new Topsis($alternatives, $criteria, $normalizedWeights, $decisionMatrix, $criteriaType);
         $rankings = $topsis->run();
         $steps = $topsis->getSteps();
 
@@ -103,7 +103,7 @@ class PoorFamilyController extends Controller
             // Temukan atau buat instansi PoorFamilyModel
             $poorFamily = PoorFamilyModel::firstOrNew(['noKK' => $family->noKK]);
             // Perbarui skor
-            $poorFamily->score = round($ranking['score'],4);
+            $poorFamily->score = round($ranking['score'], 4);
             // Simpan perubahan
             $poorFamily->save();
 
