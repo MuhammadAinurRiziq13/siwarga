@@ -31,7 +31,7 @@
                         <th>Waktu Pengajuan</th>
                         <th>Aksi</th>
                         <th>Status</th>
-                        <th>Download</th> <!-- Tambahkan kolom Download -->
+                        <th>Download</th> 
                     </tr>
                 </thead>
             </table>

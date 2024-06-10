@@ -268,7 +268,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'kode' => 'C4',
-                'nama' => 'Luas tanah',
+                'nama' => 'Luas Tanah',
                 'bobot' => 3,
                 'jenis' => 'Cost',
             ],

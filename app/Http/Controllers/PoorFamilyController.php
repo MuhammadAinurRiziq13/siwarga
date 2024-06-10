@@ -28,8 +28,8 @@ class PoorFamilyController extends Controller
         $rankedFamilies = $this->list()->getData()['rankedFamilies'];
 
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Pra-Sejahtera',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera']
+            'title' => 'Data Keluarga Prasejahtera',
+            'list' => ['Home', 'Keluarga Prasejahtera']
         ];
 
         return view('poor-family.index', [
@@ -116,8 +116,8 @@ class PoorFamilyController extends Controller
 
         // Atur breadcrumb untuk navigasi
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Pra-Sejahtera',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera']
+            'title' => 'Data Keluarga Prasejahtera',
+            'list' => ['Home', 'Keluarga Prasejahtera']
         ];
 
         // Kirim data ke view untuk ditampilkan kepada pengguna
@@ -151,8 +151,8 @@ class PoorFamilyController extends Controller
 
 
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Pra-Sejahtera',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera']
+            'title' => 'Data Keluarga Prasejahtera',
+            'list' => ['Home', 'Keluarga Prasejahtera']
         ];
 
         // Pass the data to the view
@@ -170,11 +170,11 @@ class PoorFamilyController extends Controller
         $bukti = BuktiPrasejahtera::where('bukti', $poorFamily->id)->get();
 
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Pra-Sejahtera',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Detail']
+            'title' => 'Data Keluarga Prasejahtera',
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Detail']
         ];
         $page = (object)[
-            'title' => 'Detail Keluarga Pra-Sejahtera'
+            'title' => 'Detail Keluarga Prasejahtera'
         ];
         return view('poor-family.show', [
             'breadcrumb' => $breadcrumb,
@@ -192,11 +192,11 @@ class PoorFamilyController extends Controller
         $criteria = CriteriaPraSejahteraModel::all();
         $breadcrumb = (object)[
             'title' => '',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Tambah']
         ];
 
         $page = (object)[
-            'title' => 'Form Tambah Keluarga Pra-Sejahtera'
+            'title' => 'Form Tambah Keluarga Prasejahtera'
         ];
 
         return view('poor-family.create', [
@@ -212,7 +212,7 @@ class PoorFamilyController extends Controller
     {
         $breadcrumb = (object)[
             'title' => '',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Tambah']
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Tambah']
         ];
 
         $page = (object)[
@@ -229,7 +229,7 @@ class PoorFamilyController extends Controller
         $criteria = CriteriaPraSejahteraModel::all();
         $breadcrumb = (object)[
             'title' => 'Jenis Criteria',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Criteria']
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Criteria']
         ];
 
         $page = (object)[
@@ -248,7 +248,7 @@ class PoorFamilyController extends Controller
         $criteria = CriteriaPraSejahteraModel::where('id', $id)->first();
         $breadcrumb = (object)[
             'title' => 'Jenis Criteria',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Criteria']
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Criteria']
         ];
 
         $page = (object)[
@@ -293,7 +293,7 @@ class PoorFamilyController extends Controller
             }
         }
 
-        return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil disimpan');
+        return redirect('/poor-family')->with('success', 'Data Keluarga Prasejahtera berhasil disimpan');
     }
 
     public function storeCriteria(Request $request)
@@ -329,10 +329,10 @@ class PoorFamilyController extends Controller
         $bukti = BuktiPrasejahtera::where('bukti', $poorFamily->id)->get();
         $breadcrumb = (object)[
             'title' => '',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera', 'Edit']
+            'list' => ['Home', 'Keluarga Prasejahtera', 'Edit']
         ];
         $page = (object)[
-            'title' => 'Form Edit Keluarga Pra-Sejahtera'
+            'title' => 'Form Edit Keluarga Prasejahtera'
         ];
         return view('poor-family.edit', [
             'breadcrumb' => $breadcrumb,
@@ -422,24 +422,24 @@ class PoorFamilyController extends Controller
 
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
-        return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera Berhasil Diubah');
+        return redirect('/poor-family')->with('success', 'Data Keluarga Prasejahtera Berhasil Diubah');
     }
 
     public function destroy(string $noKK)
     {
         $check = PoorFamilyModel::where('noKK', $noKK)->first();
         if (!$check) {
-            return redirect('/poor-family')->with('error', 'Data Keluarga Pra-Sejahtera tidak ditemukan');
+            return redirect('/poor-family')->with('error', 'Data Keluarga Prasejahtera tidak ditemukan');
         }
 
         try {
             // Hapus data dari tabel anak (keluargaKurangMampu)
             PoorFamilyModel::where('noKK', $noKK)->delete();
 
-            return redirect('/poor-family')->with('success', 'Data Keluarga Pra-Sejahtera berhasil dihapus');
+            return redirect('/poor-family')->with('success', 'Data Keluarga Prasejahtera berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/poor-family')->with('error', 'Data Keluarga Pra-Sejahtera gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/poor-family')->with('error', 'Data Keluarga Prasejahtera gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
         }
     }
 

@@ -56,9 +56,9 @@
                             @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
                                 <tr>
                                     <th>{{ $c->nama }}</th>
-                                    <td>Rp {{ $add->{$c->kode} }}</td>
+                                    <td>Rp{{ $add->{$c->kode} }}</td>
                                 </tr>
-                            @elseif ($c->nama == 'Luas tanah')
+                            @elseif ($c->nama == 'Luas Tanah')
                                 <tr>
                                     <th>{{ $c->nama }}</th>
                                     <td>{{ $add->{$c->kode} }} m<sup>2</sup></td>
@@ -67,15 +67,15 @@
                                 <tr>
                                     <th>{{ $c->nama }}</th>
                                     @if ($add->{$c->kode} == 1)
-                                        <td>Tidak Layak</td>
+                                        <td>Rumah Kontrak</td>
                                     @elseif ($add->{$c->kode} == 2)
-                                        <td>Kurang Layak</td>
+                                        <td>Buruk Layak</td>
                                     @elseif ($add->{$c->kode} == 3)
-                                        <td>Cukup Layak</td>
+                                        <td>Kurang Layak</td>
                                     @elseif ($add->{$c->kode} == 4)
-                                        <td>Layak</td>
+                                        <td>Cukup Layak</td>
                                     @elseif ($add->{$c->kode} == 5)
-                                        <td>Sangat Layak</td>
+                                        <td>Layak</td>
                                     @endif
                                 </tr>
                             @else

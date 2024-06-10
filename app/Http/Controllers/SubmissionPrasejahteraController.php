@@ -22,11 +22,11 @@ class SubmissionPrasejahteraController extends Controller
         $criteria = CriteriaPraSejahteraModel::all();
 
         $breadcrumb = (object)[
-            'title' => 'Data Keluarga Pra-Sejahtera',
-            'list' => ['Home', 'Keluarga Pra-Sejahtera']
+            'title' => 'Data Keluarga Prasejahtera',
+            'list' => ['Home', 'Keluarga Prasejahtera']
         ];
         $page = (object)[
-            'title' => 'Detail Keluarga Pra-Sejahtera'
+            'title' => 'Detail Keluarga Prasejahtera'
         ];
         return view('warga.submission-add.index', [
             'breadcrumb' => $breadcrumb,
@@ -139,7 +139,7 @@ class SubmissionPrasejahteraController extends Controller
             }
         }
 
-        return redirect('/submission-prasejahtera/' . Auth::user()->username)->with('success', 'Pengajuan Keluarga Pra-Sejahtera berhasil disimpan');
+        return redirect('/submission-prasejahtera/' . Auth::user()->username)->with('success', 'Pengajuan Keluarga Prasejahtera berhasil disimpan');
     }
 
     public function show(string $id)

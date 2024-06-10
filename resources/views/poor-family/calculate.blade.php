@@ -9,13 +9,13 @@
 @section('content')
     <div class="card">
         <div class="card-header bg-dark-blue">
-            <h6 class="card-title my-2 text-white float-left">Rekomendasi Keluarga Pra-Sejahtera Penerima Bantuan</h6>
+            <h6 class="card-title my-2 text-white float-left">Rekomendasi Keluarga Prasejahtera Penerima Bantuan</h6>
                 <a class="btn btn-sm my-1 btn-secondary float-right"
                     href="{{ url('poor-family') }}">
                         Kembali</a>
         </div>
         {{-- <div class="card-header bg-dark-blue">
-            <h6 class="card-title mb-0 text-white">Rekomendasi Keluarga Pra-Sejahtera Penerima Bantuan</h6>
+            <h6 class="card-title mb-0 text-white">Rekomendasi Keluarga Prasejahtera Penerima Bantuan</h6>
             <div class="card-tools float-right">
                 <a href="{{ url('poor-family') }}" class="btn btn-sm btn-secondary float-right">Kembali</a>
             </div>
