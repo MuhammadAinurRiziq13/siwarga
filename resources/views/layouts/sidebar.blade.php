@@ -45,7 +45,7 @@
         <li class="nav-item {{ request()->is('poor-family*') || request()->is('submission-add*') ? 'active' : '' }}">
             <a href="{{ url('/poor-family') }}" class="nav-link">
                 <i class="fas fa-fw fa-user-injured"></i>
-                <span>Keluarga Pra-Sejahtera</span></a>
+                <span>Keluarga Prasejahtera</span></a>
         </li>
 
         <hr class="sidebar-divider">
@@ -57,7 +57,7 @@
         <li class="nav-item {{ request()->is('gallery*') ? 'active' : '' }}">
             <a href="{{ url('/gallery') }}" class="nav-link">
                 <i class="fas fa-fw fa-images"></i>
-                <span>Gallery</span></a>
+                <span>Galeri</span></a>
         </li>
 
         <hr class="sidebar-divider">
@@ -86,7 +86,7 @@
         <li class="nav-item {{ request()->is('') || request()->is('submission-prasejahtera*') ? 'active' : '' }}">
             <a href="{{ url('/submission-prasejahtera/' . Auth::user()->username) }}" class="nav-link">
                 <i class="fas fa-fw fa-user-injured"></i>
-                <span>Keluarga Pra-Sejahtera</span>
+                <span>Keluarga Prasejahtera</span>
             </a>
         </li>
 

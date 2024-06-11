@@ -23,7 +23,7 @@
                             @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
                                 <tr>
                                     <th>{{ $c->nama }}</th>
-                                    <td>Rp {{ $poorFamily->{$c->kode} }}</td>
+                                    <td>Rp{{ $poorFamily->{$c->kode} }}</td>
                                 </tr>
                             @elseif ($c->nama == 'Luas Tanah')
                                 <tr>
@@ -36,7 +36,7 @@
                                     @if ($poorFamily->{$c->kode} == 1)
                                         <td>Rumah Kontrak</td>
                                     @elseif ($poorFamily->{$c->kode} == 2)
-                                        <td>Tidak Layak</td>
+                                        <td>Buruk Layak</td>
                                     @elseif ($poorFamily->{$c->kode} == 3)
                                         <td>Kurang layak</td>
                                     @elseif ($poorFamily->{$c->kode} == 4)

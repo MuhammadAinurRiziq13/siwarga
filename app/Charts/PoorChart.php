@@ -21,10 +21,10 @@ class PoorChart
         $sejahtera = FamilyModel::count() - $praSejahtera;
 
         return $this->chart->donutChart()
-            ->setTitle('Presentase Warga Pra-Sejahtera')
+            ->setTitle('Presentase Warga Prasejahtera')
             ->addData([$sejahtera, $praSejahtera])
             ->setColors(['#4ccdfe', '#ff6384'])
             ->setHeight(200)
-            ->setLabels(['Sejahtera', 'Pra-Sejahtera']);
+            ->setLabels(['Sejahtera', 'Prasejahtera']);
     }
 }

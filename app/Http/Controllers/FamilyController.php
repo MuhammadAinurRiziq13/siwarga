@@ -163,7 +163,7 @@ class FamilyController extends Controller
             'provinsi' => $request->provinsi,
         ]);
 
-        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah anda ingin input data warga??');
+        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah Anda ingin input data warga?');
     }
 
     public function store1(Request $request)
@@ -226,7 +226,7 @@ class FamilyController extends Controller
             ]);
         }
 
-        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah anda ingin input data warga lagi??');
+        return redirect('/family/' . $request->noKK . '/create')->with('success', 'Apakah Anda ingin input data warga lagi??');
     }
 
     public function edit(string $id)

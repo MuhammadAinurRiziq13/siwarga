@@ -42,7 +42,7 @@
                                         <option value="4" @if ($poorFamily->C5 == 4) selected @endif>Cukup Layak</option>
                                         <option value="3" @if ($poorFamily->C5 == 3) selected @endif>Kurang Layak
                                         </option>
-                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Tidak Layak
+                                        <option value="2" @if ($poorFamily->C5 == 2) selected @endif>Buruk Layak
                                         </option>
                                         <option value="1" @if ($poorFamily->C5 == 1) selected @endif>Rumah Kontrak
                                         </option>
