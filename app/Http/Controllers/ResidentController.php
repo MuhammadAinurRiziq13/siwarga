@@ -14,6 +14,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ResidentImport;
 use App\Exports\ResidentExport;
+use Illuminate\Support\Facades\Log;
 
 class ResidentController extends Controller
 {
@@ -62,9 +63,13 @@ class ResidentController extends Controller
                 $btn = '<a href="' . url('/resident/' . $resident->NIK) . '" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a> ';
                 if (Auth::user()->level == 'admin') {
                     $btn .= '<a href="' . url('/resident/' . $resident->NIK . '/edit') . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a> ';
-                    $btn .= '<form class="d-inline-block" method="POST" action="' . url('/resident/' . $resident->NIK) . '">'
-                        . csrf_field() . method_field('DELETE') .
-                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                    if ($resident->status_keluarga === 'kepala keluarga') {
+                        $btn .= '<a href="' . url('/resident/' . $resident->NIK . '/ubah') . '" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a> ';
+                    } else {
+                        $btn .= '<form class="d-inline-block" method="POST" action="' . url('/resident/' . $resident->NIK) . '">'
+                            . csrf_field() . method_field('DELETE') .
+                            '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');"><i class="fas fa-trash-alt"></i></button></form>';
+                    }
                 }
                 return $btn;
             })
@@ -297,6 +302,40 @@ class ResidentController extends Controller
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect('/resident')->with('success', 'Data Warga Berhasil Diubah');
+    }
+
+    public function ubah(string $nik)
+    {
+        $resident = ResidentModel::where('NIK', $nik)
+            ->leftJoin('wargasementara', 'warga.NIK', '=', 'wargasementara.NIK_warga_sementara')
+            ->first();
+        $anggota = ResidentModel::where('noKK', $resident->noKK)->get();
+        $breadcrumb = (object)[
+            'title' => '',
+            'list' => ['Home', 'Warga', 'ubah']
+        ];
+        $page = (object)[
+            'title' => 'Form ubah Kepala Keluarga'
+        ];
+        return view('resident.ubah', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'resident' => $resident,
+            'anggota' => $anggota,
+        ]);
+    }
+
+    public function update1(Request $request, string $id)
+    {
+        $selectedMember = ResidentModel::where('NIK', $request->family_member)->first();
+        if ($selectedMember) {
+            $selectedMember->update(['status_keluarga' => 'kepala keluarga']);
+        }
+
+        User::where('username', $id)->delete();
+        ResidentModel::destroy($id);
+
+        return redirect('/resident')->with('success', 'Data warga berhasil dihapus');
     }
 
     /**

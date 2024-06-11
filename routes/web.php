@@ -93,7 +93,9 @@ Route::prefix('resident')->middleware('role:admin,superadmin')->group(function (
         Route::get('/create', [ResidentController::class, 'create']);
         Route::post('/', [ResidentController::class, 'store']);
         Route::get('/{id}/edit', [ResidentController::class, 'edit']);
+        Route::get('/{id}/ubah', [ResidentController::class, 'ubah']);
         Route::put('/{id}', [ResidentController::class, 'update']);
+        Route::put('/{id}/ubah', [ResidentController::class, 'update1']);
         Route::delete('/{id}', [ResidentController::class, 'destroy']);
     });
     Route::get('/{id}', [ResidentController::class, 'show']);

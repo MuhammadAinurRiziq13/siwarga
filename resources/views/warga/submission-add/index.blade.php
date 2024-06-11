@@ -28,10 +28,42 @@
                     </tr>
                     @foreach ($criteria as $c)
                         @if (isset($poorFamily->{$c->kode}))
-                            <tr>
-                                <th>{{ $c->nama }}</th>
-                                <td>{{ $poorFamily->{$c->kode} }}</td> <!-- Mengambil nilai berdasarkan kode kriteria -->
-                            </tr>
+                            @if ($c->nama == 'Jumlah Tanggungan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }} orang</td>
+                                </tr>
+                            @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>Rp{{ $poorFamily->{$c->kode} }}</td>
+                                </tr>
+                            @elseif ($c->nama == 'Luas Tanah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }} m<sup>2</sup></td>
+                                </tr>
+                            @elseif ($c->nama == 'Kondisi Rumah')
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    @if ($poorFamily->{$c->kode} == 1)
+                                        <td>Rumah Kontrak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 2)
+                                        <td>Buruk Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 3)
+                                        <td>Kurang Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 4)
+                                        <td>Cukup Layak</td>
+                                    @elseif ($poorFamily->{$c->kode} == 5)
+                                        <td>Layak</td>
+                                    @endif
+                                </tr>
+                            @else
+                                <tr>
+                                    <th>{{ $c->nama }}</th>
+                                    <td>{{ $poorFamily->{$c->kode} }}</td>
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
                 </table>

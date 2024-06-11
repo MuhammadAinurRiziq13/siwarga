@@ -34,7 +34,7 @@
                                     <option value="5">Layak</option>
                                     <option value="4">Cukup Layak</option>
                                     <option value="3">Kurang Layak</option>
-                                    <option value="2">Buruk Layak</option>
+                                    <option value="2">Tidak Layak</option>
                                     <option value="1">Rumah Kontrak</option>
                                 </select>
                             @else

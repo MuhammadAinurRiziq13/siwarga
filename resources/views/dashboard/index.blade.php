@@ -188,6 +188,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="container">
+            <br><br><br>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <iframe width="100%" height="350"
+                        src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_tj4qvlmxhd"
+                        frameborder="0" style="border:0" allowfullscreen
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <iframe width="100%" height="350"
+                        src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_6qog9anxhd"
+                        frameborder="0" style="border:0" allowfullscreen
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </div>
+            </div>
+            <div class="row">
+                <div class="justify-content-center d-flex col-12">
+                    {{-- <div class="col-12"> --}}
+                    <iframe width="500" height="400"
+                        src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_j16eabnxhd"
+                        frameborder="0" style="border:0" allowfullscreen
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+                </div>
+            </div>
+        </div>
     @else
         <div class="row">
 
@@ -236,27 +263,10 @@
             <div class="col-xl-4 col-lg-5">
 
             </div>
-            
+
         </div>
     @endif
-    
-    <div class="container">
-        <br><br><br>
-        <div class="row">
-            <div class="col-xl-6 col-lg-6">
-                <iframe width="100%" height="350" src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_tj4qvlmxhd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-            </div>
-            <div class="col-xl-6 col-lg-6">
-                <iframe width="100%" height="350" src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_6qog9anxhd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-            </div>
-        </div>
-        <div class="row">
-            <div class="justify-content-center d-flex col-12">
-            {{-- <div class="col-12"> --}}
-                <iframe width="500" height="400" src="https://lookerstudio.google.com/embed/reporting/b9ee3ea2-7587-4757-bacd-791b8f328774/page/p_j16eabnxhd" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-            </div>
-        </div>
-    </div>
+
     {{-- <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -274,7 +284,7 @@
             </div>
         </div>
     </div> --}}
-    
+
 
     @if ($message = Session::get('LoginBerhasil'))
         <script>
