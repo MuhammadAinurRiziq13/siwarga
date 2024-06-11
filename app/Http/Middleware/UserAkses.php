@@ -19,6 +19,6 @@ class UserAkses
         if (auth()->user()->level == $level) {
             return $next($request);
         }
-        return redirect('/');
+        return response("<script>alert('Anda tidak memiliki akses'); history.back();</script>");
     }
 }

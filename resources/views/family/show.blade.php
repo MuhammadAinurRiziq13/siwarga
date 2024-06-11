@@ -51,6 +51,7 @@
                         <th>Tempat Lahir</th>
                         <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
+                        <th>Status Kerja</th>
                         <th>Status Keluarga</th>
                     </tr>
                 </thead>
@@ -65,6 +66,7 @@
                                 <td>{{ $family_member->tempat_lahir }}</td>
                                 <td>{{ date('d-m-Y', strtotime($family_member->tanggal_lahir)) }}</td>
                                 <td>{{ $family_member->jenis_kelamin }}</td>
+                                <td>{{ $family_member->status_kerja }}</td>
                                 <td>{{ $family_member->status_keluarga }}</td>
                             </tr>
                         @endif

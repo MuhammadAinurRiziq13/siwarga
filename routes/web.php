@@ -64,7 +64,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 //     Route::get('/{id}', [DashboardController::class, 'index2']);
 // });
 
-Route::prefix('family')->middleware('auth')->group(function () {
+Route::prefix('family')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [FamilyController::class, 'index']);
     Route::post('/list', [FamilyController::class, 'list']);
     Route::post('/import', [FamilyController::class, 'import'])->name('family.import');
@@ -83,7 +83,7 @@ Route::prefix('family')->middleware('auth')->group(function () {
     Route::get('/{id}', [FamilyController::class, 'show']);
 });
 
-Route::prefix('resident')->middleware('auth')->group(function () {
+Route::prefix('resident')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [ResidentController::class, 'index']);
     Route::post('/list', [ResidentController::class, 'list']);
     Route::post('/import', [ResidentController::class, 'import'])->name('resident.import');
@@ -99,7 +99,7 @@ Route::prefix('resident')->middleware('auth')->group(function () {
     Route::get('/{id}', [ResidentController::class, 'show']);
 });
 
-Route::prefix('poor-family')->middleware('auth')->group(function () {
+Route::prefix('poor-family')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [PoorFamilyController::class, 'index']);
     Route::post('/list', [PoorFamilyController::class, 'list']);
     Route::get('/calculate', [PoorFamilyController::class, 'calculate']);
@@ -122,7 +122,7 @@ Route::prefix('poor-family')->middleware('auth')->group(function () {
     Route::get('/{id}', [PoorFamilyController::class, 'show']);
 });
 
-Route::prefix('submission-changes')->middleware('auth')->group(function () {
+Route::prefix('submission-changes')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [SubmissionChangesController::class, 'index']);
     Route::post('/list', [SubmissionChangesController::class, 'list']);
 
@@ -134,7 +134,7 @@ Route::prefix('submission-changes')->middleware('auth')->group(function () {
     Route::get('/{id}', [SubmissionChangesController::class, 'show']);
 });
 
-Route::prefix('submission-add')->middleware('auth')->group(function () {
+Route::prefix('submission-add')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [SubmissionAddController::class, 'index']);
     Route::post('/list', [SubmissionAddController::class, 'list']);
 
@@ -146,7 +146,7 @@ Route::prefix('submission-add')->middleware('auth')->group(function () {
     Route::get('/{id}', [SubmissionAddController::class, 'show']);
 });
 
-Route::prefix('submission-letter')->middleware('auth')->group(function () {
+Route::prefix('submission-letter')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [SubmissionLetterController::class, 'index']);
     Route::post('/list', [SubmissionLetterController::class, 'list']);
 
@@ -159,7 +159,7 @@ Route::prefix('submission-letter')->middleware('auth')->group(function () {
     Route::get('/{id}', [SubmissionLetterController::class, 'show']);
 });
 
-Route::prefix('gallery')->middleware('auth')->group(function () {
+Route::prefix('gallery')->middleware('role:admin,superadmin')->group(function () {
     Route::get('/', [GalleryController::class, 'index']);
     Route::post('/list', [GalleryController::class, 'list']);
 
@@ -173,7 +173,7 @@ Route::prefix('gallery')->middleware('auth')->group(function () {
     Route::get('/{id}', [GalleryController::class, 'show']);
 });
 
-Route::prefix('resident-edit')->middleware('auth')->group(function () {
+Route::prefix('resident-edit')->middleware('role:warga')->group(function () {
     // Route::get('/', [GalleryController::class, 'index']);
     Route::get('/{id}', [ResidentEditController::class, 'index']);
     Route::post('/list', [ResidentEditController::class, 'list']);
@@ -187,7 +187,7 @@ Route::prefix('resident-edit')->middleware('auth')->group(function () {
     // Route::get('/{id}', [GalleryController::class, 'show']);
 });
 
-Route::prefix('submission-prasejahtera')->middleware('auth')->group(function () {
+Route::prefix('submission-prasejahtera')->middleware('role:warga')->group(function () {
     Route::get('/{id}', [SubmissionPrasejahteraController::class, 'index']);
     Route::post('/list', [SubmissionPrasejahteraController::class, 'list']);
     Route::get('/{id}/create', [SubmissionPrasejahteraController::class, 'create']);
@@ -201,7 +201,7 @@ Route::prefix('submission-prasejahtera')->middleware('auth')->group(function () 
     // Route::get('/{id}', [GalleryController::class, 'show']);
 });
 
-Route::prefix('submission-pengantar')->middleware('auth')->group(function () {
+Route::prefix('submission-pengantar')->middleware('role:warga')->group(function () {
     Route::get('/{id}', [SubmissionPengantarController::class, 'index']);
     Route::get('/{id}/create', [SubmissionPengantarController::class, 'create']);
     Route::post('/list', [SubmissionPengantarController::class, 'list']);

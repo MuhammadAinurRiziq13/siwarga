@@ -68,7 +68,7 @@ class FamilyController extends Controller
 
     public function show(string $id)
     {
-        $family = FamilyModel::select('keluarga.*', 'warga.NIK', 'warga.nama', 'warga.tempat_lahir', 'warga.tanggal_lahir', 'warga.jenis_kelamin', 'warga.status_keluarga')
+        $family = FamilyModel::select('keluarga.*', 'warga.NIK', 'warga.nama', 'warga.tempat_lahir', 'warga.tanggal_lahir', 'warga.jenis_kelamin', 'warga.status_keluarga', 'warga.status_kerja')
             ->selectSub(function ($query) {
                 $query->from('warga')
                     ->selectRaw('COUNT(warga.nama)')
