@@ -129,7 +129,7 @@
                     </div>
                 </div> --}}
                     <!-- Card Body -->
-                    <div class="card-body" style="height: 450px;">
+                    <div class="card-body" style="height: 490px;">
                         {!! $chart->container() !!}
                     </div>
                 </div>
@@ -137,7 +137,7 @@
 
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-4">
-                <div class="card shadow mb-4" style="height: 210px;">
+                <div class="card shadow mb-4" style="height: 240px;">
                     <!-- Card Header - Dropdown -->
                     {{-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="card shadow mb-4" style="height: 210px;">
+                <div class="card shadow mb-4" style="height: 230px;">
                     <!-- Card Header - Dropdown -->
                     {{-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>

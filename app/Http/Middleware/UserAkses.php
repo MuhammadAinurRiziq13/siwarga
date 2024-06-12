@@ -14,11 +14,15 @@ class UserAkses
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $level): Response
+    public function handle(Request $request, Closure $next, $levels): Response
     {
-        if (auth()->user()->level == $level) {
+        $userLevel = auth()->user()->level;
+        $allowedLevels = explode('|', $levels);
+
+        if (in_array($userLevel, $allowedLevels)) {
             return $next($request);
         }
-        return response("<script>alert('Anda tidak memiliki akses'); history.back();</script>");
+
+        return redirect("/dashboard");
     }
 }
