@@ -180,14 +180,14 @@ class FamilyController extends Controller
             'status_kerja' => 'required',
             'alamat_asal' => 'required_if:alamat_asal_checkbox,on', // Jika checkbox di-check, alamat_asal harus diisi
             'status_keluarga' => [
-                function ($fail) use ($request) {
+                function ($attribute, $value, $fail) use ($request) {
                     // Mengecek apakah ada kepala keluarga dengan nomor KK yang sama
                     $count = ResidentModel::where('noKK', $request->noKK)
                         ->where('status_keluarga', 'kepala keluarga')
                         ->count();
 
                     // Jika ada kepala keluarga lain dengan nomor KK yang sama
-                    if ($count > 0 && $request->status_keluarga == 'kepala keluarga') {
+                    if ($count > 0 && $value == 'kepala keluarga') {
                         $fail('Nomor KK ini sudah memiliki kepala keluarga.');
                     }
                 },
