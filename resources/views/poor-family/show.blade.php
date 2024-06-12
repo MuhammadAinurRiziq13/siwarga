@@ -23,7 +23,7 @@
                             @elseif ($c->nama == 'Pendapatan' || $c->nama == 'Aset Kendaraan')
                                 <tr>
                                     <th>{{ $c->nama }}</th>
-                                    <td>Rp{{ $poorFamily->{$c->kode} }}</td>
+                                    <td>Rp{{ number_format($poorFamily->{$c->kode}, 0, ',', '.') }}</td>
                                 </tr>
                             @elseif ($c->nama == 'Luas Tanah')
                                 <tr>

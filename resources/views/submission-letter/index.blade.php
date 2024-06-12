@@ -72,7 +72,7 @@
                     {
                         data: "waktu_pengajuan",
                         className: "",
-                        orderable: false,
+                        orderable: true,
                         searchable: false
                     },
                     {
