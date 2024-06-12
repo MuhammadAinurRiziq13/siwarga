@@ -230,9 +230,15 @@
                                 </h2>
                                 <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                                     <div class="accordion-body">
-                                        Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet
-                                        non curabitur
-                                        gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                                        <ol>
+                                            <li>Buka aplikasi/situs web dan masukkan username dan password Anda untuk login.</li>
+                                            <li>Setelah login, pilih menu "Edit Data Warga" dari menu utama.</li>
+                                            <li>Cari data warga yang ingin Anda ubah.Klik tombol yang berwarna kuning pada data warga yang ingin Anda ubah.</li>
+                                            <li>Masukkan perubahan data yang Anda inginkan pada formulir yang disediakan. Pastikan semua data yang diubah sudah benar.</li>
+                                            <li>Setelah selesai mengubah data, klik tombol "Kirim" untuk menyimpan perubahan.</li>
+                                            <li>Data yang diubah akan diproses oleh admin. Tunggu hingga admin selesai memverifikasi data Anda.</li>
+                                            <li>Anda akan menerima notifikasi melalui email atau SMS setelah data Anda diubah oleh admin.</li>
+                                        </ol>
                                     </div>
                                 </div>
                             </div>
@@ -246,12 +252,15 @@
                                 </h2>
                                 <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
                                     <div class="accordion-body">
-                                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                        velit laoreet id
-                                        donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
-                                        pellentesque
-                                        elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt
-                                        dui.
+                                        <ol>
+                                            <li>Buka aplikasi/situs web dan masukkan username dan password Anda untuk login.</li>
+                                            <li>Setelah login, pilih menu "Surat pengantar" dari menu utama.</li>
+                                            <li>Klik tombol "tambah" yang terletak di kanan atas.</li>
+                                            <li>Anda akan diarahkan ke halaman pengisian formulir surat pengajuan. Isi semua data yang diperlukan dengan lengkap dan benar, seperti nama, no.Hp dan keperluan.</li>
+                                            <li>Setelah selesai mengisi formulir, klik tombol "Kirim" untuk mengirim surat pengantar.</li>
+                                            <li>Surat pengantar akan diproses oleh admin. Tunggu hingga admin selesai memverifikasi data Anda.</li>
+                                            <li>Anda akan menerima notifikasi melalui email atau SMS setelah surat pengantar Anda diterima oleh admin.</li>
+                                        </ol>
                                     </div>
                                 </div>
                             </div>
@@ -273,11 +282,16 @@
                                 </h2>
                                 <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
                                     <div class="accordion-body">
-                                        Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in
-                                        est ante in.
-                                        Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing
-                                        bibendum est.
-                                        Purus gravida quis blandit turpis cursus in.
+                                        <ol>
+                                            <li>Buka aplikasi/situs web dan masukkan username dan password Anda untuk login.</li>
+                                            <li>Setelah login, pilih menu "Keluarga Seahtera" dari menu utama.</li>
+                                            <li>Klik tombol "tambah" yang terletak di kanan atas.</li>
+                                            <li>Anda akan diarahkan ke halaman pengisian formulir Pengajuan Keluarga Pra Sejahtera. Isi semua data yang diperlukan dengan lengkap dan benar, seperti pendapatan, jumlah tanggungan dan no.Hp.</li>
+                                            <li>Jangan lupa untuk melampirkan foto bukti sebagai bahan pertimbangan admin.</li>
+                                            <li>Setelah selesai mengisi formulir, klik tombol "Kirim" untuk mengirim surat Pengajuan Keluarga Pra Sejahtera.</li>
+                                            <li>Surat Pengajuan Keluarga Pra Sejahtera akan diproses oleh admin. Tunggu hingga admin selesai memverifikasi data Anda.</li>
+                                            <li>Anda akan menerima notifikasi melalui email atau SMS setelah surat Pengajuan Keluarga Pra Sejahtera Anda diterima oleh admin.</li>
+                                        </ol>
                                     </div>
                                 </div>
                             </div>
@@ -291,7 +305,7 @@
                                 </h2>
                                 <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
                                     <div class="accordion-body">
-                                        Kami selalu terbuka untuk menerima masukan dan saran dari pengguna SIWarga. Anda
+                                        Kami selalu terbuka untuk menerima masukan dan saran dari pengguna PORT-05. Anda
                                         dapat memberikan
                                         masukan atau saran melalui email ke di bagian Contact Us di bawah.
                                     </div>
