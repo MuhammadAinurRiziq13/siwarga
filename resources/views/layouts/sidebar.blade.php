@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-dark-blue sidebar sidebar-dark accordion " id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    
+
     {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#"> --}}
     {{-- <div class="sidebar-brand-icon rotate-n-15"> --}}
         {{-- <i class="fas fa-user-cog"></i> --}}
@@ -33,12 +33,12 @@
 
         <li class="nav-item {{ request()->is('family*') ? 'active' : '' }} ">
             <a href="{{ url('/family') }}" class="nav-link">
-                <i class="fas fa-fw fa-user-alt"></i>
+                <i class="fas fa-fw fa-users"></i>
                 <span>Keluarga</span></a>
         </li>
         <li class="nav-item {{ request()->is('resident*') || request()->is('submission-changes*') ? 'active' : '' }}">
             <a href="{{ url('/resident') }}" class="nav-link">
-                <i class="fas fa-fw fa-user-clock"></i>
+                <i class="fas fa-fw fa-user-alt"></i>
                 <span>Data Warga</span>
             </a>
         </li>

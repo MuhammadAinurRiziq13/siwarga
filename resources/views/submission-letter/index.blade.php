@@ -22,6 +22,7 @@
                     </button>
                 </div>
             @endif
+            <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover table-sm" id="table_submission">
                 <thead>
                     <tr>
@@ -31,10 +32,11 @@
                         <th>Waktu Pengajuan</th>
                         <th>Aksi</th>
                         <th>Status</th>
-                        <th>Download</th> 
+                        <th>Download</th>
                     </tr>
                 </thead>
             </table>
+            </div>
         </div>
     </div>
 @endsection

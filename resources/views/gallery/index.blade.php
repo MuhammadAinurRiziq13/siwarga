@@ -27,6 +27,7 @@
                     </button>
                 </div>
             @endif
+            <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover table-sm" id="table_gallery">
                 <thead>
                     <tr>
@@ -39,6 +40,7 @@
                     </tr>
                 </thead>
             </table>
+            </div>
         </div>
     </div>
 @endsection
@@ -85,7 +87,7 @@
                         render: data => {
                             const date = new Date(data);
                             return `${("0" + date.getDate()).slice(-2)}-${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
-                        } 
+                        }
                     },
                     {
                         data: "keterangan",

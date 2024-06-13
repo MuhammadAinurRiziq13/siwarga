@@ -181,7 +181,7 @@
                                                         <div class="post-img"><img
                                                                 src="{{ asset('storage/' . $item->nama_foto) }}"
                                                                 class="img-fluid" alt=""></div>
-                                                        <span class="post-date">{{ $item->tanggal_kegiatan }}</span>
+                                                        <span class="post-date">{{ date('d-m-Y', strtotime($item->tanggal_kegiatan)) }}</span>
                                                         <h3 class="post-title">{{ $item->judul }}</h3>
                                                     </div>
                                                 </div>

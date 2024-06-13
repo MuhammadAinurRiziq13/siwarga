@@ -39,17 +39,19 @@
                     </button>
                 </div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_family">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>No KK</th>
-                        <th>Jml Anggota</th>
-                        <th>Alamat</th>
-                        <th style="width: 14%">Aksi</th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm " id="table_family">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>No KK</th>
+                            <th>Jml Anggota</th>
+                            <th>Alamat</th>
+                            <th style="width: 14%">Aksi</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

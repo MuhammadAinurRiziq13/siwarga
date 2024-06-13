@@ -36,6 +36,7 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
+            <div class="table-responsive">
             <table id="poorFamilyTable" class="table table-bordered table-striped table-hover table-sm">
                 <thead>
                     <tr>
@@ -74,6 +75,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 @endsection
